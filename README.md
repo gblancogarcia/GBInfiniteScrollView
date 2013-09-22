@@ -26,21 +26,17 @@ You can directly add the `GBInfiniteLoopScrollView.h` and `GBInfiniteLoopScrollV
 
 To use it, you simply need to an an instance of GBInfiniteLoopScrollView.
 
-* Init with a placeholder
-
+Init with a placeholder.
 ```objective-c
 GBInfiniteLoopScrollView *scrollView = [[GBInfiniteLoopScrollView alloc] initWithFrame:frame 
                                                                            placeholder:placeholder];
 ```
-* Init with an array of views
-
+Init with an array of views.
 ```objective-c
 GBInfiniteLoopScrollView *scrollView = [[GBInfiniteLoopScrollView alloc] initWithFrame:frame 
                                                                            views:views];
 ```
-
-* Adding a view
-
+Add a view.
 ```objective-c
 [scrollView addView:view];
 ```
