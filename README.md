@@ -26,40 +26,24 @@ You can directly add the `GBInfiniteLoopScrollView.h` and `GBInfiniteLoopScrollV
 
 To use it, you simply need to an an instance of GBInfiniteLoopScrollView.
 
-### Init with a placeholder
+* Init with a placeholder
 
 ```objective-c
 GBInfiniteLoopScrollView *scrollView = [[GBInfiniteLoopScrollView alloc] initWithFrame:frame 
                                                                            placeholder:placeholder];
 ```
-### Init with an array of views
+* Init with an array of views
 
 ```objective-c
 GBInfiniteLoopScrollView *scrollView = [[GBInfiniteLoopScrollView alloc] initWithFrame:frame 
                                                                            views:views];
 ```
 
-### Adding a view
+* Adding a view
 
 ```objective-c
 [scrollView addView:view];
 ```
-
-## Donations
-
-If you found this project useful, please donate.
-There’s no expected amount and I don’t require you to.
-
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-<input type="hidden" name="cmd" value="_donations">
-<input type="hidden" name="business" value="C7YMM9TY4QPH8">
-<input type="hidden" name="lc" value="ES">
-<input type="hidden" name="item_name" value="gblancogarcia">
-<input type="hidden" name="currency_code" value="EUR">
-<input type="hidden" name="bn" value="PP-DonationsBF:btn_donate_SM.gif:NonHosted">
-<input type="image" src="https://www.paypalobjects.com/es_ES/ES/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal. La forma rápida y segura de pagar en Internet.">
-<img alt="" border="0" src="https://www.paypalobjects.com/es_ES/i/scr/pixel.gif" width="1" height="1">
-</form>
 
 ##License (MIT)
 
