@@ -1,7 +1,7 @@
 GBInfiniteLoopScrollView
 ========================
 
-GBInfiniteLoopScrollView is a subclass of UIView. It contains an endlessly horizontal scrollable UIScrollView.
+GBInfiniteLoopScrollView is an endlessly horizontal scrollable paged UIScrollView.
 
 ## Screenshots
 
@@ -27,12 +27,9 @@ You can directly add the `GBInfiniteLoopScrollView.h` and `GBInfiniteLoopScrollV
 ## Usage
 
 ```objective-c
-
 #import "GBInfiniteLoopScrollView.h"
 
-GBInfiniteLoopScrollView *infiniteLoopScrollView = [[GBInfiniteLoopScrollView alloc] initWithFrame:frame placeholder:placeholder];
+GBInfiniteLoopScrollView *scrollView = [[GBInfiniteLoopScrollView alloc] initWithFrame:frame placeholder:placeholder];
 }];
-[infiniteLoopScrollView addView:view];
+[scrollView addView:view];
 ```
-
-[...]
