@@ -23,6 +23,7 @@
 		4399BFCB17DBA72700DC2742 /* GBInfiniteLoopScrollViewDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4399BFCA17DBA72700DC2742 /* GBInfiniteLoopScrollViewDemoTests.m */; };
 		4399BFDB17DBA8D000DC2742 /* GBInfiniteLoopScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4399BFDA17DBA8D000DC2742 /* GBInfiniteLoopScrollView.m */; };
 		439E24D017DC712E0069F712 /* Placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 439E24CF17DC712E0069F712 /* Placeholder@2x.png */; };
+		43FCAA5C17EEF071003C06C5 /* Placeholder-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43FCAA5B17EEF071003C06C5 /* Placeholder-568h@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		4399BFD917DBA8D000DC2742 /* GBInfiniteLoopScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GBInfiniteLoopScrollView.h; path = GBInfiniteLoopScrollViewDemo/GBInfiniteLoopScrollView.h; sourceTree = SOURCE_ROOT; };
 		4399BFDA17DBA8D000DC2742 /* GBInfiniteLoopScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBInfiniteLoopScrollView.m; sourceTree = "<group>"; };
 		439E24CF17DC712E0069F712 /* Placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Placeholder@2x.png"; sourceTree = "<group>"; };
+		43FCAA5B17EEF071003C06C5 /* Placeholder-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Placeholder-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +181,7 @@
 		439E24CE17DC70E80069F712 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				43FCAA5B17EEF071003C06C5 /* Placeholder-568h@2x.png */,
 				439E24CF17DC712E0069F712 /* Placeholder@2x.png */,
 			);
 			name = Graphics;
@@ -267,6 +270,7 @@
 				439E24D017DC712E0069F712 /* Placeholder@2x.png in Resources */,
 				4399BFB817DBA72700DC2742 /* Images.xcassets in Resources */,
 				4399BFAA17DBA72700DC2742 /* InfoPlist.strings in Resources */,
+				43FCAA5C17EEF071003C06C5 /* Placeholder-568h@2x.png in Resources */,
 				4399BFB317DBA72700DC2742 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

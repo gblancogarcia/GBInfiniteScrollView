@@ -36,7 +36,15 @@
     self.numberOfViews = 0;
     
     CGRect frame = self.view.bounds;
-    UIImage *image = [UIImage imageNamed:@"Placeholder"];
+    
+    UIImage *image;
+
+    if ([UIScreen mainScreen].bounds.size.height > 480.0f) {
+        image = [UIImage imageNamed:@"Placeholder-568h"];
+    } else {
+        image = [UIImage imageNamed:@"Placeholder"];
+    }
+    
     UIImageView *placeholder = [[UIImageView alloc] initWithImage:image];
     
     self.infiniteLoopScrollView = [[GBInfiniteLoopScrollView alloc] initWithFrame:frame
