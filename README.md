@@ -1,7 +1,9 @@
 GBInfiniteLoopScrollView
 ========================
 
-GBInfiniteLoopScrollView is an iOS drop-in class [...]
+GBInfiniteLoopScrollView is a subclass of UIView. It contains an endlessly horizontal scrollable UIScrollView.
+
+## Screenshots
 
 [![](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteLoopScrollView/Launch-thumb.png)](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteLoopScrollView/Launch.png)
 [![](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteLoopScrollView/0-thumb.png)](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteLoopScrollView/0.png)
@@ -22,8 +24,15 @@ You can directly add the `GBInfiniteLoopScrollView.h` and `GBInfiniteLoopScrollV
 2. Open your project in Xcode, then drag and drop `GBInfiniteLoopScrollView.h` and `GBInfiniteLoopScrollView.m` onto your project (use the "Product Navigator view"). Make sure to select Copy items when asked if you extracted the code archive outside of your project. 
 3. Include GBInfiniteLoopScrollView wherever you need it with `#import "GBInfiniteLoopScrollView.h"`.
 
-[![](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteLoopScrollView/Springboard-thumb.png)](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteLoopScrollView/Springboard.png)
-
 ## Usage
+
+```objective-c
+
+#import "GBInfiniteLoopScrollView.h"
+
+GBInfiniteLoopScrollView *infiniteLoopScrollView = [[GBInfiniteLoopScrollView alloc] initWithFrame:frame placeholder:placeholder];
+}];
+[infiniteLoopScrollView addView:view];
+```
 
 [...]
