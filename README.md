@@ -10,7 +10,7 @@ GBInfiniteLoopScrollView is an endlessly horizontal scrollable paged UIScrollVie
 
 ## Requirements
 
-GBInfiniteLoopScrollView works on iOS 7 and is compatible with ARC projects.
+GBInfiniteLoopScrollView works on iOS 7 SDK or later and is compatible with ARC projects.
 
 ## Adding GBInfiniteLoopScrollView to your project
 
