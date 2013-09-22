@@ -1,9 +1,7 @@
 GBInfiniteLoopScrollView
 ========================
 
-GBInfiniteLoopScrollView is an endlessly horizontal scrollable paged UIScrollView.
-
-## Screenshots
+GBInfiniteLoopScrollView is an endlessly horizontal scrollable paged UIScrollView. It is based on Apple StreetScroller iOS sample code.
 
 [![](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteLoopScrollView/Launch-thumb.png)](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteLoopScrollView/Launch.png)
 [![](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteLoopScrollView/0-thumb.png)](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteLoopScrollView/0.png)
@@ -29,7 +27,7 @@ You can directly add the `GBInfiniteLoopScrollView.h` and `GBInfiniteLoopScrollV
 ```objective-c
 #import "GBInfiniteLoopScrollView.h"
 
-GBInfiniteLoopScrollView *scrollView = [[GBInfiniteLoopScrollView alloc] initWithFrame:frame placeholder:placeholder];
-}];
+GBInfiniteLoopScrollView *scrollView = [[GBInfiniteLoopScrollView alloc] initWithFrame:frame 
+                                                                           placeholder:placeholder];
 [scrollView addView:view];
 ```
