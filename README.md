@@ -1,7 +1,7 @@
 GBInfiniteLoopScrollView
 ========================
 
-GBInfiniteLoopScrollView is an endlessly UIScrollView organized in pages. It is based on Apple StreetScroller iOS sample code.  It allows you to add UIViews dynamically.
+The GBInfiniteLoopScrollView class provides an endlessly scroll view organized in pages. It is an UIScrollView subclass that can scroll infinitely in the horizontal direction. GBInfiniteLoopScrollView also provides auto scroll functionality. It allows you to add views dynamically. It is based on Apple StreetScroller iOS sample code.
 
 [![](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteLoopScrollView/Launch-thumb.png)](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteLoopScrollView/Launch.png)
 [![](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteLoopScrollView/0-thumb.png)](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteLoopScrollView/0.png)
@@ -24,23 +24,48 @@ You can directly add the `GBInfiniteLoopScrollView.h` and `GBInfiniteLoopScrollV
 
 ## Usage
 
-To use it, you simply need to an an instance of GBInfiniteLoopScrollView.
+To use it, you simply need to an instance of GBInfiniteLoopScrollView.
 
-Init with a placeholder.
+First, initialize the GBInfiniteLoopScrollView with a placeholder or an array of views.
 ```objective-c
-GBInfiniteLoopScrollView *scrollView = [[GBInfiniteLoopScrollView alloc] initWithFrame:frame 
-                                                                           placeholder:placeholder];
-```
-Init with an array of views.
-```objective-c
-GBInfiniteLoopScrollView *scrollView = [[GBInfiniteLoopScrollView alloc] initWithFrame:frame 
-                                                                           views:views];
-```
-Add a view.
-```objective-c
-[scrollView addView:view];
+// A convenience constructor that initializes the GBInfiniteLoopScrollView with the placeholder UIView.
+- (id)initWithFrame:(CGRect)frame placeholder:(UIView *)placeholder;
+
+// A convenience constructor that initializes the GBInfiniteLoopScrollView with the array of UIViews.
+- (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views;
 ```
 
+Also available the following constructors:
+```objective-c
+// A convenience constructor that initializes the GBInfiniteLoopScrollView with the array of UIViews and the automatic
+// scroll flag.
+- (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views autoScroll:(BOOL)autoScroll;
+
+// A convenience constructor that initializes the GBInfiniteLoopScrollView with the array of UIViews, the automatic
+// scroll flag and the automatic time interval.
+- (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views autoScroll:(BOOL)autoScroll interval:(CGFloat)interval;
+
+// A convenience constructor that initializes the GBInfiniteLoopScrollView with the array of UIViews, the automatic
+// scroll flag, the automatic time interval and the automatic scroll direction.
+- (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views autoScroll:(BOOL)autoScroll interval:(CGFloat)interval direction:(GBAutoScrollDirection)direction;
+```
+
+You can enable/disable and configure the auto scroll functionality with the following methods:
+```objective-c
+// Sets the automatic scroll flag.
+- (void)setAutoScroll:(BOOL)autoScroll;
+
+// Sets the automatic scroll flag and the automatic time interval.
+- (void)setAutoScroll:(BOOL)autoScroll interval:(CGFloat)interval;
+
+// Sets the automatic scroll flag, the automatic time interval and the automatic scroll direction.
+- (void)setAutoScroll:(BOOL)autoScroll interval:(CGFloat)interval direction:(GBAutoScrollDirection)direction;
+```
+
+Finally, add a view.
+```objective-c
+- (void)addView:(UIView *)view;
+```
 ##License (MIT)
 
 Copyright (c) 2013 Gerardo Blanco
