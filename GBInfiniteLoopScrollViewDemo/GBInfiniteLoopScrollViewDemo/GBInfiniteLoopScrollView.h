@@ -28,10 +28,13 @@ typedef NS_ENUM(NSInteger, GBAutoScrollDirection) {
     GBAutoScrollDirectionLeftToRight,  // Automatic scroll from left to right.
 };
 
-// The GBInfiniteLoopScrollView class provides a endlessly scroll view organized in pages. It is a UIScrollView subclass
-// that can scroll infinitely in the horizontal direction. GBInfiniteLoopScrollView provides auto scroll functionality.
-// It allows you to add views dynamically. It is based on Apple StreetScroller iOS sample code.
+// The GBInfiniteLoopScrollView class provides an endlessly scroll view organized in pages. It is an UIScrollView
+// subclass that can scroll infinitely in the horizontal direction. GBInfiniteLoopScrollView also provides auto scroll
+// functionality. It allows you to add views dynamically. It is based on Apple StreetScroller iOS sample code.
 @interface GBInfiniteLoopScrollView : UIScrollView <UIScrollViewDelegate>
+
+// A convenience constructor that initializes the GBInfiniteLoopScrollView with the placeholder UIView.
+- (id)initWithFrame:(CGRect)frame placeholder:(UIView *)placeholder;
 
 // A convenience constructor that initializes the GBInfiniteLoopScrollView with the array of UIViews.
 - (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views;
@@ -41,18 +44,12 @@ typedef NS_ENUM(NSInteger, GBAutoScrollDirection) {
 - (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views autoScroll:(BOOL)autoScroll;
 
 // A convenience constructor that initializes the GBInfiniteLoopScrollView with the array of UIViews, the automatic
-// scroll flag and the the automatic time interval.
+// scroll flag and the automatic time interval.
 - (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views autoScroll:(BOOL)autoScroll interval:(CGFloat)interval;
 
 // A convenience constructor that initializes the GBInfiniteLoopScrollView with the array of UIViews, the automatic
-// scroll flag, the the automatic time interval and the automatic scroll direction.
+// scroll flag, the automatic time interval and the automatic scroll direction.
 - (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views autoScroll:(BOOL)autoScroll interval:(CGFloat)interval direction:(GBAutoScrollDirection)direction;
-
-// A convenience constructor that initializes the GBInfiniteLoopScrollView with a placeholder UIView.
-- (id)initWithFrame:(CGRect)frame placeholder:(UIView *)placeholder;
-
-// Adds a view.
-- (void)addView:(UIView *)view;
 
 // Sets the automatic scroll flag.
 - (void)setAutoScroll:(BOOL)autoScroll;
@@ -62,5 +59,8 @@ typedef NS_ENUM(NSInteger, GBAutoScrollDirection) {
 
 // Sets the automatic scroll flag, the automatic time interval and the automatic scroll direction.
 - (void)setAutoScroll:(BOOL)autoScroll interval:(CGFloat)interval direction:(GBAutoScrollDirection)direction;
+
+// Adds a view.
+- (void)addView:(UIView *)view;
 
 @end
