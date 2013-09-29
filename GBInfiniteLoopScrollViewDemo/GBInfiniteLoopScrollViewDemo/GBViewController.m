@@ -1,8 +1,8 @@
 //
 //  GBViewController.m
-//  GBInfiniteLoopScrollView
+//  GBInfiniteLoopScrollViewDemo
 //
-//  Created by Gerardo Blanco García on 25/08/13.
+//  Created by Gerardo Blanco García on 01/10/13.
 //  Copyright (c) 2013 Gerardo Blanco García. All rights reserved.
 //
 
@@ -49,6 +49,8 @@
     
     self.infiniteLoopScrollView = [[GBInfiniteLoopScrollView alloc] initWithFrame:frame
                                                                       placeholder:placeholder];
+    
+    [self.infiniteLoopScrollView setAutoScroll:YES interval:3.0f];
     
     [self.view addSubview:self.infiniteLoopScrollView];
     [self setupAddButton];

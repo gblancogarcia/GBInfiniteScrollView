@@ -1,12 +1,43 @@
+//
+//  GBInfiniteLoopScrollView.h
+//  GBInfiniteLoopScrollView
+//
+//  Created by Gerardo Blanco García on 01/10/13.
+//  Copyright (c) 2013 Gerardo Blanco García. All rights reserved.
+//
+
 #import "GBInfiniteLoopScrollView.h"
+
+static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 
 @interface GBInfiniteLoopScrollView ()
 
+// Array of UIViews.
 @property (nonatomic, retain) NSMutableArray *views;
+
+// Array of pending views to add.
 @property (nonatomic, retain) NSMutableArray *pendingViews;
+
+// The placesholder view.
 @property (nonatomic, retain) UIView *placeholder;
+
+// The current page index.
 @property (nonatomic) NSUInteger currentPageIndex;
+
+// Array of visible indices.
 @property (nonatomic, retain) NSMutableArray *visibleIndices;
+
+// A Boolean value that determines whether automatic scroll is enabled.
+@property (nonatomic) BOOL autoScroll;
+
+// Automatic scroll time interval.
+@property (nonatomic) CGFloat interval;
+
+// Automatic scroll timer.
+@property (nonatomic, retain) NSTimer *timer;
+
+// Automatic scroll direction (right to left or left to right).
+@property (nonatomic) GBAutoScrollDirection direction;
 
 @end
 
@@ -17,6 +48,48 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.views = [views mutableCopy];
+        self.autoScroll = NO;
+        self.interval = 0.0f;
+        self.direction = GBAutoScrollDirectionRightToLeft;
+        [self setup];
+    }
+    return self;
+}
+
+- (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views autoScroll:(BOOL)autoScroll
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.views = [views mutableCopy];
+        self.autoScroll = autoScroll;
+        self.interval = GBAutoScrollDefaultInterval;
+        self.direction = GBAutoScrollDirectionRightToLeft;
+        [self setup];
+    }
+    return self;
+}
+
+- (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views autoScroll:(BOOL)autoScroll interval:(CGFloat)interval
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.views = [views mutableCopy];
+        self.autoScroll = autoScroll;
+        self.interval = interval;
+        self.direction = GBAutoScrollDirectionRightToLeft;
+        [self setup];
+    }
+    return self;
+}
+
+- (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views autoScroll:(BOOL)autoScroll interval:(CGFloat)interval direction:(GBAutoScrollDirection)direction
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.views = [views mutableCopy];
+        self.autoScroll = autoScroll;
+        self.interval = interval;
+        self.direction = direction;
         [self setup];
     }
     return self;
@@ -28,6 +101,9 @@
     if (self) {
         self.views = [[NSMutableArray alloc] init];
         self.placeholder = placeholder;
+        self.autoScroll = NO;
+        self.interval = 0.0f;
+        self.direction = GBAutoScrollDirectionRightToLeft;
         [self setup];
     }
     return self;
@@ -54,6 +130,7 @@
     }
     
     [self setupContentSize];
+    [self setupTimer];
 }
 
 - (void)setupPlaceholder
@@ -70,6 +147,47 @@
 {
     self.contentSize = CGSizeMake([self contentSizeWidth], self.frame.size.height);
     self.contentOffset = CGPointMake([self centerContentOffsetX], self.contentOffset.y);
+}
+
+- (void)setupTimer
+{
+    if (self.autoScroll && [self isScrollNecessary]) {
+        if (self.timer) {
+            [self.timer invalidate];
+        }
+        
+        if (self.direction == GBAutoScrollDirectionLeftToRight) {
+            self.timer = [NSTimer scheduledTimerWithTimeInterval:self.interval
+                                                          target:self
+                                                        selector:@selector(scrollToPreviousPage)
+                                                        userInfo:nil
+                                                         repeats:YES];
+        } else {
+            self.timer = [NSTimer scheduledTimerWithTimeInterval:self.interval
+                                                          target:self
+                                                        selector:@selector(scrollToNextPage)
+                                                        userInfo:nil
+                                                         repeats:YES];
+        }
+    }
+}
+
+#pragma mark - autoScroll
+
+- (void)setAutoScroll:(BOOL)autoScroll interval:(CGFloat)interval
+{
+    self.autoScroll = autoScroll;
+    self.interval = interval;
+    self.direction = GBAutoScrollDirectionRightToLeft;
+    [self setupTimer];
+}
+
+- (void)setAutoScroll:(BOOL)autoScroll interval:(CGFloat)interval direction:(GBAutoScrollDirection)direction
+{
+    self.autoScroll = autoScroll;
+    self.interval = interval;
+    self.direction = direction;
+    [self setupTimer];
 }
 
 #pragma mark -
@@ -272,7 +390,7 @@
 
 #pragma mark - Layout
 
-// Recenter content to achieve impression of infinite scrolling.
+// Recenters content to achieve impression of infinite scrolling.
 - (void)layoutSubviews
 {
     [super layoutSubviews];
@@ -316,6 +434,8 @@
         } else if (currentContentOffset.x == [self maxContentOffsetX]) {
             [self nextPage];
         }
+        
+        [self setupTimer];
         
         [self resetVisibleViews];
         [self recenterCurrentView];
@@ -392,7 +512,6 @@
     CGFloat rightEdge = CGRectGetMaxX([self lastVisibleView].frame);
 
     // Add views that are missing on right side.
-    
     if (rightEdge < maximumVisibleX) {
         NSLog(@"[%2.f, %2.f]", rightEdge, maximumVisibleX);
         
@@ -407,7 +526,6 @@
     CGFloat leftEdge = CGRectGetMinX([self firstVisibleView].frame);
         
     // Add views that are missing on left side.
-
     if (leftEdge > minimumVisibleX) {
         NSLog(@"[%2.f, %2.f]", leftEdge, minimumVisibleX);
         
@@ -429,36 +547,66 @@
     } else if ([self singlePage]) {
         [self.views addObject:view];
         [self setupContentSize];
+        [self setupTimer];
         [self recenterCurrentView];
     } else {
+        [self setupTimer];
         [self.pendingViews addObject:view];
     }
 }
 
--(NSString *)arrayDescription:(NSArray *)array
+#pragma mark - Scroll
+
+// Scrolls to the next page.
+- (void)scrollToNextPage
+{
+    if ([self isScrollNecessary]) {
+        CGRect frame = [self currentView].frame;
+        CGFloat x = CGRectGetMaxX(frame);
+        CGFloat y = frame.origin.y;
+        CGPoint point = CGPointMake(x, y);
+        [self setContentOffset:point animated:YES];
+    }
+}
+
+// Scrolls to the previous page.
+- (void)scrollToPreviousPage
+{
+    if ([self isScrollNecessary]) {
+        CGRect frame = [self currentView].frame;
+        CGFloat x = CGRectGetMinX(frame) - [self pageWidth];
+        CGFloat y = frame.origin.y;
+        CGPoint point = CGPointMake(x, y);
+        [self setContentOffset:point animated:YES];
+    }
+}
+
+#pragma mark - Debug convenience methods
+
+- (NSString *)arrayDescription:(NSArray *)array
 {
     NSMutableString *description = [NSMutableString string];
-
+    
     if (array) {
         [description appendString:@"["];
-    
+        
         for (int i = 0 ; i < array.count ; i++) {
             UIView *view = [array objectAtIndex:i];
-        
+            
             [description appendString:[NSString stringWithFormat:@"%d", view.tag]];
-        
+            
             if (i != array.count - 1) {
                 [description appendString:@", "];
             }
         }
-    
+        
         [description appendString:@"]"];
     }
     
     return [description copy];
 }
 
--(NSString *)visibleIndicesDescription
+- (NSString *)visibleIndicesDescription
 {
     NSMutableString *description = [NSMutableString string];
     
@@ -468,7 +616,7 @@
         for (int i = 0 ; i < self.visibleIndices.count ; i++) {
             NSNumber *index = [self.visibleIndices objectAtIndex:i];
             UIView *view = [self.views objectAtIndex:index.integerValue];
-
+            
             [description appendString:[NSString stringWithFormat:@"%d", view.tag]];
             
             if (i != self.visibleIndices.count - 1) {
