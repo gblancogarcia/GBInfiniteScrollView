@@ -7,6 +7,7 @@ The GBInfiniteLoopScrollView class provides an endlessly scroll view organized i
 [![](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteLoopScrollView/0-thumb.png)](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteLoopScrollView/0.png)
 [![](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteLoopScrollView/1-thumb.png)](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteLoopScrollView/1.png)
 [![](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteLoopScrollView/2-thumb.png)](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteLoopScrollView/2.png)
+[![](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteLoopScrollView/Multitask-thumb.png)](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteLoopScrollView/Multitask.png)
 
 ## Requirements
 
