@@ -47,16 +47,13 @@ First, initialize the GBInfiniteLoopScrollView with a placeholder or an array of
 
 Also available the following constructors:
 ```objective-c
-// A convenience constructor that initializes the GBInfiniteLoopScrollView with the array of UIViews and the automatic
-// scroll flag.
+// A convenience constructor that initializes the GBInfiniteLoopScrollView with the array of UIViews and the automatic scroll flag.
 - (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views autoScroll:(BOOL)autoScroll;
 
-// A convenience constructor that initializes the GBInfiniteLoopScrollView with the array of UIViews, the automatic
-// scroll flag and the automatic time interval.
+// A convenience constructor that initializes the GBInfiniteLoopScrollView with the array of UIViews, the automatic scroll flag and the automatic time interval.
 - (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views autoScroll:(BOOL)autoScroll interval:(CGFloat)interval;
 
-// A convenience constructor that initializes the GBInfiniteLoopScrollView with the array of UIViews, the automatic
-// scroll flag, the automatic time interval and the automatic scroll direction.
+// A convenience constructor that initializes the GBInfiniteLoopScrollView with the array of UIViews, the automatic scroll flag, the automatic time interval and the automatic scroll direction.
 - (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views autoScroll:(BOOL)autoScroll interval:(CGFloat)interval direction:(GBAutoScrollDirection)direction;
 ```
 
