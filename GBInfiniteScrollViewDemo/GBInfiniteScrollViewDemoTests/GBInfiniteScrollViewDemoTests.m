@@ -1,18 +1,18 @@
 //
-//  GBInfiniteLoopScrollViewDemoTests.m
-//  GBInfiniteLoopScrollViewDemoTests
+//  GBInfiniteScrollViewDemoTests.m
+//  GBInfiniteScrollViewDemoTests
 //
-//  Created by Gerardo Blanco García on 07/09/13.
+//  Created by Gerardo Blanco García on 06/10/13.
 //  Copyright (c) 2013 Gerardo Blanco García. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
 
-@interface GBInfiniteLoopScrollViewDemoTests : XCTestCase
+@interface GBInfiniteScrollViewDemoTests : XCTestCase
 
 @end
 
-@implementation GBInfiniteLoopScrollViewDemoTests
+@implementation GBInfiniteScrollViewDemoTests
 
 - (void)setUp
 {

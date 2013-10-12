@@ -63,4 +63,7 @@ typedef NS_ENUM(NSInteger, GBAutoScrollDirection) {
 // Adds a view.
 - (void)addView:(UIView *)view;
 
+// Resets the GBInfiniteLoopScrollView and initializes it with the array of UIViews.
+- (void)resetWithViews:(NSMutableArray *)views;
+
 @end
