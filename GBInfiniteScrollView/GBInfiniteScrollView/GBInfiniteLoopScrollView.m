@@ -219,7 +219,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 
 #pragma mark - Pages
 
-- (int)numberOfPages
+- (NSUInteger)numberOfPages
 {
     return [self.views count];
 }
@@ -288,7 +288,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 
 #pragma mark - Visible Views
 
-- (int)numberOfVisibleViews
+- (NSUInteger)numberOfVisibleViews
 {
     return self.visibleIndices.count;
 }
@@ -318,7 +318,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 - (void)addPreviousVisibleIndex
 {
     NSUInteger previousVisibleIndex = [self previousIndex:[self firstVisibleIndex]];
-    [self.visibleIndices insertObject:[NSNumber numberWithInt:previousVisibleIndex] atIndex:0];
+    [self.visibleIndices insertObject:[NSNumber numberWithUnsignedInteger:previousVisibleIndex] atIndex:0];
 }
 
 - (void)removeFirstVisibleIndex
@@ -335,7 +335,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 - (void)addNexVisibleIndex
 {
     NSUInteger nextVisibleIndex = [self nextIndex:[self lastVisibleIndex]];
-    [self.visibleIndices addObject:[NSNumber numberWithInt:nextVisibleIndex]];
+    [self.visibleIndices addObject:[NSNumber numberWithUnsignedInteger:nextVisibleIndex]];
 }
 
 - (void)removeLastVisibleIndex
@@ -384,7 +384,6 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 
 #pragma mark - Layout
 
-// Recenters content to achieve impression of infinite scrolling.
 - (void)layoutSubviews
 {
     [super layoutSubviews];
@@ -402,7 +401,6 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     }
 }
 
-// Adds the pending views to the array of UIViews.
 - (void)addPendingViews
 {
     if (self.pendingViews.count != 0) {
@@ -414,7 +412,6 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     }
 }
 
-// Recenters the visible views if its necessary.
 - (void)recenterIfNecessary
 {
     CGPoint currentContentOffset = [self contentOffset];
@@ -438,7 +435,6 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     }
 }
 
-// Resets the visible indices array.
 - (void)resetVisibleViews
 {
     for (NSNumber *index in self.visibleIndices) {
@@ -449,16 +445,14 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     }
     
     [self.visibleIndices removeAllObjects];
-    [self.visibleIndices addObject:[NSNumber numberWithInt:[self currentPageIndex]]];
+    [self.visibleIndices addObject:[NSNumber numberWithUnsignedInteger:[self currentPageIndex]]];
 }
 
-// Recenters the current view.
 - (void)recenterCurrentView
 {
     [self moveView:[self currentView] toPositionX:[self centerContentOffsetX]];
 }
 
-// Moves a view an amount.
 - (void)moveView:(UIView *)view deltaX:(CGFloat)delta
 {
     CGPoint center = view.center;
@@ -466,7 +460,6 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     view.center = center;
 }
 
-// Moves a view to a position X.
 - (void)moveView:(UIView *)view toPositionX:(CGFloat)positionX
 {
     CGRect frame = view.frame;
@@ -476,7 +469,6 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 
 #pragma mark - Views Tiling
 
-// Places a view on right.
 - (CGFloat)placeView:(UIView *)view onRight:(CGFloat)rightEdge
 {
     CGRect frame = [view frame];
@@ -490,7 +482,6 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     return CGRectGetMaxX(frame);
 }
 
-// Places a view on left.
 - (CGFloat)placeView:(UIView *)view onLeft:(CGFloat)leftEdge
 {
     CGRect frame = [view frame];
@@ -504,7 +495,6 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     return CGRectGetMinX(frame);
 }
 
-// Tiles views.
 - (void)tileViewsFromMinX:(CGFloat)minimumVisibleX toMaxX:(CGFloat)maximumVisibleX
 {
     CGFloat rightEdge = CGRectGetMaxX([self lastVisibleView].frame);
@@ -530,7 +520,6 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     }
 }
 
-// Adds a view.
 - (void)addView:(UIView *)view
 {
     if ([self isEmpty]) {
@@ -548,7 +537,6 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     }
 }
 
-// Resets the GBInfiniteLoopScrollView and initializes it with the array of UIViews.
 - (void)resetWithViews:(NSMutableArray *)views
 {
     for (NSNumber *index in self.visibleIndices) {
@@ -574,7 +562,6 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 
 #pragma mark - Scroll
 
-// Scrolls to the next page.
 - (void)scrollToNextPage
 {
     if ([self isScrollNecessary]) {
@@ -586,7 +573,6 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     }
 }
 
-// Scrolls to the previous page.
 - (void)scrollToPreviousPage
 {
     if ([self isScrollNecessary]) {
