@@ -23,6 +23,15 @@ You can directly add the `GBInfiniteLoopScrollView.h` and `GBInfiniteLoopScrollV
 2. Open your project in Xcode, then drag and drop `GBInfiniteLoopScrollView.h` and `GBInfiniteLoopScrollView.m` onto your project (use the "Product Navigator view"). Make sure to select Copy items when asked if you extracted the code archive outside of your project. 
 3. Include GBInfiniteLoopScrollView wherever you need it with `#import "GBInfiniteLoopScrollView.h"`.
 
+### Static library
+
+You can also add MBProgressHUD as a static library to your project or workspace. 
+
+1. Download the [latest code version](https://github.com/gblancogarcia/GBInfiniteLoopScrollView/archive/master.zip) or add the repository as a git submodule to your git-tracked project. 
+2. Open your project in Xcode, then drag and drop `GBInfiniteLoopScrollView.xcodeproj` onto your project or workspace (use the "Product Navigator view"). 
+3. Select your target and go to the Build phases tab. In the Link Binary With Libraries section select the add button. On the sheet find and add `libGBInfiniteLoopScrollView.a`. You might also need to add `GBInfiniteLoopScrollView` to the Target Dependencies list. 
+4. Include GBInfiniteLoopScrollView wherever you need it with `#import <GBInfiniteLoopScrollView/GBInfiniteLoopScrollView.h>`.
+
 ## Usage
 
 To use it, you simply need to an instance of GBInfiniteLoopScrollView.
