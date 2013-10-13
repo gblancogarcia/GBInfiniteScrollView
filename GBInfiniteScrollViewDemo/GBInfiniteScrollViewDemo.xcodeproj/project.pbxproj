@@ -38,7 +38,7 @@
 
 /* Begin PBXFileReference section */
 		4357F3E01801B66D00EF282B /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
-		4388DC4E1801A38D0074CABE /* GBInfiniteScrollViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GBInfiniteScrollViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4388DC4E1801A38D0074CABE /* Infinite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Infinite.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4388DC511801A38D0074CABE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4388DC531801A38D0074CABE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		4388DC551801A38D0074CABE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -99,7 +99,7 @@
 		4388DC4F1801A38D0074CABE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4388DC4E1801A38D0074CABE /* GBInfiniteScrollViewDemo.app */,
+				4388DC4E1801A38D0074CABE /* Infinite.app */,
 				4388DC691801A38D0074CABE /* GBInfiniteScrollViewDemoTests.xctest */,
 			);
 			name = Products;
@@ -195,7 +195,7 @@
 			);
 			name = GBInfiniteScrollViewDemo;
 			productName = GBInfiniteScrollViewDemo;
-			productReference = 4388DC4E1801A38D0074CABE /* GBInfiniteScrollViewDemo.app */;
+			productReference = 4388DC4E1801A38D0074CABE /* Infinite.app */;
 			productType = "com.apple.product-type.application";
 		};
 		4388DC681801A38D0074CABE /* GBInfiniteScrollViewDemoTests */ = {
@@ -410,7 +410,7 @@
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/GBInfiniteScrollView-arspasbwstkcdnastqxbxdwropsl/Build/Products/Debug-iphoneos",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Infinite;
 				USER_HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/**";
 				WRAPPER_EXTENSION = app;
 			};
@@ -430,7 +430,7 @@
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/GBInfiniteScrollView-arspasbwstkcdnastqxbxdwropsl/Build/Products/Debug-iphoneos",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Infinite;
 				USER_HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/**";
 				WRAPPER_EXTENSION = app;
 			};
