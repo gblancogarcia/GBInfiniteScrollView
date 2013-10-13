@@ -45,7 +45,8 @@ First, initialize the GBInfiniteLoopScrollView with a placeholder or an array of
 - (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views;
 ```
 
-Also available the following constructors:
+There are also available the following constructors:
+
 ```objective-c
 // A convenience constructor that initializes the GBInfiniteLoopScrollView with the array of UIViews and the automatic scroll flag.
 - (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views autoScroll:(BOOL)autoScroll;
@@ -58,6 +59,7 @@ Also available the following constructors:
 ```
 
 You can enable/disable and configure the auto scroll functionality with the following methods:
+
 ```objective-c
 // Sets the automatic scroll flag.
 - (void)setAutoScroll:(BOOL)autoScroll;
@@ -70,6 +72,7 @@ You can enable/disable and configure the auto scroll functionality with the foll
 ```
 
 Finally, add a view.
+
 ```objective-c
 - (void)addView:(UIView *)view;
 ```
