@@ -1,6 +1,6 @@
 //
 //  GBViewController.m
-//  GBInfiniteLoopScrollViewDemo
+//  GBInfiniteScrollViewDemo
 //
 //  Created by Gerardo Blanco García on 01/10/13.
 //  Copyright (c) 2013 Gerardo Blanco García. All rights reserved.
@@ -8,11 +8,11 @@
 
 #import "GBViewController.h"
 
-#import "GBInfiniteLoopScrollView.h"
+#import <GBInfiniteScrollView/GBInfiniteScrollView.h>
 
 @interface GBViewController ()
 
-@property (nonatomic, retain) GBInfiniteLoopScrollView *infiniteLoopScrollView;
+@property (nonatomic, retain) GBInfiniteScrollView *infiniteScrollView;
 @property (nonatomic, retain) UIColor *color;
 @property (nonatomic) int numberOfViews;
 
@@ -47,12 +47,12 @@
     
     UIImageView *placeholder = [[UIImageView alloc] initWithImage:image];
     
-    self.infiniteLoopScrollView = [[GBInfiniteLoopScrollView alloc] initWithFrame:frame
+    self.infiniteScrollView = [[GBInfiniteScrollView alloc] initWithFrame:frame
                                                                       placeholder:placeholder];
     
-    [self.infiniteLoopScrollView setAutoScroll:YES interval:3.0f];
+    [self.infiniteScrollView setAutoScroll:YES interval:3.0f];
     
-    [self.view addSubview:self.infiniteLoopScrollView];
+    [self.view addSubview:self.infiniteScrollView];
     [self setupAddButton];
 }
 
@@ -114,7 +114,7 @@
 - (void)addRandomColorView
 {
     UIView *view = [self randomColorView];
-    [self.infiniteLoopScrollView addView:view];
+    [self.infiniteScrollView addView:view];
 }
 
 - (UIView *)randomColorView

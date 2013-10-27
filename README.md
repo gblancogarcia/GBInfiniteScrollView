@@ -1,60 +1,60 @@
-GBInfiniteLoopScrollView
+GBInfiniteScrollView
 ========================
 
-The GBInfiniteLoopScrollView class provides an endlessly scroll view organized in pages. It is an UIScrollView subclass that can scroll infinitely in the horizontal direction. GBInfiniteLoopScrollView also provides auto scroll functionality. It allows you to add views dynamically. It is based on Apple StreetScroller iOS sample code.
+The GBInfiniteScrollView class provides an endlessly scroll view organized in pages. It is an UIScrollView subclass that can scroll infinitely in the horizontal direction. GBInfiniteScrollView also provides auto scroll functionality. It allows you to add views dynamically. It is based on Apple StreetScroller iOS sample code.
 
-[![](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteLoopScrollView/Launch-thumb.png)](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteLoopScrollView/Launch.png)
-[![](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteLoopScrollView/0-thumb.png)](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteLoopScrollView/0.png)
-[![](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteLoopScrollView/1-thumb.png)](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteLoopScrollView/1.png)
-[![](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteLoopScrollView/2-thumb.png)](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteLoopScrollView/2.png)
-[![](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteLoopScrollView/Multitask-thumb.png)](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteLoopScrollView/Multitask.png)
+[![](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteScrollView/Launch-thumb.png)](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteScrollView/Launch.png)
+[![](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteScrollView/0-thumb.png)](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteScrollView/0.png)
+[![](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteScrollView/1-thumb.png)](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteScrollView/1.png)
+[![](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteScrollView/2-thumb.png)](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteScrollView/2.png)
+[![](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteScrollView/Multitask-thumb.png)](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteScrollView/Multitask.png)
 
 ## Requirements
 
-GBInfiniteLoopScrollView works on iOS 7 SDK or later and is compatible with ARC projects.
+GBInfiniteScrollView works on iOS 7 SDK or later and is compatible with ARC projects.
 
-## Adding GBInfiniteLoopScrollView to your project
+## Adding GBInfiniteScrollView to your project
 
 ### Source files
 
-You can directly add the `GBInfiniteLoopScrollView.h` and `GBInfiniteLoopScrollView.m` source files to your project.
+You can directly add the `GBInfiniteScrollView.h` and `GBInfiniteScrollView.m` source files to your project.
 
-1. Download the [latest code version](https://github.com/gblancogarcia/GBInfiniteLoopScrollView/archive/master.zip). 
-2. Open your project in Xcode, then drag and drop `GBInfiniteLoopScrollView.h` and `GBInfiniteLoopScrollView.m` onto your project (use the "Product Navigator view"). Make sure to select Copy items when asked if you extracted the code archive outside of your project. 
-3. Include GBInfiniteLoopScrollView wherever you need it with `#import "GBInfiniteLoopScrollView.h"`.
+1. Download the [latest code version](https://github.com/gblancogarcia/GBInfiniteScrollView/archive/master.zip). 
+2. Open your project in Xcode, then drag and drop `GBInfiniteScrollView.h` and `GBInfiniteScrollView.m` onto your project (use the "Product Navigator view"). Make sure to select Copy items when asked if you extracted the code archive outside of your project. 
+3. Include GBInfiniteScrollView wherever you need it with `#import "GBInfiniteScrollView.h"`.
 
 ### Static library
 
-You can also add GBInfiniteLoopScrollView as a static library to your project or workspace. 
+You can also add GBInfiniteScrollView as a static library to your project or workspace. 
 
-1. Download the [latest code version](https://github.com/gblancogarcia/GBInfiniteLoopScrollView/archive/master.zip) or add the repository as a git submodule to your git-tracked project. 
-2. Open your project in Xcode, then drag and drop `GBInfiniteLoopScrollView.xcodeproj` onto your project or workspace (use the "Product Navigator view"). 
-3. Select your target and go to the Build phases tab. In the Link Binary With Libraries section select the add button. On the sheet find and add `libGBInfiniteLoopScrollView.a`. You might also need to add `GBInfiniteLoopScrollView` to the Target Dependencies list. 
-4. Include GBInfiniteLoopScrollView wherever you need it with `#import <GBInfiniteLoopScrollView/GBInfiniteLoopScrollView.h>`.
+1. Download the [latest code version](https://github.com/gblancogarcia/GBInfiniteScrollView/archive/master.zip) or add the repository as a git submodule to your git-tracked project. 
+2. Open your project in Xcode, then drag and drop `GBInfiniteScrollView.xcodeproj` onto your project or workspace (use the "Product Navigator view"). 
+3. Select your target and go to the Build phases tab. In the Link Binary With Libraries section select the add button. On the sheet find and add `libGBInfiniteScrollView.a`. You might also need to add `GBInfiniteScrollView` to the Target Dependencies list. 
+4. Include GBInfiniteScrollView wherever you need it with `#import <GBInfiniteScrollView/GBInfiniteScrollView.h>`.
 
 ## Usage
 
-To use it, you simply need to an instance of GBInfiniteLoopScrollView.
+To use it, you simply need to an instance of GBInfiniteScrollView.
 
-First, initialize the GBInfiniteLoopScrollView with a placeholder or an array of views.
+First, initialize the GBInfiniteScrollView with a placeholder or an array of views.
 ```objective-c
-// A convenience constructor that initializes the GBInfiniteLoopScrollView with the placeholder UIView.
+// A convenience constructor that initializes the GBInfiniteScrollView with the placeholder UIView.
 - (id)initWithFrame:(CGRect)frame placeholder:(UIView *)placeholder;
 
-// A convenience constructor that initializes the GBInfiniteLoopScrollView with the array of UIViews.
+// A convenience constructor that initializes the GBInfiniteScrollView with the array of UIViews.
 - (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views;
 ```
 
 There are also available the following constructors:
 
 ```objective-c
-// A convenience constructor that initializes the GBInfiniteLoopScrollView with the array of UIViews and the automatic scroll flag.
+// A convenience constructor that initializes the GBInfiniteScrollView with the array of UIViews and the automatic scroll flag.
 - (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views autoScroll:(BOOL)autoScroll;
 
-// A convenience constructor that initializes the GBInfiniteLoopScrollView with the array of UIViews, the automatic scroll flag and the automatic time interval.
+// A convenience constructor that initializes the GBInfiniteScrollView with the array of UIViews, the automatic scroll flag and the automatic time interval.
 - (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views autoScroll:(BOOL)autoScroll interval:(CGFloat)interval;
 
-// A convenience constructor that initializes the GBInfiniteLoopScrollView with the array of UIViews, the automatic scroll flag, the automatic time interval and the automatic scroll direction.
+// A convenience constructor that initializes the GBInfiniteScrollView with the array of UIViews, the automatic scroll flag, the automatic time interval and the automatic scroll direction.
 - (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views autoScroll:(BOOL)autoScroll interval:(CGFloat)interval direction:(GBAutoScrollDirection)direction;
 ```
 

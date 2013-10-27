@@ -1,16 +1,16 @@
 //
-//  GBInfiniteLoopScrollView.h
-//  GBInfiniteLoopScrollView
+//  GBInfiniteScrollView.h
+//  GBInfiniteScrollView
 //
 //  Created by Gerardo Blanco García on 01/10/13.
 //  Copyright (c) 2013 Gerardo Blanco García. All rights reserved.
 //
 
-#import "GBInfiniteLoopScrollView.h"
+#import "GBInfiniteScrollView.h"
 
 static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 
-@interface GBInfiniteLoopScrollView ()
+@interface GBInfiniteScrollView ()
 
 // Array of UIViews.
 @property (nonatomic, retain) NSMutableArray *views;
@@ -27,7 +27,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 // Array of visible indices.
 @property (nonatomic, retain) NSMutableArray *visibleIndices;
 
-// A Boolean value that determines whether automatic scroll is enabled.
+// A boolean value that determines whether automatic scroll is enabled.
 @property (nonatomic) BOOL autoScroll;
 
 // Automatic scroll time interval.
@@ -41,7 +41,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 
 @end
 
-@implementation GBInfiniteLoopScrollView
+@implementation GBInfiniteScrollView
 
 - (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views
 {    

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4357F3DF1801B3C700EF282B /* GBInfiniteLoopScrollView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4388DC421801A3460074CABE /* GBInfiniteLoopScrollView.h */; };
+		4357F3DF1801B3C700EF282B /* GBInfiniteScrollView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4388DC421801A3460074CABE /* GBInfiniteScrollView.h */; };
 		4388DC1D1801A3280074CABE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4388DC1C1801A3280074CABE /* Foundation.framework */; };
 		4388DC2B1801A3280074CABE /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4388DC2A1801A3280074CABE /* XCTest.framework */; };
 		4388DC2C1801A3280074CABE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4388DC1C1801A3280074CABE /* Foundation.framework */; };
@@ -15,7 +15,7 @@
 		4388DC311801A3280074CABE /* libGBInfiniteScrollView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4388DC191801A3280074CABE /* libGBInfiniteScrollView.a */; };
 		4388DC371801A3280074CABE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4388DC351801A3280074CABE /* InfoPlist.strings */; };
 		4388DC391801A3280074CABE /* GBInfiniteScrollViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4388DC381801A3280074CABE /* GBInfiniteScrollViewTests.m */; };
-		4388DC441801A3460074CABE /* GBInfiniteLoopScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4388DC431801A3460074CABE /* GBInfiniteLoopScrollView.m */; };
+		4388DC441801A3460074CABE /* GBInfiniteScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4388DC431801A3460074CABE /* GBInfiniteScrollView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,7 +35,7 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
-				4357F3DF1801B3C700EF282B /* GBInfiniteLoopScrollView.h in CopyFiles */,
+				4357F3DF1801B3C700EF282B /* GBInfiniteScrollView.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,8 +51,8 @@
 		4388DC341801A3280074CABE /* GBInfiniteScrollViewTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GBInfiniteScrollViewTests-Info.plist"; sourceTree = "<group>"; };
 		4388DC361801A3280074CABE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4388DC381801A3280074CABE /* GBInfiniteScrollViewTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GBInfiniteScrollViewTests.m; sourceTree = "<group>"; };
-		4388DC421801A3460074CABE /* GBInfiniteLoopScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBInfiniteLoopScrollView.h; sourceTree = "<group>"; };
-		4388DC431801A3460074CABE /* GBInfiniteLoopScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBInfiniteLoopScrollView.m; sourceTree = "<group>"; };
+		4388DC421801A3460074CABE /* GBInfiniteScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBInfiniteScrollView.h; sourceTree = "<group>"; };
+		4388DC431801A3460074CABE /* GBInfiniteScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBInfiniteScrollView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,8 +110,8 @@
 		4388DC1E1801A3280074CABE /* GBInfiniteScrollView */ = {
 			isa = PBXGroup;
 			children = (
-				4388DC421801A3460074CABE /* GBInfiniteLoopScrollView.h */,
-				4388DC431801A3460074CABE /* GBInfiniteLoopScrollView.m */,
+				4388DC421801A3460074CABE /* GBInfiniteScrollView.h */,
+				4388DC431801A3460074CABE /* GBInfiniteScrollView.m */,
 				4388DC1F1801A3280074CABE /* Supporting Files */,
 			);
 			path = GBInfiniteScrollView;
@@ -224,7 +224,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4388DC441801A3460074CABE /* GBInfiniteLoopScrollView.m in Sources */,
+				4388DC441801A3460074CABE /* GBInfiniteScrollView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

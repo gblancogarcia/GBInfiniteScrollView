@@ -1,6 +1,6 @@
 //
 //  GBViewController.h
-//  GBInfiniteLoopScrollViewDemo
+//  GBInfiniteScrollViewDemo
 //
 //  Created by Gerardo Blanco García on 01/10/13.
 //  Copyright (c) 2013 Gerardo Blanco García. All rights reserved.
