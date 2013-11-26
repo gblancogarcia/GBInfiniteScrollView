@@ -38,23 +38,23 @@ To use it, you simply need to an instance of GBInfiniteScrollView.
 
 First, initialize the GBInfiniteScrollView with a placeholder or an array of views.
 ```objective-c
-// A convenience constructor that initializes the GBInfiniteScrollView with the placeholder UIView.
+// A convenience initializer that initializes the GBInfiniteScrollView with the placeholder UIView.
 - (id)initWithFrame:(CGRect)frame placeholder:(UIView *)placeholder;
 
-// A convenience constructor that initializes the GBInfiniteScrollView with the array of UIViews.
+// A convenience initializer that initializes the GBInfiniteScrollView with the array of UIViews.
 - (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views;
 ```
 
-There are also available the following constructors:
+There are also available the following Initializers:
 
 ```objective-c
-// A convenience constructor that initializes the GBInfiniteScrollView with the array of UIViews and the automatic scroll flag.
+// A convenience initializer that initializes the GBInfiniteScrollView with the array of UIViews and the automatic scroll flag.
 - (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views autoScroll:(BOOL)autoScroll;
 
-// A convenience constructor that initializes the GBInfiniteScrollView with the array of UIViews, the automatic scroll flag and the automatic time interval.
+// A convenience initializer that initializes the GBInfiniteScrollView with the array of UIViews, the automatic scroll flag and the automatic time interval.
 - (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views autoScroll:(BOOL)autoScroll interval:(CGFloat)interval;
 
-// A convenience constructor that initializes the GBInfiniteScrollView with the array of UIViews, the automatic scroll flag, the automatic time interval and the automatic scroll direction.
+// A convenience initializer that initializes the GBInfiniteScrollView with the array of UIViews, the automatic scroll flag, the automatic time interval and the automatic scroll direction.
 - (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views autoScroll:(BOOL)autoScroll interval:(CGFloat)interval direction:(GBAutoScrollDirection)direction;
 ```
 
@@ -80,16 +80,18 @@ You can enable/disable and configure the auto scroll functionality with the foll
 Finally, add a view or and array of views:
 
 ```objective-c
+// Adds a view.
 - (void)addView:(UIView *)view;
 
+// Resets the GBInfiniteScrollView and initializes it with the array of UIViews.
 - (void)resetWithViews:(NSMutableArray *)views;
 ```
 
 It is possible to get the current view with the following method:
 
 ```objective-c
+// Gets the current view.
 - (UIView *)currentView;
-
 ```
 
 ##License (MIT)
