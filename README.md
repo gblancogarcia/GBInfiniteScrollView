@@ -69,13 +69,29 @@ You can enable/disable and configure the auto scroll functionality with the foll
 
 // Sets the automatic scroll flag, the automatic time interval and the automatic scroll direction.
 - (void)setAutoScroll:(BOOL)autoScroll interval:(CGFloat)interval direction:(GBAutoScrollDirection)direction;
+
+// Stops automatic scroll.
+- (void)stopAutoScroll;
+
+// Starts automatic scroll.
+- (void)startAutoScroll;
 ```
 
-Finally, add a view.
+Finally, add a view or and array of views:
 
 ```objective-c
 - (void)addView:(UIView *)view;
+
+- (void)resetWithViews:(NSMutableArray *)views;
 ```
+
+It is possible to get the current view with the following method:
+
+```objective-c
+- (UIView *)currentView;
+
+```
+
 ##License (MIT)
 
 Copyright (c) 2013 Gerardo Blanco
