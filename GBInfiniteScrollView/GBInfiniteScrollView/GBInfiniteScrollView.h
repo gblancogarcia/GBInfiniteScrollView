@@ -60,8 +60,17 @@ typedef NS_ENUM(NSInteger, GBAutoScrollDirection) {
 // Sets the automatic scroll flag, the automatic time interval and the automatic scroll direction.
 - (void)setAutoScroll:(BOOL)autoScroll interval:(CGFloat)interval direction:(GBAutoScrollDirection)direction;
 
+// Stops automatic scroll.
+- (void)stopAutoScroll;
+
+// Starts automatic scroll.
+- (void)startAutoScroll;
+
 // Adds a view.
 - (void)addView:(UIView *)view;
+
+// Gets the current view.
+- (UIView *)currentView;
 
 // Resets the GBInfiniteScrollView and initializes it with the array of UIViews.
 - (void)resetWithViews:(NSMutableArray *)views;

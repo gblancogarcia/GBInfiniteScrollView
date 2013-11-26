@@ -43,6 +43,8 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 
 @implementation GBInfiniteScrollView
 
+#pragma mark - Initializers
+
 - (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views
 {    
     self = [super initWithFrame:frame];
@@ -151,11 +153,11 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 
 - (void)setupTimer
 {
+    if (self.timer) {
+        [self.timer invalidate];
+    }
+    
     if (self.autoScroll && [self isScrollNecessary]) {
-        if (self.timer) {
-            [self.timer invalidate];
-        }
-        
         if (self.direction == GBAutoScrollDirectionLeftToRight) {
             self.timer = [NSTimer scheduledTimerWithTimeInterval:self.interval
                                                           target:self
@@ -172,7 +174,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     }
 }
 
-#pragma mark - autoScroll
+#pragma mark - Automatic scroll
 
 - (void)setAutoScroll:(BOOL)autoScroll interval:(CGFloat)interval
 {
@@ -187,6 +189,17 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     self.autoScroll = autoScroll;
     self.interval = interval;
     self.direction = direction;
+    [self setupTimer];
+}
+
+- (void)stopAutoScroll
+{
+    self.autoScroll = NO;
+}
+
+- (void)startAutoScroll
+{
+    self.autoScroll = YES;
     [self setupTimer];
 }
 

@@ -12,8 +12,9 @@
 
 @interface GBViewController ()
 
-@property (nonatomic, retain) GBInfiniteScrollView *infiniteScrollView;
-@property (nonatomic, retain) UIColor *color;
+@property (nonatomic, strong) GBInfiniteScrollView *infiniteScrollView;
+@property (nonatomic, strong) UIButton *stopOrStartButton;
+@property (nonatomic, strong) UIColor *color;
 @property (nonatomic) int numberOfViews;
 
 @end
@@ -54,6 +55,7 @@
     
     [self.view addSubview:self.infiniteScrollView];
     [self setupAddButton];
+    [self setupStopOrPlayButton];
 }
 
 - (void)setupAddButton
@@ -111,6 +113,43 @@
     [self.view addConstraint:left];
 }
 
+- (void)setupStopOrPlayButton
+{
+    if (!self.stopOrStartButton) {
+        self.stopOrStartButton = [[UIButton alloc] init];
+        [self.stopOrStartButton setTitle:@"Stop" forState:UIControlStateNormal];
+        [self.stopOrStartButton addTarget:self
+                                   action:@selector(stopOrStartAutoScroll)
+                         forControlEvents:UIControlEventTouchUpInside];
+        
+        self.stopOrStartButton.hidden = YES;
+        
+        [self.view addSubview:self.stopOrStartButton];
+        
+        [self.stopOrStartButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+        
+        NSLayoutConstraint *bottom = [NSLayoutConstraint constraintWithItem:self.stopOrStartButton
+                                                                  attribute:NSLayoutAttributeBottom
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:self.view
+                                                                  attribute:NSLayoutAttributeBottom
+                                                                 multiplier:1.0f
+                                                                   constant:-24.0f];
+        
+        [self.view addConstraint:bottom];
+        
+        NSLayoutConstraint *right = [NSLayoutConstraint constraintWithItem:self.stopOrStartButton
+                                                                 attribute:NSLayoutAttributeRight
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:self.view
+                                                                 attribute:NSLayoutAttributeRight
+                                                                multiplier:1.0f
+                                                                  constant:-32.0f];
+        
+        [self.view addConstraint:right];
+    }
+}
+
 - (void)addRandomColorView
 {
     UIView *view = [self randomColorView];
@@ -144,6 +183,10 @@
 
     self.numberOfViews++;
     
+    if (self.numberOfViews > 1) {
+        self.stopOrStartButton.hidden = NO;
+    }
+    
     return view;
 }
 
@@ -157,7 +200,18 @@
     return color;
 }
 
--(UIStatusBarStyle)preferredStatusBarStyle
+- (void)stopOrStartAutoScroll
+{
+    if ([self.stopOrStartButton.titleLabel.text isEqualToString:@"Stop"]) {
+        [self.infiniteScrollView stopAutoScroll];
+        [self.stopOrStartButton setTitle:@"Start" forState:UIControlStateNormal];
+    } else {
+        [self.infiniteScrollView startAutoScroll];
+        [self.stopOrStartButton setTitle:@"Stop" forState:UIControlStateNormal];
+    }
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle
 {
     return UIStatusBarStyleLightContent;
 }

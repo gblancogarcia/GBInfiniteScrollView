@@ -5,36 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>D8F93032-CF10-4ED6-BCD8-235BD721F7DE</string>
+	<string>1E7E512D-C9B1-4BC5-A2A2-87A469FA2822</string>
 	<key>IDESourceControlProjectName</key>
 	<string>GBInfiniteScrollView</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>38F0F249-7CA0-4ABD-B549-6A22EB601E59</key>
-		<string>https://github.com/gblancogarcia/GBInfiniteLoopScrollView.git</string>
+		<key>37D67848-D54C-4C22-9C1F-F2845A8A5747</key>
+		<string>https://github.com/gblancogarcia/GBInfiniteScrollView.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>GBInfiniteScrollView.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>38F0F249-7CA0-4ABD-B549-6A22EB601E59</key>
+		<key>37D67848-D54C-4C22-9C1F-F2845A8A5747</key>
 		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/gblancogarcia/GBInfiniteLoopScrollView.git</string>
+	<string>https://github.com/gblancogarcia/GBInfiniteScrollView.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>38F0F249-7CA0-4ABD-B549-6A22EB601E59</string>
+	<string>37D67848-D54C-4C22-9C1F-F2845A8A5747</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>38F0F249-7CA0-4ABD-B549-6A22EB601E59</string>
+			<string>37D67848-D54C-4C22-9C1F-F2845A8A5747</string>
 			<key>IDESourceControlWCCName</key>
-			<string>GBInfiniteLoopScrollView</string>
+			<string>GBInfiniteScrollView</string>
 		</dict>
 	</array>
 </dict>
