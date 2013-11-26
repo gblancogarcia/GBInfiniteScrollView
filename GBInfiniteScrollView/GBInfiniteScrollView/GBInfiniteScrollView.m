@@ -18,7 +18,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 // Array of pending views to add.
 @property (nonatomic, retain) NSMutableArray *pendingViews;
 
-// The placesholder view.
+// The placeholder view.
 @property (nonatomic, retain) UIView *placeholder;
 
 // The current page index.
