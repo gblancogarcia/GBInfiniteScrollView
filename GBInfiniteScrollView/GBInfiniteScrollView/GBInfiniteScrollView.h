@@ -33,21 +33,21 @@ typedef NS_ENUM(NSInteger, GBAutoScrollDirection) {
 // functionality. It allows you to add views dynamically. It is based on Apple StreetScroller iOS sample code.
 @interface GBInfiniteScrollView : UIScrollView <UIScrollViewDelegate>
 
-// A convenience constructor that initializes the GBInfiniteScrollView with the placeholder UIView.
+// A convenience initializer that initializes the GBInfiniteScrollView with the placeholder UIView.
 - (id)initWithFrame:(CGRect)frame placeholder:(UIView *)placeholder;
 
-// A convenience constructor that initializes the GBInfiniteScrollView with the array of UIViews.
+// A convenience initializer that initializes the GBInfiniteScrollView with the array of UIViews.
 - (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views;
 
-// A convenience constructor that initializes the GBInfiniteScrollView with the array of UIViews and the automatic
+// A convenience initializer that initializes the GBInfiniteScrollView with the array of UIViews and the automatic
 // scroll flag.
 - (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views autoScroll:(BOOL)autoScroll;
 
-// A convenience constructor that initializes the GBInfiniteScrollView with the array of UIViews, the automatic
+// A convenience initializer that initializes the GBInfiniteScrollView with the array of UIViews, the automatic
 // scroll flag and the automatic time interval.
 - (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views autoScroll:(BOOL)autoScroll interval:(CGFloat)interval;
 
-// A convenience constructor that initializes the GBInfiniteScrollView with the array of UIViews, the automatic
+// A convenience initializer that initializes the GBInfiniteScrollView with the array of UIViews, the automatic
 // scroll flag, the automatic time interval and the automatic scroll direction.
 - (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views autoScroll:(BOOL)autoScroll interval:(CGFloat)interval direction:(GBAutoScrollDirection)direction;
 
@@ -69,10 +69,10 @@ typedef NS_ENUM(NSInteger, GBAutoScrollDirection) {
 // Adds a view.
 - (void)addView:(UIView *)view;
 
-// Gets the current view.
-- (UIView *)currentView;
-
 // Resets the GBInfiniteScrollView and initializes it with the array of UIViews.
 - (void)resetWithViews:(NSMutableArray *)views;
+
+// Gets the current view.
+- (UIView *)currentView;
 
 @end
