@@ -427,24 +427,32 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 
 - (void)recenterIfNecessary
 {
-    CGPoint currentContentOffset = [self contentOffset];
-    CGFloat distanceFromCenterOffsetX = fabs(currentContentOffset.x - [self centerContentOffsetX]);
-    
-    if (distanceFromCenterOffsetX == [self distanceFromCenterOffsetX]) {
-        self.contentOffset = CGPointMake([self centerContentOffsetX], currentContentOffset.y);
-
-        if (currentContentOffset.x == [self minContentOffsetX]) {
-            [self previousPage];
-        } else if (currentContentOffset.x == [self maxContentOffsetX]) {
-            [self nextPage];
-        }
-
-        [self resetVisibleViews];
-        [self recenterCurrentView];
-        [self setupTimer];
+    if ([self isScrollNecessary]) {
+        CGPoint currentContentOffset = [self contentOffset];
+        CGFloat distanceFromCenterOffsetX = fabs(currentContentOffset.x - [self centerContentOffsetX]);
         
-        // Check if there is pending views to add.
-        [self addPendingViews];
+        if (distanceFromCenterOffsetX == [self distanceFromCenterOffsetX]) {
+            self.contentOffset = CGPointMake([self centerContentOffsetX], currentContentOffset.y);
+            
+            if (currentContentOffset.x == [self minContentOffsetX]) {
+                [self previousPage];
+                if ([self.infiniteScrollViewDelegate respondsToSelector:@selector(infiniteScrollViewDidScrollPreviousPage:)]) {
+                    [self.infiniteScrollViewDelegate infiniteScrollViewDidScrollPreviousPage:self];
+                }
+            } else if (currentContentOffset.x == [self maxContentOffsetX]) {
+                [self nextPage];
+                if ([self.infiniteScrollViewDelegate respondsToSelector:@selector(infiniteScrollViewDidScrollNextPage:)]) {
+                    [self.infiniteScrollViewDelegate infiniteScrollViewDidScrollNextPage:self];
+                }
+            }
+            
+            [self resetVisibleViews];
+            [self recenterCurrentView];
+            [self setupTimer];
+            
+            // Check if there is pending views to add.
+            [self addPendingViews];
+        }
     }
 }
 

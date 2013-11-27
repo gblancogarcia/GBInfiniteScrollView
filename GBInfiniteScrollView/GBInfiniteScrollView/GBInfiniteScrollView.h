@@ -28,10 +28,15 @@ typedef NS_ENUM(NSInteger, GBAutoScrollDirection) {
     GBAutoScrollDirectionLeftToRight,  // Automatic scroll from left to right.
 };
 
+@protocol GBInfiniteScrollViewDelegate;
+
 // The GBInfiniteScrollView class provides an endlessly scroll view organized in pages. It is an UIScrollView
 // subclass that can scroll infinitely in the horizontal direction. GBInfiniteScrollView also provides auto scroll
 // functionality. It allows you to add views dynamically. It is based on Apple StreetScroller iOS sample code.
 @interface GBInfiniteScrollView : UIScrollView <UIScrollViewDelegate>
+
+// Infinite scroll view delegate.
+@property (nonatomic, assign) id <GBInfiniteScrollViewDelegate> infiniteScrollViewDelegate;
 
 // A convenience initializer that initializes the GBInfiniteScrollView with the placeholder UIView.
 - (id)initWithFrame:(CGRect)frame placeholder:(UIView *)placeholder;
@@ -74,5 +79,17 @@ typedef NS_ENUM(NSInteger, GBAutoScrollDirection) {
 
 // Gets the current view.
 - (UIView *)currentView;
+
+@end
+
+@protocol GBInfiniteScrollViewDelegate <NSObject>
+
+@optional
+
+// Called when the GBInfiniteScrollView scrolled to next page.
+- (void)infiniteScrollViewDidScrollNextPage:(GBInfiniteScrollView *)infiniteScrollView;
+
+// Called when the GBInfiniteScrollView scrolled to previous page.
+- (void)infiniteScrollViewDidScrollPreviousPage:(GBInfiniteScrollView *)infiniteScrollView;
 
 @end

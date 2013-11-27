@@ -8,8 +8,6 @@
 
 #import "GBViewController.h"
 
-#import <GBInfiniteScrollView/GBInfiniteScrollView.h>
-
 @interface GBViewController ()
 
 @property (nonatomic, strong) GBInfiniteScrollView *infiniteScrollView;
@@ -52,6 +50,7 @@
                                                                       placeholder:placeholder];
     
     [self.infiniteScrollView setAutoScroll:YES interval:3.0f];
+    [self.infiniteScrollView setInfiniteScrollViewDelegate:self];
     
     [self.view addSubview:self.infiniteScrollView];
     [self setupAddButton];
@@ -209,6 +208,16 @@
         [self.infiniteScrollView startAutoScroll];
         [self.stopOrStartButton setTitle:@"Stop" forState:UIControlStateNormal];
     }
+}
+
+- (void)infiniteScrollViewDidScrollNextPage:(GBInfiniteScrollView *)infiniteScrollView
+{
+    NSLog(@"Next page");
+}
+
+- (void)infiniteScrollViewDidScrollPreviousPage:(GBInfiniteScrollView *)infiniteScrollView
+{
+    NSLog(@"Previous page");
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle

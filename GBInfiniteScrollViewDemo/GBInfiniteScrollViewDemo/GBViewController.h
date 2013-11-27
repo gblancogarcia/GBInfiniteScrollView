@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GBViewController : UIViewController
+#import <GBInfiniteScrollView/GBInfiniteScrollView.h>
+
+@interface GBViewController : UIViewController <GBInfiniteScrollViewDelegate>
 
 @end
