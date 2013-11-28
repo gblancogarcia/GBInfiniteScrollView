@@ -436,12 +436,12 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
             
             if (currentContentOffset.x == [self minContentOffsetX]) {
                 [self previousPage];
-                if ([self.infiniteScrollViewDelegate respondsToSelector:@selector(infiniteScrollViewDidScrollPreviousPage:)]) {
+                if (self.infiniteScrollViewDelegate && [self.infiniteScrollViewDelegate respondsToSelector:@selector(infiniteScrollViewDidScrollPreviousPage:)]) {
                     [self.infiniteScrollViewDelegate infiniteScrollViewDidScrollPreviousPage:self];
                 }
             } else if (currentContentOffset.x == [self maxContentOffsetX]) {
                 [self nextPage];
-                if ([self.infiniteScrollViewDelegate respondsToSelector:@selector(infiniteScrollViewDidScrollNextPage:)]) {
+                if (self.infiniteScrollViewDelegate && [self.infiniteScrollViewDelegate respondsToSelector:@selector(infiniteScrollViewDidScrollNextPage:)]) {
                     [self.infiniteScrollViewDelegate infiniteScrollViewDidScrollNextPage:self];
                 }
             }
