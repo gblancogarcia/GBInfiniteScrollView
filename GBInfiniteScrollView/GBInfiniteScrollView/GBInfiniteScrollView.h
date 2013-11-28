@@ -86,10 +86,10 @@ typedef NS_ENUM(NSInteger, GBAutoScrollDirection) {
 
 @optional
 
-// Called when the GBInfiniteScrollView scrolled to next page.
+// Called when the GBInfiniteScrollView has scrolled to next page.
 - (void)infiniteScrollViewDidScrollNextPage:(GBInfiniteScrollView *)infiniteScrollView;
 
-// Called when the GBInfiniteScrollView scrolled to previous page.
+// Called when the GBInfiniteScrollView has scrolled to previous page.
 - (void)infiniteScrollViewDidScrollPreviousPage:(GBInfiniteScrollView *)infiniteScrollView;
 
 @end
