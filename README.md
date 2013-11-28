@@ -77,7 +77,7 @@ You can enable/disable and configure the auto scroll functionality with the foll
 - (void)startAutoScroll;
 ```
 
-Finally, add a view or and array of views:
+Add a view or and array of views:
 
 ```objective-c
 // Adds a view.
@@ -92,6 +92,29 @@ It is possible to get the current view with the following method:
 ```objective-c
 // Gets the current view.
 - (UIView *)currentView;
+```
+
+It is also avaliable a delegete that conforms the `GBInfiniteScrollViewDelegate` protocol:
+
+
+```objective-c
+// Infinite scroll view delegate.
+@property (nonatomic, assign) id <GBInfiniteScrollViewDelegate> infiniteScrollViewDelegate;
+```
+
+
+```objective-c
+@protocol GBInfiniteScrollViewDelegate <NSObject>
+
+@optional
+
+// Called when the GBInfiniteScrollView scrolled to next page.
+- (void)infiniteScrollViewDidScrollNextPage:(GBInfiniteScrollView *)infiniteScrollView;
+
+// Called when the GBInfiniteScrollView scrolled to previous page.
+- (void)infiniteScrollViewDidScrollPreviousPage:(GBInfiniteScrollView *)infiniteScrollView;
+
+@end
 ```
 
 ##License (MIT)
