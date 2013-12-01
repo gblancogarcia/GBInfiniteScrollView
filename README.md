@@ -5,7 +5,7 @@ GBInfiniteScrollView
 
 A `GBInfiniteScrollView` object must have an object that acts as a data source and an object that acts as a delegate. The data source must adopt the `GBInfiniteScrollViewDataSource` protocol and the delegate must adopt the `GBInfiniteScrollViewDelegate` protocol. The data source provides the views that `GBInfiniteScrollView` needs to display. The delegate allows the adopting delegate to respond to scrolling operations.
 
-`GBInfiniteScrollView` overrides the `layoutSubviews` method of `UIView` so that it calls reloadData only when you create a new instance of `GBInfiniteScrollView` or when you assign a new data source. Reloading the infinite scroll view clears current state, including the current view, but it is possible to specify the initial page index to display.
+`GBInfiniteScrollView` overrides the `layoutSubviews` method of `UIView` so that it calls `reloadData` only when you create a new instance of `GBInfiniteScrollView` or when you assign a new data source. Reloading the infinite scroll view clears current state, including the current view, but it is possible to specify the initial page index to display.
 
 It is based on Apple StreetScroller iOS sample code.
 
