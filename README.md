@@ -1,7 +1,13 @@
 GBInfiniteScrollView
 ========================
 
-The GBInfiniteScrollView class provides an endlessly scroll view organized in pages. It is an UIScrollView subclass that can scroll infinitely in the horizontal direction. GBInfiniteScrollView also provides auto scroll functionality. It allows you to add views dynamically. It is based on Apple StreetScroller iOS sample code.
+GBInfiniteScrollView class provides an endlessly scroll view organized in pages. It is a subclass of UIScrollView, which allows users to scroll infinitely in the horizontal direction. GBInfiniteScrollView also provides automatic scrolling feature.
+
+A GBInfiniteScrollView object must have an object that acts as a data source and an object that acts as a delegate. The data source must adopt the GBInfiniteScrollViewDataSource protocol and the delegate must adopt the GBInfiniteScrollViewDelegate protocol. The data source provides the views that GBInfiniteScrollView needs to display. The delegate allows the adopting delegate to respond to scrolling operations.
+
+GBInfiniteScrollView overrides the layoutSubviews method of UIView so that it calls reloadData only when you create a new instance of GBInfiniteScrollView or when you assign a new data source. Reloading the infinite scroll view clears current state, including the current view, but it is possible to specify the initial page index to display.
+
+It is based on Apple StreetScroller iOS sample code.
 
 [![](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteScrollView/Launch-thumb.png)](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteScrollView/Launch.png)
 [![](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteScrollView/0-thumb.png)](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteScrollView/0.png)
@@ -34,87 +40,46 @@ You can also add GBInfiniteScrollView as a static library to your project or wor
 
 ## Usage
 
-To use it, you simply need to an instance of GBInfiniteScrollView.
+This is an example of use:
 
-First, initialize the GBInfiniteScrollView with a placeholder or an array of views.
+First, initialize the GBInfiniteScrollView instance.
 ```objective-c
-// A convenience initializer that initializes the GBInfiniteScrollView with the placeholder UIView.
-- (id)initWithFrame:(CGRect)frame placeholder:(UIView *)placeholder;
+GBInfiniteScrollView *infiniteScrollView = [[GBInfiniteScrollView alloc] initWithFrame:self.view.bounds];
+infiniteScrollView.infiniteScrollViewDataSource = self;
+infiniteScrollView.infiniteScrollViewDelegate = self;
+infiniteScrollView.pageIndex = 0;
+    
+[self.view addSubview:infiniteScrollView];
+    
+[infiniteScrollView reloadData];
 
-// A convenience initializer that initializes the GBInfiniteScrollView with the array of UIViews.
-- (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views;
+[infiniteScrollView startAutoScroll];
+
 ```
 
-There are also available the following Initializers:
+Then, implement the `GBInfiniteScrollViewDataSource` and `GBInfiniteScrollViewDelegate` methods.
 
 ```objective-c
-// A convenience initializer that initializes the GBInfiniteScrollView with the array of UIViews and the automatic scroll flag.
-- (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views autoScroll:(BOOL)autoScroll;
+- (void)infiniteScrollViewDidScrollNextPage:(GBInfiniteScrollView *)infiniteScrollView
+{
+    NSLog(@"Next page");
+}
 
-// A convenience initializer that initializes the GBInfiniteScrollView with the array of UIViews, the automatic scroll flag and the automatic time interval.
-- (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views autoScroll:(BOOL)autoScroll interval:(CGFloat)interval;
+- (void)infiniteScrollViewDidScrollPreviousPage:(GBInfiniteScrollView *)infiniteScrollView
+{
+    NSLog(@"Previous page");
+}
 
-// A convenience initializer that initializes the GBInfiniteScrollView with the array of UIViews, the automatic scroll flag, the automatic time interval and the automatic scroll direction.
-- (id)initWithFrame:(CGRect)frame views:(NSMutableArray *)views autoScroll:(BOOL)autoScroll interval:(CGFloat)interval direction:(GBAutoScrollDirection)direction;
-```
+- (NSInteger)numberOfPagesInInfiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView
+{
+    return self.views.count;
+}
 
-You can enable/disable and configure the auto scroll functionality with the following methods:
+- (UIView *)infiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView viewAtPageIndex:(NSUInteger)pageIndex
+{
+    return[self.views objectAtIndex:pageIndex];
+}
 
-```objective-c
-// Sets the automatic scroll flag.
-- (void)setAutoScroll:(BOOL)autoScroll;
-
-// Sets the automatic scroll flag and the automatic time interval.
-- (void)setAutoScroll:(BOOL)autoScroll interval:(CGFloat)interval;
-
-// Sets the automatic scroll flag, the automatic time interval and the automatic scroll direction.
-- (void)setAutoScroll:(BOOL)autoScroll interval:(CGFloat)interval direction:(GBAutoScrollDirection)direction;
-
-// Stops automatic scroll.
-- (void)stopAutoScroll;
-
-// Starts automatic scroll.
-- (void)startAutoScroll;
-```
-
-Add a view or and array of views:
-
-```objective-c
-// Adds a view.
-- (void)addView:(UIView *)view;
-
-// Resets the GBInfiniteScrollView and initializes it with the array of UIViews.
-- (void)resetWithViews:(NSMutableArray *)views;
-```
-
-It is possible to get the current view with the following method:
-
-```objective-c
-// Gets the current view.
-- (UIView *)currentView;
-```
-
-It is also avaliable a delegete that conforms the `GBInfiniteScrollViewDelegate` protocol:
-
-
-```objective-c
-// Infinite scroll view delegate.
-@property (nonatomic, assign) id <GBInfiniteScrollViewDelegate> infiniteScrollViewDelegate;
-```
-
-
-```objective-c
-@protocol GBInfiniteScrollViewDelegate <NSObject>
-
-@optional
-
-// Called when the GBInfiniteScrollView has scrolled to next page.
-- (void)infiniteScrollViewDidScrollNextPage:(GBInfiniteScrollView *)infiniteScrollView;
-
-// Called when the GBInfiniteScrollView has scrolled to previous page.
-- (void)infiniteScrollViewDidScrollPreviousPage:(GBInfiniteScrollView *)infiniteScrollView;
-
-@end
 ```
 
 ##License (MIT)
