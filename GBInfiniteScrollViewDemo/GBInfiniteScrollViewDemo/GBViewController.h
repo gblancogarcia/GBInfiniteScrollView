@@ -10,6 +10,6 @@
 
 #import <GBInfiniteScrollView/GBInfiniteScrollView.h>
 
-@interface GBViewController : UIViewController <GBInfiniteScrollViewDelegate>
+@interface GBViewController : UIViewController <GBInfiniteScrollViewDelegate, GBInfiniteScrollViewDataSource>
 
 @end
