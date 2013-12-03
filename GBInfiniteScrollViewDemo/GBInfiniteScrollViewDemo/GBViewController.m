@@ -8,13 +8,15 @@
 
 #import "GBViewController.h"
 
-static CGFloat const GBNumberOfViews = 1000.0f;
-static CGFloat const GBMaxNumberOfViews = 10000.0f;
+#import "GBPageRecord.h"
+
+static CGFloat const GBNumberOfPages = 10000.0f;
+static CGFloat const GBMaxNumberOfPages = 10000.0f;
 
 @interface GBViewController ()
 
 @property (nonatomic, strong) UIImageView *placeholder;
-@property (nonatomic, strong) NSMutableArray *views;
+@property (nonatomic, strong) NSMutableArray *data;
 @property (nonatomic, strong) GBInfiniteScrollView *infiniteScrollView;
 @property (nonatomic, strong) UIButton *stopOrStartButton;
 @property (nonatomic, strong) UIButton *addButton;
@@ -37,16 +39,17 @@ static CGFloat const GBMaxNumberOfViews = 10000.0f;
 
 - (void)setup
 {
-    self.views = [[NSMutableArray alloc] init];
+    self.data = [[NSMutableArray alloc] init];
     
-    for (int i = 0; i < GBNumberOfViews; i++) {
-        [self addRandomColorView];
+    for (int i = 0; i < GBNumberOfPages; i++) {
+        [self addRandomColorPage];
     }
     
     self.infiniteScrollView = [[GBInfiniteScrollView alloc] initWithFrame:self.view.bounds];
     self.infiniteScrollView.infiniteScrollViewDataSource = self;
     self.infiniteScrollView.infiniteScrollViewDelegate = self;
     self.infiniteScrollView.pageIndex = 0;
+    self.infiniteScrollView.interval = 1.0f;
     
     [self.view addSubview:self.infiniteScrollView];
     
@@ -63,7 +66,7 @@ static CGFloat const GBMaxNumberOfViews = 10000.0f;
     self.addButton.titleLabel.font = [UIFont fontWithName: @"HelveticaNeue-UltraLight" size:64.0f];
     
     [self.addButton addTarget:self
-                       action:@selector(addRandomColorView)
+                       action:@selector(addRandomColorPage)
              forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:self.addButton];
@@ -120,7 +123,7 @@ static CGFloat const GBMaxNumberOfViews = 10000.0f;
                                    action:@selector(stopOrStartAutoScroll)
                          forControlEvents:UIControlEventTouchUpInside];
         
-        if (self.views.count < 2) {
+        if (self.data.count < 2) {
             self.stopOrStartButton.hidden = YES;
         }
         
@@ -150,74 +153,30 @@ static CGFloat const GBMaxNumberOfViews = 10000.0f;
     }
 }
 
-- (void)addRandomColorView
+- (void)addRandomColorPage
 {
-    if (self.views.count >= GBMaxNumberOfViews) {
+    if (self.data.count >= GBMaxNumberOfPages) {
         self.addButton.hidden = YES;
     } else {
-        [self.views addObject:[self randomColorView]];
+        [self.data addObject:[self randomColorPageRecord]];
     }
     
-    if (self.views.count > 1) {
+    if (self.data.count > 1) {
         self.stopOrStartButton.hidden = NO;
     }
 }
 
-- (UIView *)randomColorView
+- (GBPageRecord *)randomColorPageRecord
 {
-    UIView *view = [[UIView alloc] initWithFrame:self.view.bounds];
-    view.clipsToBounds = YES;
+    GBPageRecord *pageRecord = [[GBPageRecord alloc] init];
     
-    int i = self.views.count;
-    
-    view.tag = i;
-    
-    view.backgroundColor = self.color;
-    
+    pageRecord.index = self.data.count;
+    pageRecord.text = [NSString stringWithFormat: @"%lu", (unsigned long)[self.data count]];
+    pageRecord.backgroundColor = self.color;
     self.color = [self nextColor:self.color];
-    
-    UILabel *label = [[UILabel alloc] init];
-    
-    label.font = [UIFont fontWithName: @"HelveticaNeue-UltraLight" size:[self fontSizeForNumber:i]];
-    label.text = [NSString stringWithFormat:@"%d", i];
-    label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = self.color;
-    label.translatesAutoresizingMaskIntoConstraints = NO;
-    [label sizeToFit];
+    pageRecord.textColor = self.color;
 
-    [view addSubview:label];
-    
-    NSLayoutConstraint *left = [NSLayoutConstraint constraintWithItem:label
-                                                            attribute:NSLayoutAttributeLeft
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:view
-                                                            attribute:NSLayoutAttributeLeft
-                                                           multiplier:1.0f
-                                                             constant:16.0f];
-    
-    [view addConstraint:left];
-    
-    NSLayoutConstraint *right = [NSLayoutConstraint constraintWithItem:label
-                                                             attribute:NSLayoutAttributeRight
-                                                             relatedBy:NSLayoutRelationEqual
-                                                                toItem:view
-                                                             attribute:NSLayoutAttributeRight
-                                                            multiplier:1.0f
-                                                              constant:-16.0f];
-    
-    [view addConstraint:right];
-    
-    NSLayoutConstraint *centerY = [NSLayoutConstraint constraintWithItem:label
-                                                               attribute:NSLayoutAttributeCenterY
-                                                               relatedBy:NSLayoutRelationEqual
-                                                                  toItem:view
-                                                               attribute:NSLayoutAttributeCenterY
-                                                              multiplier:1.0f
-                                                                constant:0.0f];
-    
-    [view addConstraint:centerY];
-
-    return view;
+    return pageRecord;
 }
 
 - (UIColor *)color
@@ -273,23 +232,35 @@ static CGFloat const GBGoldenRatio = 0.618033988749895f;
 
 - (void)infiniteScrollViewDidScrollNextPage:(GBInfiniteScrollView *)infiniteScrollView
 {
-    NSLog(@"Next page");
+    // NSLog(@"Next page");
 }
 
 - (void)infiniteScrollViewDidScrollPreviousPage:(GBInfiniteScrollView *)infiniteScrollView
 {
-    NSLog(@"Previous page");
+    // NSLog(@"Previous page");
 }
 
 - (NSInteger)numberOfPagesInInfiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView
 {
-    NSLog(@"%d", self.views.count);
-    return self.views.count;
+    return self.data.count;
 }
 
-- (UIView *)infiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView viewAtPageIndex:(NSUInteger)pageIndex
+- (GBInfiniteScrollViewPage *)infiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView pageAtIndex:(NSUInteger)index;
 {
-    return[self.views objectAtIndex:pageIndex];
+    GBPageRecord *record = [self.data objectAtIndex:index];
+    GBInfiniteScrollViewPage *page = [infiniteScrollView dequeueReusablePage];
+    
+    if (page == nil) {
+        page = [[GBInfiniteScrollViewPage alloc] initWithFrame:self.view.bounds style:GBInfiniteScrollViewPageStyleText];
+    }
+    
+    page.textLabel.text = record.text;
+    page.textLabel.textColor = record.textColor;
+    page.contentView.backgroundColor = record.backgroundColor;
+
+    page.textLabel.font = [UIFont fontWithName: @"HelveticaNeue-UltraLight" size:[self fontSizeForNumber:record.index]];
+    
+    return page;
 }
 
 - (CGFloat)fontSizeForNumber:(int)number

@@ -5,23 +5,28 @@
 //  Created by Gerardo Blanco García on 01/10/13.
 //  Copyright (c) 2013 Gerardo Blanco García. All rights reserved.
 //
-
-// This code is distributed under the terms and conditions of the MIT license.
+//  Permission is hereby granted, free of charge, to any person obtaining
+//  a copy of this software and associated documentation files (the
+//  "Software"), to deal in the Software without restriction, including
+//  without limitation the rights to use, copy, modify, merge, publish,
+//  distribute, sublicense,  and/or sell copies of the Software, and to
+//  permit persons to whom the Software is furnished to do so, subject to
+//  the following conditions:
 //
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
-// documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
-// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
-// permit persons to whom the Software is furnished to do so, subject to the following conditions:
+//  The above copyright notice and this permission notice shall be
+//  included in all copies or substantial portions of the Software.
 //
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
-// Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
-// WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-// COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+//  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+//  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+//  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+//  CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+//  TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+//  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #import <UIKit/UIKit.h>
+
+#import "GBInfiniteScrollViewPage.h"
 
 typedef NS_ENUM(NSInteger, GBAutoScrollDirection) {
     GBAutoScrollDirectionRightToLeft,  // Automatic scrolling from right to left. (default)
@@ -54,8 +59,14 @@ typedef NS_ENUM(NSInteger, GBAutoScrollDirection) {
 // Infinite scroll view delegate.
 @property (nonatomic, assign) id <GBInfiniteScrollViewDelegate> infiniteScrollViewDelegate;
 
-// Initializer.
+// Returns an initialized infinite scroll view.
+- (id)init;
+
+// Returns an initialized infinite scroll view from a given frame.
 - (id)initWithFrame:(CGRect)frame;
+
+// Returns an initialized infinite scroll view from data in a given unarchiver.
+- (id)initWithCoder:(NSCoder *)aDecoder;
 
 // Automatic scrolling time interval.
 @property (nonatomic) CGFloat interval;
@@ -70,7 +81,7 @@ typedef NS_ENUM(NSInteger, GBAutoScrollDirection) {
 @property (nonatomic, readonly) NSUInteger currentPageIndex;
 
 // Gets the current view.
-- (UIView *)currentView;
+- (GBInfiniteScrollViewPage *)currentPage;
 
 // Reloads everything from scratch.
 - (void)reloadData;
@@ -80,6 +91,9 @@ typedef NS_ENUM(NSInteger, GBAutoScrollDirection) {
 
 // Starts automatic scrolling.
 - (void)startAutoScroll;
+
+// Returns a reusable infinite scroll view page object.
+- (GBInfiniteScrollViewPage *)dequeueReusablePage;
 
 @end
 
@@ -92,7 +106,7 @@ typedef NS_ENUM(NSInteger, GBAutoScrollDirection) {
 - (NSInteger)numberOfPagesInInfiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView;
 
 // Asks the data source for a view to display in a particular page index. (required)
-- (UIView *)infiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView viewAtPageIndex:(NSUInteger)pageIndex;
+- (GBInfiniteScrollViewPage *)infiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView pageAtIndex:(NSUInteger)index;
 
 @end
 

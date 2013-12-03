@@ -24,6 +24,7 @@
 		4388DC851801A3E30074CABE /* Placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4388DC831801A3E30074CABE /* Placeholder@2x.png */; };
 		4388DC881801A4220074CABE /* GBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4388DC871801A4220074CABE /* GBViewController.m */; };
 		4388DC941801AF3F0074CABE /* libGBInfiniteScrollView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4388DC921801A87A0074CABE /* libGBInfiniteScrollView.a */; };
+		43ED10A4184C07C8002D38A3 /* GBPageRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 43ED10A3184C07C8002D38A3 /* GBPageRecord.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,8 @@
 		4388DC861801A4220074CABE /* GBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBViewController.h; sourceTree = "<group>"; };
 		4388DC871801A4220074CABE /* GBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBViewController.m; sourceTree = "<group>"; };
 		4388DC921801A87A0074CABE /* libGBInfiniteScrollView.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGBInfiniteScrollView.a; path = "../../../Library/Developer/Xcode/DerivedData/GBInfiniteScrollView-arspasbwstkcdnastqxbxdwropsl/Build/Products/Debug-iphoneos/libGBInfiniteScrollView.a"; sourceTree = "<group>"; };
+		43ED10A2184C07C8002D38A3 /* GBPageRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBPageRecord.h; sourceTree = "<group>"; };
+		43ED10A3184C07C8002D38A3 /* GBPageRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBPageRecord.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +166,8 @@
 			children = (
 				4388DC601801A38D0074CABE /* GBAppDelegate.h */,
 				4388DC611801A38D0074CABE /* GBAppDelegate.m */,
+				43ED10A2184C07C8002D38A3 /* GBPageRecord.h */,
+				43ED10A3184C07C8002D38A3 /* GBPageRecord.m */,
 				4388DC861801A4220074CABE /* GBViewController.h */,
 				4388DC871801A4220074CABE /* GBViewController.m */,
 			);
@@ -281,6 +286,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4388DC5E1801A38D0074CABE /* main.m in Sources */,
+				43ED10A4184C07C8002D38A3 /* GBPageRecord.m in Sources */,
 				4388DC881801A4220074CABE /* GBViewController.m in Sources */,
 				4388DC621801A38D0074CABE /* GBAppDelegate.m in Sources */,
 			);
