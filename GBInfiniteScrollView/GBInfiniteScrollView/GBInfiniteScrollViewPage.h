@@ -11,7 +11,7 @@
 #import <UIKit/UIKit.h>
 
 typedef NS_ENUM(NSInteger, GBInfiniteScrollViewPageStyle) {
-    GBInfiniteScrollViewPageStyleEmpty,
+    GBInfiniteScrollViewPageStyleCustom,
     GBInfiniteScrollViewPageStyleText,
     GBInfiniteScrollViewPageStyleImage
 };
@@ -28,7 +28,7 @@ typedef NS_ENUM(NSInteger, GBInfiniteScrollViewPageStyle) {
 
 @property (nonatomic, strong, readonly) UIImageView *imageView;
 
-@property (nonatomic, strong) UIView *backgroundView;
+@property (nonatomic, strong) UIView *customView;
 
 - (void)prepareForReuse;
 

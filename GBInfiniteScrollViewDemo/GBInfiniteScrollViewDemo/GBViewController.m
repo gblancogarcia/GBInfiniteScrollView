@@ -245,20 +245,67 @@ static CGFloat const GBGoldenRatio = 0.618033988749895f;
     return self.data.count;
 }
 
+//- (GBInfiniteScrollViewPage *)infiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView pageAtIndex:(NSUInteger)index;
+//{
+//    GBPageRecord *record = [self.data objectAtIndex:index];
+//    GBInfiniteScrollViewPage *page = [infiniteScrollView dequeueReusablePage];
+//    
+//    if (page == nil) {
+//        page = [[GBInfiniteScrollViewPage alloc] initWithFrame:self.view.bounds style:GBInfiniteScrollViewPageStyleText];
+//    }
+//    
+//    page.textLabel.text = record.text;
+//    page.textLabel.textColor = record.textColor;
+//    page.contentView.backgroundColor = record.backgroundColor;
+//
+//    page.textLabel.font = [UIFont fontWithName: @"HelveticaNeue-UltraLight" size:[self fontSizeForNumber:record.index]];
+//    
+//    return page;
+//}
+
 - (GBInfiniteScrollViewPage *)infiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView pageAtIndex:(NSUInteger)index;
 {
     GBPageRecord *record = [self.data objectAtIndex:index];
     GBInfiniteScrollViewPage *page = [infiniteScrollView dequeueReusablePage];
     
     if (page == nil) {
-        page = [[GBInfiniteScrollViewPage alloc] initWithFrame:self.view.bounds style:GBInfiniteScrollViewPageStyleText];
+        page = [[GBInfiniteScrollViewPage alloc] initWithFrame:self.view.bounds style:GBInfiniteScrollViewPageStyleCustom];
     }
     
-    page.textLabel.text = record.text;
-    page.textLabel.textColor = record.textColor;
-    page.contentView.backgroundColor = record.backgroundColor;
-
-    page.textLabel.font = [UIFont fontWithName: @"HelveticaNeue-UltraLight" size:[self fontSizeForNumber:record.index]];
+    UIView *customView = [[UIView alloc] initWithFrame:self.view.bounds];
+    customView.backgroundColor = record.backgroundColor;
+    
+    UILabel *label = [[UILabel alloc] init];
+    label.text = record.text;
+    label.textColor = record.textColor;
+    label.font = [UIFont fontWithName: @"HelveticaNeue-UltraLight" size:[self fontSizeForNumber:record.index]];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.center = customView.center;
+    label.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    [customView addSubview:label];
+    
+    NSLayoutConstraint *centerX = [NSLayoutConstraint constraintWithItem:label
+                                                               attribute:NSLayoutAttributeCenterX
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:customView
+                                                               attribute:NSLayoutAttributeCenterX
+                                                              multiplier:1.0f
+                                                                constant:0.0f];
+    
+    [customView addConstraint:centerX];
+    
+    NSLayoutConstraint *centerY = [NSLayoutConstraint constraintWithItem:label
+                                                               attribute:NSLayoutAttributeCenterY
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:customView
+                                                               attribute:NSLayoutAttributeCenterY
+                                                              multiplier:1.0f
+                                                                constant:0.0f];
+    
+    [customView addConstraint:centerY];
+    
+    page.customView = customView;
     
     return page;
 }

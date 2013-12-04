@@ -50,30 +50,19 @@ CGFloat const GBInfiniteScrollViewPageMargin = 16.0f;
     return self;
 }
 
-#pragma mark - Setup
+#pragma mark - Lazy instantiation
 
-- (void)setup
+- (UIView *)contentView
 {
-    [self setupContentView];
-    
-    if (self.style == GBInfiniteScrollViewPageStyleText) {
-        [self setupTextLabel];
-    } else if (self.style == GBInfiniteScrollViewPageStyleImage) {
-        [self setupImageView];
-    }
-}
-
-- (void)setupContentView
-{
-    if (!self.contentView) {
-        self.contentView = [[UIImageView alloc] initWithFrame:CGRectZero];
-        self.contentView.backgroundColor = [UIColor clearColor];
-        self.contentView.clipsToBounds = YES;
-        self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
+    if (!_contentView) {
+        _contentView = [[UIImageView alloc] initWithFrame:CGRectZero];
+        _contentView.backgroundColor = [UIColor clearColor];
+        _contentView.clipsToBounds = YES;
+        _contentView.translatesAutoresizingMaskIntoConstraints = NO;
         
-        [self addSubview:self.contentView];
+        [self addSubview:_contentView];
         
-        NSDictionary *views = @{@"contentView" : self.contentView};
+        NSDictionary *views = @{@"contentView" : _contentView};
         
         [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[contentView]|"
                                                                      options:0
@@ -84,6 +73,32 @@ CGFloat const GBInfiniteScrollViewPageMargin = 16.0f;
                                                                      options:0
                                                                      metrics:nil
                                                                        views:views]];
+    }
+    
+    return _contentView;
+}
+
+- (void)setCustomView:(UIView *)customView
+{
+    if (_customView) {
+        [_customView removeFromSuperview];
+    }
+    
+    _customView = customView;
+    
+    if (self.style == GBInfiniteScrollViewPageStyleCustom) {
+        [self setupCustomView];
+    }
+}
+
+#pragma mark - Setup
+
+- (void)setup
+{
+    if (self.style == GBInfiniteScrollViewPageStyleText) {
+        [self setupTextLabel];
+    } else if (self.style == GBInfiniteScrollViewPageStyleImage) {
+        [self setupImageView];
     }
 }
 
@@ -152,29 +167,31 @@ CGFloat const GBInfiniteScrollViewPageMargin = 16.0f;
     }
 }
 
-- (void)setBackgroundView:(UIView *)backgroundView
+- (void)setupCustomView
 {
-    _backgroundView = backgroundView;
-    
-    if (_backgroundView) {
-        _backgroundView.translatesAutoresizingMaskIntoConstraints = NO;
+    if (self.customView) {
+        [self.contentView addSubview:_customView];
+        [self.contentView sendSubviewToBack:_customView];
         
-        [self addSubview:_backgroundView];
-        [self sendSubviewToBack:_backgroundView];
+        self.customView.translatesAutoresizingMaskIntoConstraints = NO;
         
-        NSDictionary *views = @{@"backgroundView" : _backgroundView};
+        [self.contentView addSubview:_customView];
         
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[backgroundView]|"
+        NSDictionary *views = @{@"customView" : self.customView};
+        
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[customView]|"
                                                                      options:0
                                                                      metrics:nil
                                                                        views:views]];
         
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[backgroundView]|"
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[customView]|"
                                                                      options:0
                                                                      metrics:nil
                                                                        views:views]];
     }
 }
+
+#pragma mark - Reuse
 
 - (void)prepareForReuse
 {
@@ -184,7 +201,7 @@ CGFloat const GBInfiniteScrollViewPageMargin = 16.0f;
     
     self.textLabel = nil;
     self.imageView = nil;
-    self.backgroundView = nil;
+    self.customView = nil;
     
     [self setup];
 }
