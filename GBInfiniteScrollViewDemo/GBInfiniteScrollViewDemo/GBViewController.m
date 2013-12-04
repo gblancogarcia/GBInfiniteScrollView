@@ -10,7 +10,7 @@
 
 #import "GBPageRecord.h"
 
-static CGFloat const GBNumberOfPages = 10000.0f;
+static CGFloat const GBNumberOfPages = 1000.0f;
 static CGFloat const GBMaxNumberOfPages = 10000.0f;
 
 @interface GBViewController ()

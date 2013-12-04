@@ -10,8 +10,6 @@
 
 static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 
-static NSUInteger const GBReusablePagesCount = 3;
-
 @interface GBInfiniteScrollView ()
 
 // Number of pages.
@@ -91,7 +89,7 @@ static NSUInteger const GBReusablePagesCount = 3;
 - (NSMutableArray *)reusablePages
 {
     if (!_reusablePages) {
-        _reusablePages = [[NSMutableArray alloc] initWithCapacity:GBReusablePagesCount];
+        _reusablePages = [[NSMutableArray alloc] init];
     }
     
     return _reusablePages;
@@ -302,56 +300,30 @@ static NSUInteger const GBReusablePagesCount = 3;
 {
     [self.visibleIndices addObject:[NSNumber numberWithUnsignedInteger:[self nextVisiblePageIndex]]];
     [self.visiblePages addObject:page];
-    
-    [self logVisibleIndices];
-    [self logVisiblePages];
-    [self logReusablePages];
 }
 
 - (void)addPreviousVisiblePage:(GBInfiniteScrollViewPage *)page
 {
     [self.visibleIndices insertObject:[NSNumber numberWithUnsignedInteger:[self previousVisiblePageIndex]] atIndex:0];
     [self.visiblePages insertObject:page atIndex:0];
-    
-    [self logVisibleIndices];
-    [self logVisiblePages];
-    [self logReusablePages];
 }
 
 - (void)removeFirstVisiblePage
 {
     GBInfiniteScrollViewPage *firstVisiblePage = [self firstVisiblePage];
-    
     [firstVisiblePage removeFromSuperview];
-
-    if (self.reusablePages.count < GBReusablePagesCount) {
-        [self.reusablePages addObject:firstVisiblePage];
-    }
-    
+    [self.reusablePages addObject:firstVisiblePage];
     [self.visibleIndices removeObjectAtIndex:0];
     [self.visiblePages removeObjectAtIndex:0];
-    
-    [self logVisibleIndices];
-    [self logVisiblePages];
-    [self logReusablePages];
 }
 
 - (void)removeLastVisiblePage
 {
     GBInfiniteScrollViewPage *lastVisiblePage = [self lastVisiblePage];
-
     [[self lastVisiblePage] removeFromSuperview];
-    
-    if (self.reusablePages.count < GBReusablePagesCount) {
-        [self.reusablePages addObject:lastVisiblePage];
-    }
-    
+    [self.reusablePages addObject:lastVisiblePage];
     [self.visibleIndices removeLastObject];
     [self.visiblePages removeLastObject];
-    
-    [self logVisibleIndices];
-    [self logVisiblePages];
-    [self logReusablePages];
 }
 
 #pragma mark - Reusable pages
@@ -431,12 +403,7 @@ static NSUInteger const GBReusablePagesCount = 3;
     [self.visibleIndices addObject:[NSNumber numberWithUnsignedInteger:currentPageIndex]];
     
     [self.visiblePages removeAllObjects];
-    [self.visiblePages addObject:currentpage];
-    
-    [self logVisibleIndices];
-    [self logVisiblePages];
-    [self logReusablePages];
-}
+    [self.visiblePages addObject:currentpage];}
 
 - (void)layoutCurrentView
 {
@@ -621,57 +588,6 @@ static NSUInteger const GBReusablePagesCount = 3;
         [self.infiniteScrollViewDelegate respondsToSelector:@selector(infiniteScrollViewDidScrollPreviousPage:)]) {
         [self.infiniteScrollViewDelegate infiniteScrollViewDidScrollPreviousPage:self];
     }
-}
-
-- (void)logVisibleIndices
-{
-    NSMutableString *visibleIndices = [NSMutableString string];
-    
-    [visibleIndices appendString:@"Visible inidces : "];
-    
-    for (int i = 0; i < self.reusablePages.count; i++) {
-        NSNumber *index = [self.visibleIndices objectAtIndex:i];
-        [visibleIndices appendString:index.stringValue];
-        if (i != (self.reusablePages.count - 1)) {
-            [visibleIndices appendString:@", "];
-        }
-    }
-    
-    NSLog(@"%@", visibleIndices);
-}
-
-- (void)logVisiblePages
-{
-    NSMutableString *visiblePages = [NSMutableString string];
-    
-    [visiblePages appendString:@"Visible pages   : "];
-    
-    for (int i = 0; i < self.visiblePages.count; i++) {
-        GBInfiniteScrollViewPage *page = [self.visiblePages objectAtIndex:i];
-        [visiblePages appendString:page.textLabel.text];
-        if (i != (self.visiblePages.count - 1)) {
-            [visiblePages appendString:@", "];
-        }
-    }
-    
-    NSLog(@"%@", visiblePages);
-}
-
-- (void)logReusablePages
-{
-    NSMutableString *reusablePages = [NSMutableString string];
-    
-    [reusablePages appendString:@"Reusable pages  : "];
-    
-    for (int i = 0; i < self.reusablePages.count; i++) {
-        GBInfiniteScrollViewPage *page = [self.reusablePages objectAtIndex:i];
-        [reusablePages appendString:page.textLabel.text];
-        if (i != (self.reusablePages.count - 1)) {
-            [reusablePages appendString:@", "];
-        }
-    }
-    
-    NSLog(@"%@", reusablePages);
 }
 
 @end
