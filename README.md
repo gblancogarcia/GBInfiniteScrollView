@@ -42,7 +42,20 @@ You can also add `GBInfiniteScrollView` as a static library to your project or w
 
 This is an example of use:
 
-First, initialize the `GBInfiniteScrollView` instance.
+First, import `GBInfiniteScrollView` lib. Your view controller must conform to the `GBInfiniteScrollViewDataSource` and `GBInfiniteScrollViewDelegate` protocols.
+
+```objective-c
+#import <UIKit/UIKit.h>
+
+#import <GBInfiniteScrollView/GBInfiniteScrollView.h>
+
+@interface GBViewController : UIViewController <GBInfiniteScrollViewDataSource, GBInfiniteScrollViewDelegate>
+
+@end
+```
+
+Then, initialize a `GBInfiniteScrollView` new instance.
+
 ```objective-c
 GBInfiniteScrollView *infiniteScrollView = [[GBInfiniteScrollView alloc] initWithFrame:self.view.bounds];
 
@@ -59,7 +72,7 @@ infiniteScrollView.pageIndex = 0;
 
 ```
 
-Then, implement the `GBInfiniteScrollViewDataSource` and `GBInfiniteScrollViewDelegate` protocol methods.
+Finally, implement the `GBInfiniteScrollViewDataSource` and `GBInfiniteScrollViewDelegate` protocols methods.
 
 ```objective-c
 - (void)infiniteScrollViewDidScrollNextPage:(GBInfiniteScrollView *)infiniteScrollView
@@ -74,14 +87,25 @@ Then, implement the `GBInfiniteScrollViewDataSource` and `GBInfiniteScrollViewDe
 
 - (NSInteger)numberOfPagesInInfiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView
 {
-    return self.views.count;
+    return self.data.count;
 }
 
-- (UIView *)infiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView viewAtPageIndex:(NSUInteger)pageIndex
+- (GBInfiniteScrollViewPage *)infiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView pageAtIndex:(NSUInteger)index;
 {
-    return[self.views objectAtIndex:pageIndex];
+    GBPageRecord *record = [self.data objectAtIndex:index];
+    GBInfiniteScrollViewPage *page = [infiniteScrollView dequeueReusablePage];
+    
+    if (page == nil) {
+        page = [[GBInfiniteScrollViewPage alloc] initWithFrame:self.view.bounds style:GBInfiniteScrollViewPageStyleText];
+    }
+    
+    page.textLabel.text = record.text;
+    page.textLabel.textColor = record.textColor;
+    page.contentView.backgroundColor = record.backgroundColor;
+    page.textLabel.font = [UIFont fontWithName: @"HelveticaNeue-UltraLight" size:128.0f];
+    
+    return page;
 }
-
 ```
 
 ##License (MIT)
