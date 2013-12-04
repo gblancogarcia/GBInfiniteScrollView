@@ -287,11 +287,11 @@ static CGFloat const GBGoldenRatio = 0.618033988749895f;
 //    
 //    return page;
 //}
-
--(void)buttonClicked:(id)sender
-{
-    NSLog(@"It works!");
-}
+//
+//-(void)buttonClicked:(id)sender
+//{
+//    NSLog(@"It works!");
+//}
 
 - (CGFloat)fontSizeForNumber:(int)number
 {
