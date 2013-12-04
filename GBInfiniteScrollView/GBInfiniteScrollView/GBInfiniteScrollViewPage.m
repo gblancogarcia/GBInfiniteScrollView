@@ -55,24 +55,7 @@ CGFloat const GBInfiniteScrollViewPageMargin = 16.0f;
 - (UIView *)contentView
 {
     if (!_contentView) {
-        _contentView = [[UIImageView alloc] initWithFrame:CGRectZero];
-        _contentView.backgroundColor = [UIColor clearColor];
-        _contentView.clipsToBounds = YES;
-        _contentView.translatesAutoresizingMaskIntoConstraints = NO;
-        
-        [self addSubview:_contentView];
-        
-        NSDictionary *views = @{@"contentView" : _contentView};
-        
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[contentView]|"
-                                                                     options:0
-                                                                     metrics:nil
-                                                                       views:views]];
-        
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView]|"
-                                                                     options:0
-                                                                     metrics:nil
-                                                                       views:views]];
+        [self setupContentView];
     }
     
     return _contentView;
@@ -99,6 +82,32 @@ CGFloat const GBInfiniteScrollViewPageMargin = 16.0f;
         [self setupTextLabel];
     } else if (self.style == GBInfiniteScrollViewPageStyleImage) {
         [self setupImageView];
+    }
+}
+
+- (void)setupContentView
+{
+    if (!_contentView) {
+        _contentView = [[UIImageView alloc] initWithFrame:CGRectZero];
+        _contentView.backgroundColor = [UIColor clearColor];
+        _contentView.clipsToBounds = YES;
+        _contentView.translatesAutoresizingMaskIntoConstraints = NO;
+        _contentView.userInteractionEnabled = YES;
+        _contentView.exclusiveTouch = YES;
+        
+        [self addSubview:_contentView];
+        
+        NSDictionary *views = @{@"contentView" : _contentView};
+        
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[contentView]|"
+                                                                     options:0
+                                                                     metrics:nil
+                                                                       views:views]];
+        
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView]|"
+                                                                     options:0
+                                                                     metrics:nil
+                                                                       views:views]];
     }
 }
 
@@ -188,6 +197,8 @@ CGFloat const GBInfiniteScrollViewPageMargin = 16.0f;
                                                                      options:0
                                                                      metrics:nil
                                                                        views:views]];
+        
+        
     }
 }
 

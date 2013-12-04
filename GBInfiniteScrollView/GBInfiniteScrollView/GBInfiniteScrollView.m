@@ -103,6 +103,8 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     self.bounces = NO;
     self.pagingEnabled = YES;
     self.showsHorizontalScrollIndicator = NO;
+    self.userInteractionEnabled = YES;
+    self.exclusiveTouch = YES;
 
     [self setupDefautValues];
 }
