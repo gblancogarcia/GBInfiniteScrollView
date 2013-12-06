@@ -23,12 +23,11 @@ It is based on Apple StreetScroller iOS sample code.
 
 ### Cocoapods
 
-CocoaPods is the recommended way to add `GBInfiniteScrollView` to your project.
+[CocoaPods](http://cocoapods.org) is the recommended way to add MBProgressHUD to your project.
 
-1. Download the `GBInfiniteScrollView.podspec` file and place it in your project folder.
-2. Add a pod entry for `GBInfiniteScrollView` to your Podfile. Here's an [example](https://github.com/gblancogarcia/GBInfiniteScrollView/blob/master/Podfile).
-3. Install the pod(s) by running `pod install`.
-4. Include `GBInfiniteScrollView` wherever you need it with `#import <GBInfiniteScrollView/GBInfiniteScrollView.h>`.
+1. Add a pod entry for MBProgressHUD to your Podfile `pod 'GBInfiniteScrollView', '~> 1.0'`
+2. Install the pod(s) by running `pod install`.
+3. Include `GBInfiniteScrollView` wherever you need it with `#import "GBInfiniteScrollView.h"`.
 
 ### Source files
 
