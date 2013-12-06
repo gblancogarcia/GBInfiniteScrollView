@@ -21,13 +21,22 @@ It is based on Apple StreetScroller iOS sample code.
 
 ## Adding GBInfiniteScrollView to your project
 
+### Cocoapods
+
+CocoaPods is the recommended way to add `GBInfiniteScrollView` to your project.
+
+1. Download the `GBInfiniteScrollView.podspec` file and place it in your project folder.
+2. Add a pod entry for `GBInfiniteScrollView` to your Podfile.
+3. Install the pod(s) by running `pod install`.
+4. Include `GBInfiniteScrollView` wherever you need it with `#import <GBInfiniteScrollView/GBInfiniteScrollView.h>`.
+
 ### Source files
 
-You can directly add the `GBInfiniteScrollView.h` and `GBInfiniteScrollView.m` source files to your project.
+You can directly add the header and implementation files to your project.
 
 1. Download the [latest code version](https://github.com/gblancogarcia/GBInfiniteScrollView/archive/master.zip). 
-2. Open your project in Xcode, then drag and drop `GBInfiniteScrollView.h` and `GBInfiniteScrollView.m` onto your project (use the "Product Navigator view"). Make sure to select Copy items when asked if you extracted the code archive outside of your project. 
-3. Include `GBInfiniteScrollView` wherever you need it with `#import "GBInfiniteScrollView.h"`.
+2. Open your project in Xcode, then drag and drop the header and implementation files onto your project (use the "Product Navigator view"). Make sure to select Copy items when asked if you extracted the code archive outside of your project. 
+3. Include `GBInfiniteScrollView` wherever you need it with `#import <GBInfiniteScrollView/GBInfiniteScrollView.h>`.
 
 ### Static library
 
@@ -36,7 +45,7 @@ You can also add `GBInfiniteScrollView` as a static library to your project or w
 1. Download the [latest code version](https://github.com/gblancogarcia/GBInfiniteScrollView/archive/master.zip) or add the repository as a git submodule to your git-tracked project. 
 2. Open your project in Xcode, then drag and drop `GBInfiniteScrollView.xcodeproj` onto your project or workspace (use the "Product Navigator view"). 
 3. Select your target and go to the Build phases tab. In the Link Binary With Libraries section select the add button. On the sheet find and add `libGBInfiniteScrollView.a`. You might also need to add `GBInfiniteScrollView` to the Target Dependencies list. 
-4. Include `GBInfiniteScrollView` wherever you need it with `#import <GBInfiniteScrollView/GBInfiniteScrollView.h>`.
+3. Include `GBInfiniteScrollView` wherever you need it with `#import <GBInfiniteScrollView/GBInfiniteScrollView.h>`.
 
 ## Usage
 
