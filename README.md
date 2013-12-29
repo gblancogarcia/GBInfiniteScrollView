@@ -9,7 +9,6 @@ A `GBInfiniteScrollView` object must have an object that acts as a data source a
 
 It is based on Apple StreetScroller iOS sample code.
 
-[![](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteScrollView/3.png)](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteScrollView/3@2x.png)
 [![](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteScrollView/0.png)](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteScrollView/0@2x.png)
 [![](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteScrollView/1.png)](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteScrollView/1@2x.png)
 [![](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteScrollView/2.png)](https://dl.dropboxusercontent.com/u/5359105/GBInfiniteScrollView/2@2x.png)
