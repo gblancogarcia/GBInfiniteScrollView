@@ -2,7 +2,7 @@
 //  GBAppDelegate.m
 //  GBInfiniteScrollViewDemo
 //
-//  Created by Gerardo Blanco García on 06/10/13.
+//  Created by Gerardo Blanco García on 29/12/13.
 //  Copyright (c) 2013 Gerardo Blanco García. All rights reserved.
 //
 
@@ -12,10 +12,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     return YES;
 }
-
+							
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

@@ -50,17 +50,6 @@ CGFloat const GBInfiniteScrollViewPageMargin = 16.0f;
     return self;
 }
 
-#pragma mark - Lazy instantiation
-
-- (UIView *)contentView
-{
-    if (!_contentView) {
-        [self setupContentView];
-    }
-    
-    return _contentView;
-}
-
 - (void)setCustomView:(UIView *)customView
 {
     if (_customView) {
@@ -69,7 +58,7 @@ CGFloat const GBInfiniteScrollViewPageMargin = 16.0f;
     
     _customView = customView;
     
-    if (self.style == GBInfiniteScrollViewPageStyleCustom) {
+    if (_customView && (self.style == GBInfiniteScrollViewPageStyleCustom)) {
         [self setupCustomView];
     }
 }
@@ -78,6 +67,8 @@ CGFloat const GBInfiniteScrollViewPageMargin = 16.0f;
 
 - (void)setup
 {
+    [self setupContentView];
+    
     if (self.style == GBInfiniteScrollViewPageStyleText) {
         [self setupTextLabel];
     } else if (self.style == GBInfiniteScrollViewPageStyleImage) {
@@ -88,117 +79,46 @@ CGFloat const GBInfiniteScrollViewPageMargin = 16.0f;
 - (void)setupContentView
 {
     if (!_contentView) {
-        _contentView = [[UIImageView alloc] initWithFrame:CGRectZero];
+        _contentView = [[UIView alloc] initWithFrame:self.bounds];
         _contentView.backgroundColor = [UIColor clearColor];
         _contentView.clipsToBounds = YES;
-        _contentView.translatesAutoresizingMaskIntoConstraints = NO;
         _contentView.userInteractionEnabled = YES;
         _contentView.exclusiveTouch = YES;
         
         [self addSubview:_contentView];
-        
-        NSDictionary *views = @{@"contentView" : _contentView};
-        
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[contentView]|"
-                                                                     options:0
-                                                                     metrics:nil
-                                                                       views:views]];
-        
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView]|"
-                                                                     options:0
-                                                                     metrics:nil
-                                                                       views:views]];
     }
 }
 
 - (void)setupTextLabel
 {
-    if (!self.textLabel) {
-        self.textLabel = [[UILabel alloc] init];
-        self.textLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
-        self.textLabel.textAlignment = NSTextAlignmentCenter;
-        self.textLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    if (!_textLabel) {
+        _textLabel = [[UILabel alloc] initWithFrame:self.bounds];
         
-        [self.contentView addSubview:self.textLabel];
+        _textLabel.backgroundColor = [UIColor clearColor];
         
-        NSLayoutConstraint *left = [NSLayoutConstraint constraintWithItem:self.textLabel
-                                                                attribute:NSLayoutAttributeLeft
-                                                                relatedBy:NSLayoutRelationEqual
-                                                                   toItem:self.contentView
-                                                                attribute:NSLayoutAttributeLeft
-                                                               multiplier:1.0f
-                                                                 constant:GBInfiniteScrollViewPageMargin];
+        if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) {
+            _textLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+        }
         
-        [self.contentView addConstraint:left];
+        _textLabel.textAlignment = NSTextAlignmentCenter;
         
-        NSLayoutConstraint *right = [NSLayoutConstraint constraintWithItem:self.textLabel
-                                                                 attribute:NSLayoutAttributeRight
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:self.contentView
-                                                                 attribute:NSLayoutAttributeRight
-                                                                multiplier:1.0f
-                                                                  constant:GBInfiniteScrollViewPageMargin * -1];
-        
-        [self.contentView addConstraint:right];
-        
-        NSLayoutConstraint *centerY = [NSLayoutConstraint constraintWithItem:self.textLabel
-                                                                   attribute:NSLayoutAttributeCenterY
-                                                                   relatedBy:NSLayoutRelationEqual
-                                                                      toItem:self.contentView
-                                                                   attribute:NSLayoutAttributeCenterY
-                                                                  multiplier:1.0f
-                                                                    constant:0.0f];
-        
-        [self.contentView addConstraint:centerY];
+        [_contentView addSubview:_textLabel];
     }
 }
 
 - (void)setupImageView
 {
-    if (!self.imageView) {
-        self.imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+    if (!_imageView) {
+        _imageView = [[UIImageView alloc] initWithFrame:self.bounds];
         
-        self.imageView.translatesAutoresizingMaskIntoConstraints = NO;
-        
-        [self.contentView addSubview:self.imageView];
-        
-        NSDictionary *views = @{@"imageView" : self.imageView};
-        
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[imageView]|"
-                                                                     options:0
-                                                                     metrics:nil
-                                                                       views:views]];
-        
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[imageView]|"
-                                                                     options:0
-                                                                     metrics:nil
-                                                                       views:views]];
+        [_contentView addSubview:_imageView];
     }
 }
 
 - (void)setupCustomView
 {
-    if (self.customView) {
-        [self.contentView addSubview:_customView];
-        [self.contentView sendSubviewToBack:_customView];
-        
-        self.customView.translatesAutoresizingMaskIntoConstraints = NO;
-        
-        [self.contentView addSubview:_customView];
-        
-        NSDictionary *views = @{@"customView" : self.customView};
-        
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[customView]|"
-                                                                     options:0
-                                                                     metrics:nil
-                                                                       views:views]];
-        
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[customView]|"
-                                                                     options:0
-                                                                     metrics:nil
-                                                                       views:views]];
-        
-        
+    if (_customView) {
+        [_contentView addSubview:_customView];
     }
 }
 

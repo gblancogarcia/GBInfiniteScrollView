@@ -18,7 +18,8 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
 @property (nonatomic, strong) UIImageView *placeholder;
 @property (nonatomic, strong) NSMutableArray *data;
 @property (nonatomic, strong) GBInfiniteScrollView *infiniteScrollView;
-@property (nonatomic, strong) UIButton *stopOrStartButton;
+@property (nonatomic, strong) UIButton *playButton;
+@property (nonatomic, strong) UIButton *stopButton;
 @property (nonatomic, strong) UIButton *addButton;
 @property (nonatomic, strong) UIColor *color;
 
@@ -56,15 +57,17 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
     [self.infiniteScrollView reloadData];
     
     [self setupAddButton];
-    [self setupStopOrPlayButton];
+    [self setupPlayButton];
+    [self setupStopButton];
 }
 
 - (void)setupAddButton
 {
-    self.addButton = [[UIButton alloc] init];
-    [self.addButton setTitle:@"+" forState:UIControlStateNormal];
-    self.addButton.titleLabel.font = [UIFont fontWithName: @"HelveticaNeue-UltraLight" size:64.0f];
+    self.addButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 64.0f, 64.0f)];
     
+    [self.addButton setImage:[UIImage imageNamed:@"AddButton"] forState:UIControlStateNormal];
+    [self.addButton setImage:[UIImage imageNamed:@"AddButtonHighlighted"] forState:UIControlStateHighlighted];
+
     [self.addButton addTarget:self
                        action:@selector(addRandomColorPage)
              forControlEvents:UIControlEventTouchUpInside];
@@ -73,33 +76,13 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
     
     [self.addButton setTranslatesAutoresizingMaskIntoConstraints:NO];
     
-    NSLayoutConstraint *width = [NSLayoutConstraint constraintWithItem:self.addButton
-                                                             attribute:NSLayoutAttributeWidth
-                                                             relatedBy:NSLayoutRelationEqual
-                                                                toItem:nil
-                                                             attribute:NSLayoutAttributeNotAnAttribute
-                                                            multiplier:1.0f
-                                                              constant:96.0f];
-    
-    [self.view addConstraint:width];
-    
-    NSLayoutConstraint *height = [NSLayoutConstraint constraintWithItem:self.addButton
-                                                              attribute:NSLayoutAttributeHeight
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:nil
-                                                              attribute:NSLayoutAttributeNotAnAttribute
-                                                             multiplier:1.0f
-                                                               constant:96.0f];
-    
-    [self.view addConstraint:height];
-    
     NSLayoutConstraint *bottom = [NSLayoutConstraint constraintWithItem:self.addButton
                                                               attribute:NSLayoutAttributeBottom
                                                               relatedBy:NSLayoutRelationEqual
                                                                  toItem:self.view
                                                               attribute:NSLayoutAttributeBottom
                                                              multiplier:1.0f
-                                                               constant:0.0f];
+                                                               constant:-16.0f];
     
     [self.view addConstraint:bottom];
     
@@ -109,45 +92,88 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
                                                                toItem:self.view
                                                             attribute:NSLayoutAttributeLeft
                                                            multiplier:1.0f
-                                                             constant:0.0f];
+                                                             constant:16.0f];
     
     [self.view addConstraint:left];
 }
 
-- (void)setupStopOrPlayButton
+- (void)setupPlayButton
 {
-    if (!self.stopOrStartButton) {
-        self.stopOrStartButton = [[UIButton alloc] init];
-        [self.stopOrStartButton setTitle:@"Start" forState:UIControlStateNormal];
-        [self.stopOrStartButton addTarget:self
-                                   action:@selector(stopOrStartAutoScroll)
+    if (!self.playButton) {
+        self.playButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 64.0f, 64.0f)];
+
+        [self.playButton setImage:[UIImage imageNamed:@"PlayButton"] forState:UIControlStateNormal];
+        [self.playButton setImage:[UIImage imageNamed:@"PlayButtonHighlighted"] forState:UIControlStateHighlighted];
+        
+        [self.playButton addTarget:self
+                                   action:@selector(startAutoScroll)
                          forControlEvents:UIControlEventTouchUpInside];
         
         if (self.data.count < 2) {
-            self.stopOrStartButton.hidden = YES;
+            self.playButton.hidden = YES;
         }
         
-        [self.view addSubview:self.stopOrStartButton];
+        [self.view addSubview:self.playButton];
         
-        [self.stopOrStartButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [self.playButton setTranslatesAutoresizingMaskIntoConstraints:NO];
         
-        NSLayoutConstraint *bottom = [NSLayoutConstraint constraintWithItem:self.stopOrStartButton
+        NSLayoutConstraint *bottom = [NSLayoutConstraint constraintWithItem:self.playButton
                                                                   attribute:NSLayoutAttributeBottom
                                                                   relatedBy:NSLayoutRelationEqual
                                                                      toItem:self.view
                                                                   attribute:NSLayoutAttributeBottom
                                                                  multiplier:1.0f
-                                                                   constant:-24.0f];
+                                                                   constant:-16.0f];
         
         [self.view addConstraint:bottom];
         
-        NSLayoutConstraint *right = [NSLayoutConstraint constraintWithItem:self.stopOrStartButton
+        NSLayoutConstraint *right = [NSLayoutConstraint constraintWithItem:self.playButton
                                                                  attribute:NSLayoutAttributeRight
                                                                  relatedBy:NSLayoutRelationEqual
                                                                     toItem:self.view
                                                                  attribute:NSLayoutAttributeRight
                                                                 multiplier:1.0f
-                                                                  constant:-32.0f];
+                                                                  constant:-16.0f];
+        
+        [self.view addConstraint:right];
+    }
+}
+
+- (void)setupStopButton
+{
+    if (!self.stopButton) {
+        self.stopButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 64.0f, 64.0f)];
+        
+        [self.stopButton setImage:[UIImage imageNamed:@"StopButton"] forState:UIControlStateNormal];
+        [self.stopButton setImage:[UIImage imageNamed:@"StopButtonHighlighted"] forState:UIControlStateHighlighted];
+        
+        [self.stopButton addTarget:self
+                            action:@selector(stopAutoScroll)
+                  forControlEvents:UIControlEventTouchUpInside];
+        
+        self.stopButton.hidden = YES;
+        
+        [self.view addSubview:self.stopButton];
+        
+        [self.stopButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+        
+        NSLayoutConstraint *bottom = [NSLayoutConstraint constraintWithItem:self.stopButton
+                                                                  attribute:NSLayoutAttributeBottom
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:self.view
+                                                                  attribute:NSLayoutAttributeBottom
+                                                                 multiplier:1.0f
+                                                                   constant:-16.0f];
+        
+        [self.view addConstraint:bottom];
+        
+        NSLayoutConstraint *right = [NSLayoutConstraint constraintWithItem:self.stopButton
+                                                                 attribute:NSLayoutAttributeRight
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:self.view
+                                                                 attribute:NSLayoutAttributeRight
+                                                                multiplier:1.0f
+                                                                  constant:-16.0f];
         
         [self.view addConstraint:right];
     }
@@ -161,8 +187,8 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
         [self.data addObject:[self randomColorPageRecord]];
     }
     
-    if (self.data.count > 1) {
-        self.stopOrStartButton.hidden = NO;
+    if (self.data.count > 1 && [self.playButton isHidden] && [self.stopButton isHidden]) {
+        self.playButton.hidden = NO;
     }
 }
 
@@ -219,15 +245,18 @@ static CGFloat const GBGoldenRatio = 0.618033988749895f;
     return nextColor;
 }
 
-- (void)stopOrStartAutoScroll
+- (void)startAutoScroll
 {
-    if ([self.stopOrStartButton.titleLabel.text isEqualToString:@"Stop"]) {
-        [self.infiniteScrollView stopAutoScroll];
-        [self.stopOrStartButton setTitle:@"Start" forState:UIControlStateNormal];
-    } else {
-        [self.infiniteScrollView startAutoScroll];
-        [self.stopOrStartButton setTitle:@"Stop" forState:UIControlStateNormal];
-    }
+    [self.infiniteScrollView startAutoScroll];
+    self.playButton.hidden = YES;
+    self.stopButton.hidden = NO;
+}
+
+- (void)stopAutoScroll
+{
+    [self.infiniteScrollView stopAutoScroll];
+    self.playButton.hidden = NO;
+    self.stopButton.hidden = YES;
 }
 
 - (void)infiniteScrollViewDidScrollNextPage:(GBInfiniteScrollView *)infiniteScrollView
@@ -262,6 +291,28 @@ static CGFloat const GBGoldenRatio = 0.618033988749895f;
     
     return page;
 }
+
+//- (GBInfiniteScrollViewPage *)infiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView pageAtIndex:(NSUInteger)index;
+//{
+//    GBInfiniteScrollViewPage *page = [infiniteScrollView dequeueReusablePage];
+//
+//    if (page == nil) {
+//        page = [[GBInfiniteScrollViewPage alloc] initWithFrame:self.view.bounds style:GBInfiniteScrollViewPageStyleImage];
+//    }
+//    
+//    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+//    UIImage *image = nil;
+//    
+//    if (screenBounds.size.height > 480) {
+//        image = [UIImage imageNamed:@"Placeholder-568h"];
+//    } else {
+//        image = [UIImage imageNamed:@"Placeholder"];
+//    }
+//
+//    page.imageView.image = image;
+//
+//    return page;
+//}
 
 //- (GBInfiniteScrollViewPage *)infiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView pageAtIndex:(NSUInteger)index;
 //{
