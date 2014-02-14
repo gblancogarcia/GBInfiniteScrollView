@@ -89,6 +89,9 @@ typedef NS_ENUM(NSInteger, GBAutoScrollDirection) {
 // Reloads everything from scratch.
 - (void)reloadData;
 
+// Updates current page's data source
+- (void)updateData;
+
 // Stops automatic scrolling.
 - (void)stopAutoScroll;
 

@@ -392,6 +392,13 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     [self layoutCurrentView];
 }
 
+- (void)updateData
+{
+    [self updateNumberOfPages];
+    [self resetVisiblePages];
+    [self layoutCurrentView];
+}
+
 - (void)resetReusablePages
 {
     [self.reusablePages removeAllObjects];
