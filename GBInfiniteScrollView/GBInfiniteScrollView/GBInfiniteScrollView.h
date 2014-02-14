@@ -80,6 +80,9 @@ typedef NS_ENUM(NSInteger, GBAutoScrollDirection) {
 // The current page index.
 @property (nonatomic, readonly) NSUInteger currentPageIndex;
 
+// Should scrolling wrap the data source's ends
+@property (nonatomic) BOOL shouldScrollingWrapDataSource;
+
 // Gets the current view.
 - (GBInfiniteScrollViewPage *)currentPage;
 
