@@ -115,7 +115,9 @@ Finally, implement the `GBInfiniteScrollViewDataSource` and `GBInfiniteScrollVie
 }
 ```
 
-##License (MIT)
+## License
+
+The MIT License (MIT)
 
 Copyright (c) 2013 Gerardo Blanco
 

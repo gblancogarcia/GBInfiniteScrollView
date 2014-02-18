@@ -112,6 +112,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 - (void)setupDefautValues
 {
     self.autoScroll = NO;
+    self.shouldScrollingWrapDataSource = YES;
     self.pageIndex = [self firstPageIndex];
     self.currentPageIndex = [self firstPageIndex];
     self.direction = GBAutoScrollDirectionRightToLeft;
@@ -168,6 +169,14 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     return ([self isEmpty] || [self singlePage]);
 }
 
+- (BOOL)isLastPage {
+    return (self.currentPageIndex==[self lastPageIndex]?YES:NO);
+}
+
+- (BOOL)isFirstPage {
+    return (self.currentPageIndex==[self firstPageIndex]?YES:NO);
+}
+
 #pragma mark - Pages
 
 - (void)updateNumberOfPages
@@ -210,11 +219,13 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 
 - (NSUInteger)nextPageIndex
 {
+    if (!self.shouldScrollingWrapDataSource && [self isLastPage]) return self.currentPageIndex;
     return [self nextIndex:self.currentPageIndex];
 }
 
 - (NSUInteger)previousPageIndex
 {
+    if (!self.shouldScrollingWrapDataSource && [self isFirstPage]) return self.currentPageIndex;
     return [self previousIndex:self.currentPageIndex];
 }
 
@@ -381,6 +392,13 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     [self layoutCurrentView];
 }
 
+- (void)updateData
+{
+    [self updateNumberOfPages];
+    [self resetVisiblePages];
+    [self layoutCurrentView];
+}
+
 - (void)resetReusablePages
 {
     [self.reusablePages removeAllObjects];
@@ -521,7 +539,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
             [self removeFirstVisiblePage];
         }
 
-        [self placePage:[self nextPage] onRight:rightEdge];
+        if (![self isLastPage] || _shouldScrollingWrapDataSource) [self placePage:[self nextPage] onRight:rightEdge];
     }
     
     CGFloat leftEdge = CGRectGetMinX([self firstVisiblePage].frame);
@@ -532,7 +550,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
             [self removeLastVisiblePage];
         }
 
-        [self placePage:[self previousPage] onLeft:leftEdge];
+        if (![self isFirstPage] || _shouldScrollingWrapDataSource) [self placePage:[self previousPage] onLeft:leftEdge];
     }
 }
 
