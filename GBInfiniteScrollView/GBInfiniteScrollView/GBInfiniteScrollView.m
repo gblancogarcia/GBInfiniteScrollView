@@ -463,7 +463,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     if (distanceFromCenterOffsetX == [self distanceFromCenterOffsetX]) {
         if (currentContentOffset.x == [self minContentOffsetX]) {
             [self previous];
-            [self didScrollToNextPage];
+            [self didScrollToPreviousPage];
         } else if (currentContentOffset.x == [self maxContentOffsetX]) {
             [self next];
             [self didScrollToNextPage];
