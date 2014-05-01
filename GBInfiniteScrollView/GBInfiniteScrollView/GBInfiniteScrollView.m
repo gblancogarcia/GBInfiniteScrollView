@@ -15,7 +15,9 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 // Number of pages.
 @property (nonatomic) NSUInteger numberOfPages;
 
-// The current page index.
+/**
+ *  The current page index.
+ */
 @property (nonatomic, readwrite) NSUInteger currentPageIndex;
 
 // Array of visible indices.
@@ -409,21 +411,24 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     NSUInteger currentPageIndex = [self currentPageIndex];
     GBInfiniteScrollViewPage *currentpage =  [self currentPage];
     
-    for (int i = 0; i < self.visibleIndices.count; i++) {
-        NSNumber *visibleIndex = [self.visibleIndices objectAtIndex:i];
-        GBInfiniteScrollViewPage *visiblePage = [self.visiblePages objectAtIndex:i];
-        
-        if ([self currentPageIndex] != visibleIndex.integerValue) {
-            [self.reusablePages addObject:visiblePage];
-            [visiblePage removeFromSuperview];
+    if (currentpage) {
+        for (int i = 0; i < self.visibleIndices.count; i++) {
+            NSNumber *visibleIndex = [self.visibleIndices objectAtIndex:i];
+            GBInfiniteScrollViewPage *visiblePage = [self.visiblePages objectAtIndex:i];
+            
+            if ([self currentPageIndex] != visibleIndex.integerValue) {
+                [self.reusablePages addObject:visiblePage];
+                [visiblePage removeFromSuperview];
+            }
         }
+        
+        [self.visibleIndices removeAllObjects];
+        [self.visibleIndices addObject:[NSNumber numberWithUnsignedInteger:currentPageIndex]];
+        
+        [self.visiblePages removeAllObjects];
+        [self.visiblePages addObject:currentpage];
     }
-    
-    [self.visibleIndices removeAllObjects];
-    [self.visibleIndices addObject:[NSNumber numberWithUnsignedInteger:currentPageIndex]];
-    
-    [self.visiblePages removeAllObjects];
-    [self.visiblePages addObject:currentpage];}
+}
 
 - (void)layoutCurrentView
 {
@@ -436,6 +441,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 {
     self.contentSize = CGSizeMake([self contentSizeWidth], self.frame.size.height);
 }
+
 - (void)centerContentOffset
 {
     self.contentOffset = CGPointMake([self centerContentOffsetX], self.contentOffset.y);
