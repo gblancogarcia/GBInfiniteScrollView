@@ -18,10 +18,16 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
 @property (nonatomic, strong) UIImageView *placeholder;
 @property (nonatomic, strong) NSMutableArray *data;
 @property (nonatomic, strong) GBInfiniteScrollView *infiniteScrollView;
+@property (nonatomic, strong) UIButton *directionButton;
+@property (nonatomic, strong) UIButton *infoButton;
 @property (nonatomic, strong) UIButton *playButton;
 @property (nonatomic, strong) UIButton *stopButton;
 @property (nonatomic, strong) UIButton *addButton;
 @property (nonatomic, strong) UIColor *color;
+@property (nonatomic) GBAutoScrollDirection direction;
+@property(nonatomic) CGAffineTransform rightToLeftTransform;
+@property(nonatomic) CGAffineTransform leftToRightTransform;
+@property(nonatomic) BOOL debug;
 
 @end
 
@@ -30,16 +36,23 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setup];
+    [self setUp];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)viewDidAppear:(BOOL)animated
 {
-    [super didReceiveMemoryWarning];
+    [super viewDidAppear:animated];
+    
+    if (self.debug) {
+        NSLog(@"View Did Appear");
+    }
+    
+    [self.infiniteScrollView updateData];
 }
 
-- (void)setup
+- (void)setUp
 {
+    self.debug = YES;
     self.data = [[NSMutableArray alloc] init];
     
     for (int i = 0; i < GBNumberOfPages; i++) {
@@ -49,19 +62,111 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
     self.infiniteScrollView = [[GBInfiniteScrollView alloc] initWithFrame:self.view.bounds];
     self.infiniteScrollView.infiniteScrollViewDataSource = self;
     self.infiniteScrollView.infiniteScrollViewDelegate = self;
+    self.infiniteScrollView.debug = self.debug;
+    self.infiniteScrollView.interval = 3.0f;
     self.infiniteScrollView.pageIndex = 0;
-    self.infiniteScrollView.interval = 1.0f;
-    
+    self.infiniteScrollView.direction = GBAutoScrollDirectionRightToLeft;
+
     [self.view addSubview:self.infiniteScrollView];
     
     [self.infiniteScrollView reloadData];
     
-    [self setupAddButton];
-    [self setupPlayButton];
-    [self setupStopButton];
+    [self setUpDirectionButton];
+    [self setUpInfoButton];
+    [self setUpAddButton];
+    [self setUpPlayButton];
+    [self setUpStopButton];
 }
 
-- (void)setupAddButton
+- (void)setUpDirectionButton
+{
+    self.directionButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 64.0f, 64.0f)];
+    
+    [self.directionButton setImage:[UIImage imageNamed:@"ArrowButton"] forState:UIControlStateNormal];
+    [self.directionButton setImage:[UIImage imageNamed:@"ArrowButtonHighlighted"] forState:UIControlStateHighlighted];
+    
+    [self.directionButton addTarget:self
+                       action:@selector(switchDirection)
+             forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addSubview:self.directionButton];
+    
+    [self.directionButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+    CGFloat constant = 24.0f;
+    
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+        constant -= 20.0f;
+    }
+    
+    NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:self.directionButton
+                                                              attribute:NSLayoutAttributeTop
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.view
+                                                              attribute:NSLayoutAttributeTop
+                                                             multiplier:1.0f
+                                                               constant:constant];
+    
+    [self.view addConstraint:top];
+    
+    NSLayoutConstraint *left = [NSLayoutConstraint constraintWithItem:self.directionButton
+                                                            attribute:NSLayoutAttributeLeft
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.view
+                                                            attribute:NSLayoutAttributeLeft
+                                                           multiplier:1.0f
+                                                             constant:16.0f];
+    
+    [self.view addConstraint:left];
+    
+    self.leftToRightTransform = self.directionButton.transform;
+    self.rightToLeftTransform = CGAffineTransformRotate(self.directionButton.transform, M_PI);
+    self.directionButton.transform = self.rightToLeftTransform;
+}
+
+- (void)setUpInfoButton
+{
+    self.infoButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 64.0f, 64.0f)];
+    
+    [self.infoButton setImage:[UIImage imageNamed:@"InfoButton"] forState:UIControlStateNormal];
+    [self.infoButton setImage:[UIImage imageNamed:@"InfoButtonHighlighted"] forState:UIControlStateHighlighted];
+    
+    [self.infoButton addTarget:self
+                             action:@selector(info)
+                   forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addSubview:self.infoButton];
+    
+    [self.infoButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+    CGFloat constant = 24.0f;
+    
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+        constant -= 20.0f;
+    }
+    
+    NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:self.infoButton
+                                                           attribute:NSLayoutAttributeTop
+                                                           relatedBy:NSLayoutRelationEqual
+                                                              toItem:self.view
+                                                           attribute:NSLayoutAttributeTop
+                                                          multiplier:1.0f
+                                                            constant:constant];
+    
+    [self.view addConstraint:top];
+    
+    NSLayoutConstraint *right = [NSLayoutConstraint constraintWithItem:self.infoButton
+                                                            attribute:NSLayoutAttributeRight
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.view
+                                                            attribute:NSLayoutAttributeRight
+                                                           multiplier:1.0f
+                                                             constant:-16.0f];
+    
+    [self.view addConstraint:right];
+}
+
+- (void)setUpAddButton
 {
     self.addButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 64.0f, 64.0f)];
     
@@ -97,7 +202,7 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
     [self.view addConstraint:left];
 }
 
-- (void)setupPlayButton
+- (void)setUpPlayButton
 {
     if (!self.playButton) {
         self.playButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 64.0f, 64.0f)];
@@ -139,7 +244,7 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
     }
 }
 
-- (void)setupStopButton
+- (void)setUpStopButton
 {
     if (!self.stopButton) {
         self.stopButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 64.0f, 64.0f)];
@@ -177,6 +282,38 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
         
         [self.view addConstraint:right];
     }
+}
+
+- (void)switchDirection
+{
+    CGAffineTransform transform;
+    GBAutoScrollDirection direction;
+    
+    if (self.direction == GBAutoScrollDirectionLeftToRight) {
+        transform = self.rightToLeftTransform;
+        direction = GBAutoScrollDirectionRightToLeft;
+    } else if (self.direction == GBAutoScrollDirectionRightToLeft) {
+        transform = self.leftToRightTransform;
+        direction = GBAutoScrollDirectionLeftToRight;
+    }
+    
+    [UIView beginAnimations:@"Rotate" context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationDuration:0.5f];
+
+    self.directionButton.transform = transform;
+    
+    [UIView commitAnimations];
+    
+    self.direction = direction;
+    self.infiniteScrollView.direction = self.direction;
+}
+
+- (void)info
+{
+    NSString *identifier = @"Detail Segue";
+    
+    [self performSegueWithIdentifier:identifier sender:self];
 }
 
 - (void)addRandomColorPage
@@ -261,12 +398,16 @@ static CGFloat const GBGoldenRatio = 0.618033988749895f;
 
 - (void)infiniteScrollViewDidScrollNextPage:(GBInfiniteScrollView *)infiniteScrollView
 {
-    // NSLog(@"Next page");
+    if (self.debug) {
+        NSLog(@"Did Scroll Next Page");
+    }
 }
 
 - (void)infiniteScrollViewDidScrollPreviousPage:(GBInfiniteScrollView *)infiniteScrollView
 {
-    // NSLog(@"Previous page");
+    if (self.debug) {
+        NSLog(@"Did Scroll Previous Page");
+    }
 }
 
 - (NSInteger)numberOfPagesInInfiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView
@@ -286,63 +427,10 @@ static CGFloat const GBGoldenRatio = 0.618033988749895f;
     page.textLabel.text = record.text;
     page.textLabel.textColor = record.textColor;
     page.contentView.backgroundColor = record.backgroundColor;
-
-    page.textLabel.font = [UIFont fontWithName: @"HelveticaNeue-UltraLight" size:[self fontSizeForNumber:record.index]];
+    page.textLabel.font = [UIFont fontWithName: @"HelveticaNeue-UltraLight" size:[self fontSizeForNumber:(int)record.index]];
     
     return page;
 }
-
-//- (GBInfiniteScrollViewPage *)infiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView pageAtIndex:(NSUInteger)index;
-//{
-//    GBInfiniteScrollViewPage *page = [infiniteScrollView dequeueReusablePage];
-//
-//    if (page == nil) {
-//        page = [[GBInfiniteScrollViewPage alloc] initWithFrame:self.view.bounds style:GBInfiniteScrollViewPageStyleImage];
-//    }
-//    
-//    CGRect screenBounds = [[UIScreen mainScreen] bounds];
-//    UIImage *image = nil;
-//    
-//    if (screenBounds.size.height > 480) {
-//        image = [UIImage imageNamed:@"Placeholder-568h"];
-//    } else {
-//        image = [UIImage imageNamed:@"Placeholder"];
-//    }
-//
-//    page.imageView.image = image;
-//
-//    return page;
-//}
-
-//- (GBInfiniteScrollViewPage *)infiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView pageAtIndex:(NSUInteger)index;
-//{
-//    GBPageRecord *record = [self.data objectAtIndex:index];
-//    GBInfiniteScrollViewPage *page = [infiniteScrollView dequeueReusablePage];
-//    
-//    if (page == nil) {
-//        page = [[GBInfiniteScrollViewPage alloc] initWithFrame:self.view.bounds style:GBInfiniteScrollViewPageStyleCustom];
-//    }
-//    
-//    UIView *customView = [[UIView alloc] initWithFrame:self.view.bounds];
-//    customView.backgroundColor = record.backgroundColor;
-//    
-//    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 64.0f)];
-//    [button setTitle:record.text forState:UIControlStateNormal];
-//    button.backgroundColor = record.textColor;
-//    button.center = customView.center;
-//    [button addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    [customView addSubview:button];
-//    
-//    page.customView = customView;
-//    
-//    return page;
-//}
-//
-//-(void)buttonClicked:(id)sender
-//{
-//    NSLog(@"It works!");
-//}
 
 - (CGFloat)fontSizeForNumber:(int)number
 {
