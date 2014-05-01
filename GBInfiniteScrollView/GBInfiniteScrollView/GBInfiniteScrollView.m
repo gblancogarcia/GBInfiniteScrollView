@@ -15,7 +15,9 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 // Number of pages.
 @property (nonatomic) NSUInteger numberOfPages;
 
-/** The current page index. */
+/**
+ *  The current page index.
+ */
 @property (nonatomic, readwrite) NSUInteger currentPageIndex;
 
 // Array of visible indices.
