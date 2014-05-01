@@ -29,102 +29,173 @@
 #import "GBInfiniteScrollViewPage.h"
 
 typedef NS_ENUM(NSInteger, GBAutoScrollDirection) {
-    GBAutoScrollDirectionRightToLeft,  // Automatic scrolling from right to left. (default)
-    GBAutoScrollDirectionLeftToRight,  // Automatic scrolling from left to right.
+    GBAutoScrollDirectionRightToLeft,  /**< 
+                                        * Automatic scrolling from right to left.
+                                        * @warning Default
+                                        */
+    GBAutoScrollDirectionLeftToRight,  /**< 
+                                        * Automatic scrolling from left to right.
+                                        */
 };
 
 @protocol GBInfiniteScrollViewDelegate;
 @protocol GBInfiniteScrollViewDataSource;
 
-// GBInfiniteScrollView class provides an endlessly scroll view organized in pages. It is a subclass of UIScrollView,
-// which allows users to scroll infinitely in the horizontal direction. GBInfiniteScrollView also provides automatic
-// scrolling feature.
-//
-// A GBInfiniteScrollView object must have an object that acts as a data source and an object that acts as a delegate.
-// The data source must adopt the GBInfiniteScrollViewDataSource protocol and the delegate must adopt the
-// GBInfiniteScrollViewDelegate protocol. The data source provides the views that GBInfiniteScrollView needs to display.
-// The delegate allows the adopting delegate to respond to scrolling operations.
-//
-// GBInfiniteScrollView overrides the layoutSubviews method of UIView so that it calls reloadData only when you create a
-// new instance of GBInfiniteScrollView or when you assign a new data source. Reloading the infinite scroll view clears
-// current state, including the current view, but it is possible to specify the initial page index to display.
-//
-// It is based on Apple StreetScroller iOS sample code.
-
+/**
+ * GBInfiniteScrollView class provides an endlessly scroll view organized in pages. It is a subclass of UIScrollView,
+ * which allows users to scroll infinitely in the horizontal direction. GBInfiniteScrollView also provides automatic
+ * scrolling feature.
+ *
+ * A GBInfiniteScrollView object must have an object that acts as a data source and an object that acts as a delegate.
+ * The data source must adopt the GBInfiniteScrollViewDataSource protocol and the delegate must adopt the
+ * GBInfiniteScrollViewDelegate protocol. The data source provides the views that GBInfiniteScrollView needs to display.
+ * The delegate allows the adopting delegate to respond to scrolling operations.
+ *
+ * GBInfiniteScrollView overrides the layoutSubviews method of UIView so that it calls reloadData only when you create a
+ * new instance of GBInfiniteScrollView or when you assign a new data source. Reloading the infinite scroll view clears
+ * current state, including the current view, but it is possible to specify the initial page index to display.
+ *
+ * It is based on Apple StreetScroller iOS sample code.
+ */
 @interface GBInfiniteScrollView : UIScrollView <UIScrollViewDelegate>
 
-// Infinite scroll view data source.
+/** 
+ * The data source of the Infinite-scroll-view object.
+ */
 @property (nonatomic, assign) id <GBInfiniteScrollViewDataSource> infiniteScrollViewDataSource;
 
-// Infinite scroll view delegate.
+/**
+ * The delegate of the Infinite-scroll-view object.
+ */
 @property (nonatomic, assign) id <GBInfiniteScrollViewDelegate> infiniteScrollViewDelegate;
 
-// Returns an initialized infinite scroll view.
+// Returns an initialized infinite scroll view
 - (id)init;
 
-// Returns an initialized infinite scroll view from a given frame.
+// Returns an initialized infinite scroll view from a given frame
 - (id)initWithFrame:(CGRect)frame;
 
-// Returns an initialized infinite scroll view from data in a given unarchiver.
+// Returns an initialized infinite scroll view from data in a given unarchiver
 - (id)initWithCoder:(NSCoder *)aDecoder;
 
-// Automatic scrolling time interval.
+/** 
+ * The time interval of the automatic scrolling.
+ */
 @property (nonatomic) CGFloat interval;
 
-// Automatic scrolling direction (right to left or left to right).
+/** 
+ * The direction of automatic scrolling, right to left (default) or left to right.
+ */
 @property (nonatomic) GBAutoScrollDirection direction;
 
-// Initial page index.
+/** 
+ * The initial page index.
+ */
 @property (nonatomic) NSUInteger pageIndex;
 
-// The current page index.
+/** 
+ * The current page index.
+ */
 @property (nonatomic, readonly) NSUInteger currentPageIndex;
 
-// Should scrolling wrap the data source's ends
+/** 
+ * A Boolean value that controls if it should scrolling wrap the data source's ends.
+ */
 @property (nonatomic) BOOL shouldScrollingWrapDataSource;
 
-// Gets the current view.
+/**
+ *  Gets the current view.
+ *
+ *  @return The current page of the infinite-scroll-view.
+ */
 - (GBInfiniteScrollViewPage *)currentPage;
 
-// Reloads everything from scratch.
+/**
+ * Reloads everything from scratch.
+ */
 - (void)reloadData;
 
-// Updates current page's data source
+/** 
+ * Updates current page's data source.
+ */
 - (void)updateData;
 
-// Stops automatic scrolling.
+/** 
+ * Stops automatic scrolling.
+ */
 - (void)stopAutoScroll;
 
-// Starts automatic scrolling.
+/** 
+ * Starts automatic scrolling.
+ */
 - (void)startAutoScroll;
 
-// Returns a reusable infinite scroll view page object.
+/**
+ *  Gets a reusable page.
+ *
+ *  @return A reusable infinite scroll view page object.
+ */
 - (GBInfiniteScrollViewPage *)dequeueReusablePage;
 
 @end
 
-//  This protocol represents the data model object.
+/**
+ * @protocol GBInfiniteScrollViewDataSource
+ * This protocol represents the data model object.
+ */
 @protocol GBInfiniteScrollViewDataSource<NSObject>
 
 @required
 
-// Tells the data source to return the number of pages. (required)
+/**
+ *  Tells the data source to return the number of pages.
+ *
+ *  @warning Required
+ *
+ *  @param infiniteScrollView Infinite Scroll View Object
+ *
+ *  @return An NSInteger with the number of pages of the Infinite Scroll View Object
+ */
 - (NSInteger)numberOfPagesInInfiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView;
 
-// Asks the data source for a view to display in a particular page index. (required)
+/**
+ *  Asks the data source for a view to display in a particular page index.
+ *
+ *  @warning Required
+ *
+ *  @param infiniteScrollView Infinite Scroll View Object
+ *  @param index              Index of the page
+ *
+ *  @return The GBInfiniteScrollViewPage object for the index
+ */
 - (GBInfiniteScrollViewPage *)infiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView pageAtIndex:(NSUInteger)index;
 
 @end
 
-//  This protocol allows the adopting delegate to respond to scrolling operations.
+/**
+ * @protocol GBInfiniteScrollViewDelegate 
+ * This protocol allows the adopting delegate to respond to scrolling operations.
+ */
 @protocol GBInfiniteScrollViewDelegate<NSObject>
 
 @optional
 
-// Called when the GBInfiniteScrollView has scrolled to next page.
+/**
+ *  Called when the GBInfiniteScrollView has scrolled to next page.
+ *
+ *  @warning Optional
+ *
+ *  @param infiniteScrollView Infinite Scroll View Object
+ */
 - (void)infiniteScrollViewDidScrollNextPage:(GBInfiniteScrollView *)infiniteScrollView;
 
-// Called when the GBInfiniteScrollView has scrolled to previous page.
+/**
+ *  Called when the GBInfiniteScrollView has scrolled to previous page.
+ *
+ *  @warning Optional
+ *
+ *  @param infiniteScrollView Infinite Scroll View Object
+ */
 - (void)infiniteScrollViewDidScrollPreviousPage:(GBInfiniteScrollView *)infiniteScrollView;
 
 @end
