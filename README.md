@@ -16,7 +16,7 @@ It is based on Apple StreetScroller iOS sample code.
 
 ## Requirements
 
-`GBInfiniteScrollView` works on iOS 7 SDK or later and is compatible with ARC projects.
+`GBInfiniteScrollView` works on iOS 6.1 SDK or later and is compatible with ARC projects.
 
 ## Adding GBInfiniteScrollView to your project
 
