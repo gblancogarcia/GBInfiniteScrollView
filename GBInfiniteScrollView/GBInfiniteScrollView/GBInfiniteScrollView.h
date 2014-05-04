@@ -106,7 +106,7 @@ typedef NS_ENUM(NSInteger, GBAutoScrollDirection) {
 /**
  *  Debug mode.
  */
-@property (nonatomic) BOOL *debug;
+@property (nonatomic) BOOL debug;
 
 /**
  *  Gets the current view.
