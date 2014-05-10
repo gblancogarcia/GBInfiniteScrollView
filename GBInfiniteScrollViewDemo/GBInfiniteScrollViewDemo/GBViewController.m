@@ -312,7 +312,6 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
 - (void)info
 {
     NSString *identifier = @"Detail Segue";
-    
     [self performSegueWithIdentifier:identifier sender:self];
 }
 
@@ -417,6 +416,8 @@ static CGFloat const GBGoldenRatio = 0.618033988749895f;
 
 - (GBInfiniteScrollViewPage *)infiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView pageAtIndex:(NSUInteger)index;
 {
+    NSLog(@"Page at index %d", index);
+
     GBPageRecord *record = [self.data objectAtIndex:index];
     GBInfiniteScrollViewPage *page = [infiniteScrollView dequeueReusablePage];
     
