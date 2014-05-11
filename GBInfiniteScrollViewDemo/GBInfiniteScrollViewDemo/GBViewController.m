@@ -416,7 +416,7 @@ static CGFloat const GBGoldenRatio = 0.618033988749895f;
 
 - (GBInfiniteScrollViewPage *)infiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView pageAtIndex:(NSUInteger)index;
 {
-    NSLog(@"Page at index %d", index);
+    NSLog(@"Page at index %lu", (unsigned long)index);
 
     GBPageRecord *record = [self.data objectAtIndex:index];
     GBInfiniteScrollViewPage *page = [infiniteScrollView dequeueReusablePage];
