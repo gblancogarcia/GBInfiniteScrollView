@@ -23,8 +23,8 @@
 - (void)viewDidLoad
 {
     self.view.backgroundColor = [UIColor brightRedColor];
-    [self setUpBackButton];
     [self setUpGitHubButton];
+    [self setUpBackButton];
 }
 
 - (void)setUpBackButton
