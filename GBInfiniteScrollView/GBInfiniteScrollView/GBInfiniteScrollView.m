@@ -487,7 +487,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     
     [self updateNumberOfPages];
     
-    [self.visibleIndices enumerateObjectsUsingBlock:^(GBInfiniteScrollViewPage *visiblePage, NSUInteger idx, BOOL *stop) {
+    [self.visiblePages enumerateObjectsUsingBlock:^(GBInfiniteScrollViewPage *visiblePage, NSUInteger idx, BOOL *stop) {
         [self.reusablePages addObject:visiblePage];
         [visiblePage removeFromSuperview];
     }];
