@@ -362,7 +362,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 {
     NSUInteger visibleIndex = [self.visibleIndices indexOfObject:[NSNumber numberWithUnsignedInteger:index]];
     
-    if (visibleIndex == NSNotFound) {
+    if (visibleIndex == NSNotFound && page) {
         [self.visibleIndices addObject:[NSNumber numberWithUnsignedInteger:index]];
         [self.visiblePages addObject:page];
         
@@ -376,7 +376,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 {
     NSUInteger visibleIndex = [self.visibleIndices indexOfObject:[NSNumber numberWithUnsignedInteger:index]];
     
-    if (visibleIndex == NSNotFound) {
+    if (visibleIndex == NSNotFound && page) {
         [self.visibleIndices insertObject:[NSNumber numberWithUnsignedInteger:index] atIndex:0];
         [self.visiblePages insertObject:page atIndex:0.0f];
         
@@ -487,11 +487,10 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     
     [self updateNumberOfPages];
     
-    for (int i = 0; i < self.visibleIndices.count; i++) {
-        GBInfiniteScrollViewPage *visiblePage = [self.visiblePages objectAtIndex:i];
+    [self.visiblePages enumerateObjectsUsingBlock:^(GBInfiniteScrollViewPage *visiblePage, NSUInteger idx, BOOL *stop) {
         [self.reusablePages addObject:visiblePage];
         [visiblePage removeFromSuperview];
-    }
+    }];
     
     [self.visibleIndices removeAllObjects];
     [self.visiblePages removeAllObjects];
@@ -514,15 +513,16 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
             NSLog(@"Reseting visible pages: %@", [self visibleIndicesDescription]);
         }
         
-        for (int i = 0; i < self.visibleIndices.count; i++) {
-            NSNumber *visibleIndex = [self.visibleIndices objectAtIndex:i];
-            GBInfiniteScrollViewPage *visiblePage = [self.visiblePages objectAtIndex:i];
-            
-            if ([self currentPageIndex] != visibleIndex.integerValue) {
-                [self.reusablePages addObject:visiblePage];
-                [visiblePage removeFromSuperview];
+        [self.visibleIndices enumerateObjectsUsingBlock:^(NSNumber *visibleIndex, NSUInteger idx, BOOL *stop) {
+            if (self.visiblePages.count>=idx) {
+                GBInfiniteScrollViewPage *visiblePage = [self.visiblePages objectAtIndex:idx];
+                
+                if ([self currentPageIndex] != visibleIndex.integerValue) {
+                    [self.reusablePages addObject:visiblePage];
+                    [visiblePage removeFromSuperview];
+                }
             }
-        }
+        }];
         
         [self.visibleIndices removeAllObjects];
         [self.visibleIndices addObject:[NSNumber numberWithUnsignedInteger:currentPageIndex]];
