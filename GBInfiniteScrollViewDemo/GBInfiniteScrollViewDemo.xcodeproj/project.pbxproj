@@ -14,7 +14,6 @@
 		43003907187064F600978149 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 43003906187064F600978149 /* main.m */; };
 		4300390B187064F600978149 /* GBAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4300390A187064F600978149 /* GBAppDelegate.m */; };
 		4300390E187064F600978149 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4300390C187064F600978149 /* Main.storyboard */; };
-		43003911187064F600978149 /* GBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43003910187064F600978149 /* GBViewController.m */; };
 		43003913187064F600978149 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43003912187064F600978149 /* Images.xcassets */; };
 		4300391A187064F600978149 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43003919187064F600978149 /* XCTest.framework */; };
 		4300391B187064F600978149 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 430038FA187064F600978149 /* Foundation.framework */; };
@@ -25,6 +24,10 @@
 		430039331870679800978149 /* libGBInfiniteScrollView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430039321870679800978149 /* libGBInfiniteScrollView.a */; };
 		430039371870786E00978149 /* Placeholder-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 430039351870786E00978149 /* Placeholder-568h@2x~iphone.png */; };
 		430039381870786E00978149 /* Placeholder@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 430039361870786E00978149 /* Placeholder@2x~iphone.png */; };
+		4320A1DC191290D900731982 /* GBRoundBorderedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4320A1DB191290D900731982 /* GBRoundBorderedButton.m */; };
+		4392A0C5191242490022C3F3 /* GBDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4392A0C2191242490022C3F3 /* GBDetailViewController.m */; };
+		4392A0C6191242490022C3F3 /* GBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4392A0C4191242490022C3F3 /* GBViewController.m */; };
+		4392A0C9191242CF0022C3F3 /* UIColor+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 4392A0C8191242CF0022C3F3 /* UIColor+Utils.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,8 +52,6 @@
 		43003909187064F600978149 /* GBAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBAppDelegate.h; sourceTree = "<group>"; };
 		4300390A187064F600978149 /* GBAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GBAppDelegate.m; sourceTree = "<group>"; };
 		4300390D187064F600978149 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		4300390F187064F600978149 /* GBViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBViewController.h; sourceTree = "<group>"; };
-		43003910187064F600978149 /* GBViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GBViewController.m; sourceTree = "<group>"; };
 		43003912187064F600978149 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		43003918187064F600978149 /* GBInfiniteScrollViewDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GBInfiniteScrollViewDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		43003919187064F600978149 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -62,6 +63,14 @@
 		430039321870679800978149 /* libGBInfiniteScrollView.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGBInfiniteScrollView.a; path = "../../../Library/Developer/Xcode/DerivedData/GBInfiniteScrollView-edronfnxpnachpfcgaxqokzpftby/Build/Products/Debug-iphoneos/libGBInfiniteScrollView.a"; sourceTree = "<group>"; };
 		430039351870786E00978149 /* Placeholder-568h@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Placeholder-568h@2x~iphone.png"; sourceTree = "<group>"; };
 		430039361870786E00978149 /* Placeholder@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Placeholder@2x~iphone.png"; sourceTree = "<group>"; };
+		4320A1DA191290D900731982 /* GBRoundBorderedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBRoundBorderedButton.h; sourceTree = "<group>"; };
+		4320A1DB191290D900731982 /* GBRoundBorderedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBRoundBorderedButton.m; sourceTree = "<group>"; };
+		4392A0C1191242490022C3F3 /* GBDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBDetailViewController.h; sourceTree = "<group>"; };
+		4392A0C2191242490022C3F3 /* GBDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBDetailViewController.m; sourceTree = "<group>"; };
+		4392A0C3191242490022C3F3 /* GBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBViewController.h; sourceTree = "<group>"; };
+		4392A0C4191242490022C3F3 /* GBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBViewController.m; sourceTree = "<group>"; };
+		4392A0C7191242CF0022C3F3 /* UIColor+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Utils.h"; sourceTree = "<group>"; };
+		4392A0C8191242CF0022C3F3 /* UIColor+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Utils.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,15 +133,14 @@
 			isa = PBXGroup;
 			children = (
 				43003934187077F400978149 /* Assets */,
+				4392A0CB191242FA0022C3F3 /* Controllers */,
 				43003909187064F600978149 /* GBAppDelegate.h */,
 				4300390A187064F600978149 /* GBAppDelegate.m */,
-				4300392F1870672E00978149 /* GBPageRecord.h */,
-				430039301870672E00978149 /* GBPageRecord.m */,
-				4300390F187064F600978149 /* GBViewController.h */,
-				43003910187064F600978149 /* GBViewController.m */,
 				43003912187064F600978149 /* Images.xcassets */,
 				4300390C187064F600978149 /* Main.storyboard */,
+				4392A0CC1912434B0022C3F3 /* Model */,
 				43003901187064F600978149 /* Supporting Files */,
+				4392A0CA191242EB0022C3F3 /* Utils */,
 			);
 			path = GBInfiniteScrollViewDemo;
 			sourceTree = "<group>";
@@ -173,6 +181,37 @@
 				430039361870786E00978149 /* Placeholder@2x~iphone.png */,
 			);
 			path = Assets;
+			sourceTree = "<group>";
+		};
+		4392A0CA191242EB0022C3F3 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				4320A1DA191290D900731982 /* GBRoundBorderedButton.h */,
+				4320A1DB191290D900731982 /* GBRoundBorderedButton.m */,
+				4392A0C7191242CF0022C3F3 /* UIColor+Utils.h */,
+				4392A0C8191242CF0022C3F3 /* UIColor+Utils.m */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		4392A0CB191242FA0022C3F3 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				4392A0C1191242490022C3F3 /* GBDetailViewController.h */,
+				4392A0C2191242490022C3F3 /* GBDetailViewController.m */,
+				4392A0C3191242490022C3F3 /* GBViewController.h */,
+				4392A0C4191242490022C3F3 /* GBViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		4392A0CC1912434B0022C3F3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4300392F1870672E00978149 /* GBPageRecord.h */,
+				430039301870672E00978149 /* GBPageRecord.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -220,7 +259,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = GB;
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Gerardo Blanco García";
 				TargetAttributes = {
 					430038F6187064F600978149 = {
@@ -279,8 +318,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				43003907187064F600978149 /* main.m in Sources */,
-				43003911187064F600978149 /* GBViewController.m in Sources */,
+				4392A0C9191242CF0022C3F3 /* UIColor+Utils.m in Sources */,
 				430039311870672E00978149 /* GBPageRecord.m in Sources */,
+				4320A1DC191290D900731982 /* GBRoundBorderedButton.m in Sources */,
+				4392A0C6191242490022C3F3 /* GBViewController.m in Sources */,
+				4392A0C5191242490022C3F3 /* GBDetailViewController.m in Sources */,
 				4300390B187064F600978149 /* GBAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -335,7 +377,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -374,7 +415,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -444,7 +484,6 @@
 		4300392D187064F600978149 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/GBInfiniteScrollViewDemo.app/GBInfiniteScrollViewDemo";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -467,7 +506,6 @@
 		4300392E187064F600978149 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/GBInfiniteScrollViewDemo.app/GBInfiniteScrollViewDemo";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -502,6 +540,7 @@
 				4300392B187064F600978149 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4300392C187064F600978149 /* Build configuration list for PBXNativeTarget "GBInfiniteScrollViewDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -510,6 +549,7 @@
 				4300392E187064F600978149 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

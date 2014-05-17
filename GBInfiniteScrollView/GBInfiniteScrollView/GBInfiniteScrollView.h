@@ -104,6 +104,11 @@ typedef NS_ENUM(NSInteger, GBAutoScrollDirection) {
 @property (nonatomic) BOOL shouldScrollingWrapDataSource;
 
 /**
+ *  Debug mode.
+ */
+@property (nonatomic) BOOL debug;
+
+/**
  *  Gets the current view.
  *
  *  @return The current page of the infinite-scroll-view.
