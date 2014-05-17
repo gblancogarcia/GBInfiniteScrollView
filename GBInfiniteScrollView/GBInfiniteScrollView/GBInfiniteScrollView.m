@@ -362,7 +362,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 {
     NSUInteger visibleIndex = [self.visibleIndices indexOfObject:[NSNumber numberWithUnsignedInteger:index]];
     
-    if (visibleIndex == NSNotFound) {
+    if (visibleIndex == NSNotFound && page) {
         [self.visibleIndices addObject:[NSNumber numberWithUnsignedInteger:index]];
         [self.visiblePages addObject:page];
         
