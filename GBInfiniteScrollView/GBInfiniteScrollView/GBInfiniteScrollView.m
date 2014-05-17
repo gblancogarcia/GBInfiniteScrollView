@@ -513,15 +513,16 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
             NSLog(@"Reseting visible pages: %@", [self visibleIndicesDescription]);
         }
         
-        for (int i = 0; i < self.visibleIndices.count; i++) {
-            NSNumber *visibleIndex = [self.visibleIndices objectAtIndex:i];
-            GBInfiniteScrollViewPage *visiblePage = [self.visiblePages objectAtIndex:i];
-            
-            if ([self currentPageIndex] != visibleIndex.integerValue) {
-                [self.reusablePages addObject:visiblePage];
-                [visiblePage removeFromSuperview];
+        [self.visibleIndices enumerateObjectsUsingBlock:^(NSNumber *visibleIndex, NSUInteger idx, BOOL *stop) {
+            if (self.visiblePages.count>=idx) {
+                GBInfiniteScrollViewPage *visiblePage = [self.visiblePages objectAtIndex:idx];
+                
+                if ([self currentPageIndex] != visibleIndex.integerValue) {
+                    [self.reusablePages addObject:visiblePage];
+                    [visiblePage removeFromSuperview];
+                }
             }
-        }
+        }];
         
         [self.visibleIndices removeAllObjects];
         [self.visibleIndices addObject:[NSNumber numberWithUnsignedInteger:currentPageIndex]];
