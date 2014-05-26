@@ -24,9 +24,9 @@ It is based on Apple StreetScroller iOS sample code.
 
 [CocoaPods](http://cocoapods.org) is the recommended way to add GBInfiniteScrollView to your project.
 
-1. Add a pod entry for `GBInfiniteScrollView` to your Podfile `pod 'GBInfiniteScrollView', '~> 1.3'`
+1. Add a pod entry for `GBInfiniteScrollView` to your Podfile `pod 'GBInfiniteScrollView', '~> 1.4'`
 2. Install the pod(s) by running `pod install`.
-3. Include GBInfiniteScrollView wherever you need it with #import <GBInfiniteScrollView/GBInfiniteScrollView.h>
+3. Include GBInfiniteScrollView wherever you need it with `#import <GBInfiniteScrollView/GBInfiniteScrollView.h>`.
 
 ### Source files
 
