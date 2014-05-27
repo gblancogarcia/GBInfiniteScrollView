@@ -24,7 +24,7 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
 @property (nonatomic, strong) UIButton *stopButton;
 @property (nonatomic, strong) UIButton *addButton;
 @property (nonatomic, strong) UIColor *color;
-@property (nonatomic) GBAutoScrollDirection direction;
+@property (nonatomic) GBAutoScrollDirection autoScrollDirection;
 @property(nonatomic) CGAffineTransform rightToLeftTransform;
 @property(nonatomic) CGAffineTransform leftToRightTransform;
 @property(nonatomic) BOOL debug;
@@ -53,6 +53,7 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
 - (void)setUp
 {
     self.debug = YES;
+    BOOL verboseDebug = NO;
     self.data = [[NSMutableArray alloc] init];
     
     for (int i = 0; i < GBNumberOfPages; i++) {
@@ -63,10 +64,13 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
     self.infiniteScrollView.infiniteScrollViewDataSource = self;
     self.infiniteScrollView.infiniteScrollViewDelegate = self;
     self.infiniteScrollView.debug = self.debug;
+    self.infiniteScrollView.verboseDebug = verboseDebug;
     self.infiniteScrollView.interval = 3.0f;
     self.infiniteScrollView.pageIndex = 0;
-    self.infiniteScrollView.direction = GBAutoScrollDirectionRightToLeft;
+    self.infiniteScrollView.autoScrollDirection = GBAutoScrollDirectionRightToLeft;
 
+    self.infiniteScrollView.scrollDirection = GBScrollDirectionHorizontal; //GBScrollDirectionVertical;
+    
     [self.view addSubview:self.infiniteScrollView];
     
     [self.infiniteScrollView reloadData];
@@ -287,26 +291,22 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
 - (void)switchDirection
 {
     CGAffineTransform transform;
-    GBAutoScrollDirection direction;
+    GBAutoScrollDirection autoScrollDirection;
     
-    if (self.direction == GBAutoScrollDirectionLeftToRight) {
+    if (self.autoScrollDirection == GBAutoScrollDirectionLeftToRight) {
         transform = self.rightToLeftTransform;
-        direction = GBAutoScrollDirectionRightToLeft;
-    } else if (self.direction == GBAutoScrollDirectionRightToLeft) {
+        autoScrollDirection = GBAutoScrollDirectionRightToLeft;
+    } else if (self.autoScrollDirection == GBAutoScrollDirectionRightToLeft) {
         transform = self.leftToRightTransform;
-        direction = GBAutoScrollDirectionLeftToRight;
+        autoScrollDirection = GBAutoScrollDirectionLeftToRight;
     }
     
-    [UIView beginAnimations:@"Rotate" context:nil];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:0.5f];
-
-    self.directionButton.transform = transform;
+    [UIView animateWithDuration:0.5f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.directionButton.transform = transform;
+    } completion:nil];
     
-    [UIView commitAnimations];
-    
-    self.direction = direction;
-    self.infiniteScrollView.direction = self.direction;
+    self.autoScrollDirection = autoScrollDirection;
+    self.infiniteScrollView.autoScrollDirection = self.autoScrollDirection;
 }
 
 - (void)info

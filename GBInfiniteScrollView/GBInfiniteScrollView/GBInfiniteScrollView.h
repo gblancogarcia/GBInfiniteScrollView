@@ -29,12 +29,28 @@
 #import "GBInfiniteScrollViewPage.h"
 
 typedef NS_ENUM(NSInteger, GBAutoScrollDirection) {
-    GBAutoScrollDirectionRightToLeft,  /**< 
+    GBAutoScrollDirectionRightToLeft,   /**<
                                         * Automatic scrolling from right to left.
                                         * @warning Default
                                         */
-    GBAutoScrollDirectionLeftToRight,  /**< 
+    GBAutoScrollDirectionLeftToRight,   /**<
                                         * Automatic scrolling from left to right.
+                                        */
+    GBAutoScrollDirectionTopToBottom,   /**<
+                                        * Automatic scrolling from top to bottom.
+                                        */
+    GBAutoScrollDirectionBottomToTop    /**<
+                                        * Automatic scrolling from bottom to top.
+                                        */
+};
+
+typedef NS_ENUM(NSInteger, GBScrollDirection) {
+    GBScrollDirectionHorizontal,        /**<
+                                        * Horizontal scroll direction.
+                                        * @warning Default
+                                        */
+    GBScrollDirectionVertical           /**<
+                                        * Vertical scroll direction.
                                         */
 };
 
@@ -83,10 +99,15 @@ typedef NS_ENUM(NSInteger, GBAutoScrollDirection) {
  */
 @property (nonatomic) CGFloat interval;
 
+/**
+ * The direction of scrolling, horizontal (default) or vertical.
+ */
+@property (nonatomic) GBScrollDirection scrollDirection;
+
 /** 
  * The direction of automatic scrolling, right to left (default) or left to right.
  */
-@property (nonatomic) GBAutoScrollDirection direction;
+@property (nonatomic) GBAutoScrollDirection autoScrollDirection;
 
 /** 
  * The initial page index.
@@ -107,6 +128,11 @@ typedef NS_ENUM(NSInteger, GBAutoScrollDirection) {
  *  Debug mode.
  */
 @property (nonatomic) BOOL debug;
+
+/**
+ *  Verbose for debug mode.
+ */
+@property (nonatomic) BOOL verboseDebug;
 
 /**
  *  Gets the current view.
