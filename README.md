@@ -1,7 +1,7 @@
 GBInfiniteScrollView
 ========================
 
-`GBInfiniteScrollView` class provides an endlessly scroll view organized in pages. It is a subclass of `UIScrollView`, which allows users to scroll infinitely in the horizontal direction. `GBInfiniteScrollView` also provides automatic scrolling feature.
+`GBInfiniteScrollView` class provides an endlessly scroll view organized in pages. It is a subclass of `UIScrollView`, which allows users to scroll infinitely in horizontal and vertical direction. `GBInfiniteScrollView` also provides automatic scrolling feature.
 
 A `GBInfiniteScrollView` object must have an object that acts as a data source and an object that acts as a delegate. The data source must adopt the `GBInfiniteScrollViewDataSource` protocol and the delegate must adopt the `GBInfiniteScrollViewDelegate` protocol. The data source provides the views that `GBInfiniteScrollView` needs to display. The delegate allows the adopting delegate to respond to scrolling operations.
 
