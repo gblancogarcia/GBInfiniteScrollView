@@ -12,6 +12,7 @@ build/
 *.xcodeproj/xcuserdata/
 !default.xcworkspace
 xcuserdata
+*.xcworkspace
 xcuserstate
 profile
 *.moved-aside
