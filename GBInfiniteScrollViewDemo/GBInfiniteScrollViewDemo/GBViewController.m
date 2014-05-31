@@ -54,6 +54,7 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
 {
     self.debug = YES;
     BOOL verboseDebug = NO;
+    
     self.data = [[NSMutableArray alloc] init];
     
     for (int i = 0; i < GBNumberOfPages; i++) {
@@ -68,7 +69,6 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
     self.infiniteScrollView.interval = 3.0f;
     self.infiniteScrollView.pageIndex = 0;
     self.infiniteScrollView.autoScrollDirection = GBAutoScrollDirectionRightToLeft;
-
     self.infiniteScrollView.scrollDirection = GBScrollDirectionHorizontal; //GBScrollDirectionVertical;
     
     [self.view addSubview:self.infiniteScrollView];
@@ -90,8 +90,8 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
     [self.directionButton setImage:[UIImage imageNamed:@"ArrowButtonHighlighted"] forState:UIControlStateHighlighted];
     
     [self.directionButton addTarget:self
-                       action:@selector(switchDirection)
-             forControlEvents:UIControlEventTouchUpInside];
+                             action:@selector(switchDirection)
+                   forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:self.directionButton];
     
@@ -104,12 +104,12 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
     }
     
     NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:self.directionButton
-                                                              attribute:NSLayoutAttributeTop
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:self.view
-                                                              attribute:NSLayoutAttributeTop
-                                                             multiplier:1.0f
-                                                               constant:constant];
+                                                           attribute:NSLayoutAttributeTop
+                                                           relatedBy:NSLayoutRelationEqual
+                                                              toItem:self.view
+                                                           attribute:NSLayoutAttributeTop
+                                                          multiplier:1.0f
+                                                            constant:constant];
     
     [self.view addConstraint:top];
     
@@ -136,8 +136,8 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
     [self.infoButton setImage:[UIImage imageNamed:@"InfoButtonHighlighted"] forState:UIControlStateHighlighted];
     
     [self.infoButton addTarget:self
-                             action:@selector(info)
-                   forControlEvents:UIControlEventTouchUpInside];
+                        action:@selector(info)
+              forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:self.infoButton];
     
@@ -160,12 +160,12 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
     [self.view addConstraint:top];
     
     NSLayoutConstraint *right = [NSLayoutConstraint constraintWithItem:self.infoButton
-                                                            attribute:NSLayoutAttributeRight
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.view
-                                                            attribute:NSLayoutAttributeRight
-                                                           multiplier:1.0f
-                                                             constant:-16.0f];
+                                                             attribute:NSLayoutAttributeRight
+                                                             relatedBy:NSLayoutRelationEqual
+                                                                toItem:self.view
+                                                             attribute:NSLayoutAttributeRight
+                                                            multiplier:1.0f
+                                                              constant:-16.0f];
     
     [self.view addConstraint:right];
 }
@@ -176,7 +176,7 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
     
     [self.addButton setImage:[UIImage imageNamed:@"AddButton"] forState:UIControlStateNormal];
     [self.addButton setImage:[UIImage imageNamed:@"AddButtonHighlighted"] forState:UIControlStateHighlighted];
-
+    
     [self.addButton addTarget:self
                        action:@selector(addRandomColorPage)
              forControlEvents:UIControlEventTouchUpInside];
@@ -210,13 +210,13 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
 {
     if (!self.playButton) {
         self.playButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 64.0f, 64.0f)];
-
+        
         [self.playButton setImage:[UIImage imageNamed:@"PlayButton"] forState:UIControlStateNormal];
         [self.playButton setImage:[UIImage imageNamed:@"PlayButtonHighlighted"] forState:UIControlStateHighlighted];
         
         [self.playButton addTarget:self
-                                   action:@selector(startAutoScroll)
-                         forControlEvents:UIControlEventTouchUpInside];
+                            action:@selector(startAutoScroll)
+                  forControlEvents:UIControlEventTouchUpInside];
         
         if (self.data.count < 2) {
             self.playButton.hidden = YES;
@@ -337,7 +337,7 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
     pageRecord.backgroundColor = self.color;
     self.color = [self nextColor:self.color];
     pageRecord.textColor = self.color;
-
+    
     return pageRecord;
 }
 
@@ -417,7 +417,7 @@ static CGFloat const GBGoldenRatio = 0.618033988749895f;
 - (GBInfiniteScrollViewPage *)infiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView pageAtIndex:(NSUInteger)index;
 {
     NSLog(@"Page at index %lu", (unsigned long)index);
-
+    
     GBPageRecord *record = [self.data objectAtIndex:index];
     GBInfiniteScrollViewPage *page = [infiniteScrollView dequeueReusablePage];
     
