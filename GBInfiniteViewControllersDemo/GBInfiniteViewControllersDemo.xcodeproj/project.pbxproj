@@ -219,6 +219,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = gblancogarcia;
 				TargetAttributes = {
+					4313F3981937B644001FEACF = {
+						DevelopmentTeam = CQ235PGEX8;
+					};
 					4313F3BC1937B645001FEACF = {
 						TestTargetID = 4313F3981937B644001FEACF;
 					};
@@ -401,9 +404,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GBInfiniteViewControllersDemo/GBInfiniteViewControllersDemo-Prefix.pch";
 				INFOPLIST_FILE = "GBInfiniteViewControllersDemo/GBInfiniteViewControllersDemo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/GBInfiniteScrollView-edronfnxpnachpfcgaxqokzpftby/Build/Products/Debug-iphoneos",
@@ -419,9 +424,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GBInfiniteViewControllersDemo/GBInfiniteViewControllersDemo-Prefix.pch";
 				INFOPLIST_FILE = "GBInfiniteViewControllersDemo/GBInfiniteViewControllersDemo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/GBInfiniteScrollView-edronfnxpnachpfcgaxqokzpftby/Build/Products/Debug-iphoneos",
@@ -491,6 +498,7 @@
 				4313F3D01937B645001FEACF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4313F3D11937B645001FEACF /* Build configuration list for PBXNativeTarget "GBInfiniteViewControllersDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -499,6 +507,7 @@
 				4313F3D31937B645001FEACF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

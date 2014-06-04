@@ -51,6 +51,8 @@
     self.infiniteScrollView.pageIndex = 0;
     self.infiniteScrollView.autoScrollDirection = GBAutoScrollDirectionRightToLeft;
     
+    self.infiniteScrollView.scrollsToTop = NO;
+    
     self.infiniteScrollView.scrollDirection = GBScrollDirectionHorizontal;
     
     [self.view addSubview:self.infiniteScrollView];

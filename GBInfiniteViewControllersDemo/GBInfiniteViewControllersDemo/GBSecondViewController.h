@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GBSecondViewController : UIViewController
+@interface GBSecondViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @end

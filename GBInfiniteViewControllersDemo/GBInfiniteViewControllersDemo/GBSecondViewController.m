@@ -12,7 +12,9 @@
 
 @interface GBSecondViewController ()
 
-@property (nonatomic, strong) GBRoundBorderedButton *button;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
+@property (nonatomic, strong) UIColor *color;
 
 @end
 
@@ -24,11 +26,62 @@
     [self setUp];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+}
+
 - (void)setUp
 {
     self.view.backgroundColor = [self randomColor];
+    self.tableView.backgroundColor = [self randomColor];
     
-    [self setUpButton];
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    
+    [self.refreshControl addTarget:self
+                            action:@selector(refreshTable)
+                  forControlEvents:UIControlEventValueChanged];
+    
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    
+    [self.tableView addSubview:self.refreshControl];
+    
+    [self.tableView reloadData];
+    
+    self.color = [self randomColor];
+}
+
+- (void)refreshTable
+{
+    [self.refreshControl endRefreshing];
+    self.color = [self randomColor];
+    [self.tableView reloadData];
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 20;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+    }
+    
+    cell.backgroundColor = self.color;
+    
+    self.color = [self nextColor:self.color];
+    
+    return cell;
 }
 
 - (UIColor *)randomColor
@@ -41,32 +94,25 @@
     return color;
 }
 
-- (void)setUpButton
-{
-    if (!self.button) {
-        CGRect frame = CGRectMake(0.0f, 0.0f, 240.0f, 48.0f);
-        
-        self.button = [[GBRoundBorderedButton alloc] initWithFrame:frame ];
-        [self.button setTitle:@"Second" forState:UIControlStateNormal];
-        
-        self.button.normalColor = [UIColor whiteColor];
-        self.button.highlightedColor = self.view.backgroundColor;
-        self.button.borderWidth = 2.0f;
-        
-        [self.view addSubview:self.button];
-        
-        self.button.center = self.view.center;
-        
-        [self.button addTarget:self
-                        action:@selector(gitHub)
-              forControlEvents:UIControlEventTouchUpInside];
-    }
-}
+static CGFloat const GBGoldenRatio = 0.618033988749895f;
 
-- (void)gitHub
+- (UIColor *)nextColor:(UIColor *)color
 {
-    NSURL *url = [NSURL URLWithString:@"https://github.com/gblancogarcia/GBInfiniteScrollView"];
-    [[UIApplication sharedApplication] openURL:url];
+    UIColor *nextColor;
+    
+    CGFloat hue;
+    CGFloat saturation;
+    CGFloat brightness;
+    CGFloat alpha;
+    
+    BOOL success = [color getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha];
+    
+    if (success) {
+        hue = fmodf(hue + GBGoldenRatio, 1.0);
+        nextColor = [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1.0f];
+    }
+    
+    return nextColor;
 }
 
 @end
