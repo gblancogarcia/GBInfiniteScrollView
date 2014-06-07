@@ -6,11 +6,11 @@
 //  Copyright (c) 2014 gblancogarcia. All rights reserved.
 //
 
-#import "GBSecondViewController.h"
+#import "GBTableViewController.h"
 
 #import "GBRoundBorderedButton.h"
 
-@interface GBSecondViewController ()
+@interface GBTableViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
@@ -18,7 +18,7 @@
 
 @end
 
-@implementation GBSecondViewController
+@implementation GBTableViewController
 
 - (void)viewDidLoad
 {
@@ -33,8 +33,10 @@
 
 - (void)setUp
 {
-    self.view.backgroundColor = [self randomColor];
-    self.tableView.backgroundColor = [self randomColor];
+    self.color = [self randomColor];
+    
+    self.view.backgroundColor = self.color;
+    self.tableView.backgroundColor = self.color;
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     
@@ -49,13 +51,17 @@
     
     [self.tableView reloadData];
     
-    self.color = [self randomColor];
 }
 
 - (void)refreshTable
 {
     [self.refreshControl endRefreshing];
+    
     self.color = [self randomColor];
+    
+    self.view.backgroundColor = self.color;
+    self.tableView.backgroundColor = self.color;
+    
     [self.tableView reloadData];
 }
 
@@ -80,6 +86,14 @@
     cell.backgroundColor = self.color;
     
     self.color = [self nextColor:self.color];
+    
+    if (indexPath.row == 2) {
+        cell.textLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long) self.index];
+    } else {
+        cell.textLabel.text = @"";
+    }
+    
+    cell.textLabel.textColor = [UIColor whiteColor];
     
     return cell;
 }

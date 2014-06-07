@@ -85,13 +85,19 @@ typedef NS_ENUM(NSInteger, GBScrollDirection) {
  */
 @property (nonatomic, assign) id <GBInfiniteScrollViewDelegate> infiniteScrollViewDelegate;
 
-// Returns an initialized infinite scroll view
+/**
+ * Returns an initialized infinite scroll view.
+ */
 - (id)init;
 
-// Returns an initialized infinite scroll view from a given frame
+/**
+ * Returns an initialized infinite scroll view from a given frame.
+ */
 - (id)initWithFrame:(CGRect)frame;
 
-// Returns an initialized infinite scroll view from data in a given unarchiver
+/**
+ * Returns an initialized infinite scroll view from data in a given unarchiver.
+ */
 - (id)initWithCoder:(NSCoder *)aDecoder;
 
 /** 
@@ -172,6 +178,7 @@ typedef NS_ENUM(NSInteger, GBScrollDirection) {
 
 /**
  * @protocol GBInfiniteScrollViewDataSource
+ *
  * This protocol represents the data model object.
  */
 @protocol GBInfiniteScrollViewDataSource<NSObject>
@@ -205,6 +212,7 @@ typedef NS_ENUM(NSInteger, GBScrollDirection) {
 
 /**
  * @protocol GBInfiniteScrollViewDelegate 
+ *
  * This protocol allows the adopting delegate to respond to scrolling operations.
  */
 @protocol GBInfiniteScrollViewDelegate<NSObject>

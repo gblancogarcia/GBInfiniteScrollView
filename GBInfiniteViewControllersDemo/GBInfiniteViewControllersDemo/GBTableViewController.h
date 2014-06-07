@@ -1,5 +1,5 @@
 //
-//  GBFirstViewController.h
+//  GBSecondViewController.h
 //  GBInfiniteViewControllersDemo
 //
 //  Created by Gerardo Blanco García on 29/05/14.
@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GBFirstViewController : UIViewController
+@interface GBTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic) NSUInteger index;
 
 @end
