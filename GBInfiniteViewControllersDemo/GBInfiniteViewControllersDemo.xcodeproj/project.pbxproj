@@ -23,7 +23,6 @@
 		4313F3CB1937B645001FEACF /* GBInfiniteViewControllersDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4313F3CA1937B645001FEACF /* GBInfiniteViewControllersDemoTests.m */; };
 		4313F3D91937B70C001FEACF /* GBTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4313F3D81937B70C001FEACF /* GBTableViewController.m */; };
 		4313F3DB1937C79C001FEACF /* libGBInfiniteScrollView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4313F3DA1937C79C001FEACF /* libGBInfiniteScrollView.a */; };
-		4313F3DE1937D810001FEACF /* GBRoundBorderedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4313F3DD1937D810001FEACF /* GBRoundBorderedButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,8 +58,6 @@
 		4313F3D71937B70C001FEACF /* GBTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBTableViewController.h; sourceTree = "<group>"; };
 		4313F3D81937B70C001FEACF /* GBTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBTableViewController.m; sourceTree = "<group>"; };
 		4313F3DA1937C79C001FEACF /* libGBInfiniteScrollView.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGBInfiniteScrollView.a; path = "../../../Library/Developer/Xcode/DerivedData/GBInfiniteScrollView-edronfnxpnachpfcgaxqokzpftby/Build/Products/Debug-iphoneos/libGBInfiniteScrollView.a"; sourceTree = "<group>"; };
-		4313F3DC1937D810001FEACF /* GBRoundBorderedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBRoundBorderedButton.h; sourceTree = "<group>"; };
-		4313F3DD1937D810001FEACF /* GBRoundBorderedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBRoundBorderedButton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,8 +121,6 @@
 			children = (
 				4313F3AB1937B645001FEACF /* GBAppDelegate.h */,
 				4313F3AC1937B645001FEACF /* GBAppDelegate.m */,
-				4313F3DC1937D810001FEACF /* GBRoundBorderedButton.h */,
-				4313F3DD1937D810001FEACF /* GBRoundBorderedButton.m */,
 				4313F3D71937B70C001FEACF /* GBTableViewController.h */,
 				4313F3D81937B70C001FEACF /* GBTableViewController.m */,
 				4313F3B41937B645001FEACF /* GBViewController.h */,
@@ -270,7 +265,6 @@
 				4313F3D91937B70C001FEACF /* GBTableViewController.m in Sources */,
 				4313F3A91937B645001FEACF /* main.m in Sources */,
 				4313F3B61937B645001FEACF /* GBViewController.m in Sources */,
-				4313F3DE1937D810001FEACF /* GBRoundBorderedButton.m in Sources */,
 				4313F3AD1937B645001FEACF /* GBAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
