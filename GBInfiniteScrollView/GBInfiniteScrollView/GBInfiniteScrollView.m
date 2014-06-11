@@ -749,6 +749,11 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     [self.visibleIndices removeAllObjects];
     [self.visiblePages removeAllObjects];
     
+    [self resetLayout];
+}
+
+- (void)resetLayout
+{
     [self layoutCurrentView];
 }
 

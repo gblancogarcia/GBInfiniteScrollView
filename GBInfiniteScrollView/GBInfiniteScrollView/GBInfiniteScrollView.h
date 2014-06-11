@@ -143,7 +143,7 @@ typedef NS_ENUM(NSInteger, GBScrollDirection) {
 /**
  *  Gets the current view.
  *
- *  @return The current page of the infinite-scroll-view.
+ *  @return The current page of the infinite scroll view.
  */
 - (GBInfiniteScrollViewPage *)currentPage;
 
@@ -156,6 +156,11 @@ typedef NS_ENUM(NSInteger, GBScrollDirection) {
  * Updates current page's data source.
  */
 - (void)updateData;
+
+/**
+ * Resets the infinite scroll view layout.
+ */
+- (void)resetLayout;
 
 /** 
  * Stops automatic scrolling.

@@ -47,7 +47,7 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
         NSLog(@"View Did Appear");
     }
     
-    [self.infiniteScrollView updateData];
+    [self.infiniteScrollView resetLayout];
 }
 
 - (void)setUp
