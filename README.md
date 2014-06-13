@@ -28,6 +28,12 @@ It is based on Apple StreetScroller iOS sample code.
 2. Install the pod(s) by running `pod install`.
 3. Include GBInfiniteScrollView wherever you need it with `#import <GBInfiniteScrollView/GBInfiniteScrollView.h>`.
 
+For the page control subclass.
+
+1. Add a pod entry for `GBInfiniteScrollView/PageControl` to your Podfile `pod 'GBInfiniteScrollView/PageControl'`
+2. Install the pod(s) by running `pod install`.
+3. Include GBInfiniteScrollViewWithPageControl wherever you need it with `#import <GBInfiniteScrollView/GBInfiniteScrollViewWithPageControl.h>`.
+
 ### Source files
 
 You can directly add the header and implementation files to your project.
