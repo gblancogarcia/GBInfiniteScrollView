@@ -8,32 +8,53 @@
 
 #import "GBViewController.h"
 
+#import "GBTableViewController.h"
+
 @interface GBViewController ()
 
-@property (nonatomic, strong) UIViewController *firstViewController;
-@property (nonatomic, strong) UIViewController *secondViewController;
 @property (nonatomic, strong) GBInfiniteScrollView *infiniteScrollView;
+@property (nonatomic, strong) NSMutableArray *viewControllers;
 
 @end
 
 @implementation GBViewController
 
-- (UIViewController *)firstViewController
+- (NSMutableArray *)viewControllers
 {
-    if (!_firstViewController) {
-        _firstViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"First View Controller"];
+    if (!_viewControllers) {
+        _viewControllers = [[NSMutableArray alloc] initWithCapacity:[self numberOfViewControllers]];
+        
+        for (int index = [self firstIndex]; index < [self numberOfViewControllers]; index++) {
+            [_viewControllers insertObject:[NSNull null] atIndex:index];
+        }
     }
     
-    return _firstViewController;
+    return _viewControllers;
 }
 
-- (UIViewController *)secondViewController
+- (NSUInteger)numberOfViewControllers
 {
-    if (!_secondViewController) {
-        _secondViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Second View Controller"];
-    }
-    
-    return _secondViewController;
+    return 1000;
+}
+
+- (NSUInteger)firstIndex
+{
+    return 0;
+}
+
+- (NSUInteger)lastIndex
+{
+    return fmax([self firstIndex], [self numberOfViewControllers] - 1);
+}
+
+- (NSUInteger)nextIndex:(NSUInteger)index
+{
+    return (index == [self lastIndex]) ? [self firstIndex] : (index + 1);
+}
+
+- (NSUInteger)previousIndex:(NSUInteger)index
+{
+    return (index == [self firstIndex]) ? [self lastIndex] : (index - 1);
 }
 
 - (void)viewDidLoad
@@ -45,13 +66,14 @@
 - (void)setUp
 {
     self.infiniteScrollView = [[GBInfiniteScrollView alloc] initWithFrame:self.view.bounds];
+    
+    self.infiniteScrollView.autoScrollDirection = GBAutoScrollDirectionRightToLeft;
     self.infiniteScrollView.infiniteScrollViewDataSource = self;
     self.infiniteScrollView.infiniteScrollViewDelegate = self;
     self.infiniteScrollView.interval = 3.0f;
     self.infiniteScrollView.pageIndex = 0;
-    self.infiniteScrollView.autoScrollDirection = GBAutoScrollDirectionRightToLeft;
-    
     self.infiniteScrollView.scrollDirection = GBScrollDirectionHorizontal;
+    self.infiniteScrollView.scrollsToTop = NO;
     
     [self.view addSubview:self.infiniteScrollView];
     
@@ -60,7 +82,7 @@
 
 - (NSInteger)numberOfPagesInInfiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView
 {
-    return 2;
+    return [self numberOfViewControllers];
 }
 
 - (GBInfiniteScrollViewPage *)infiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView pageAtIndex:(NSUInteger)index;
@@ -72,17 +94,51 @@
                                                          style:GBInfiniteScrollViewPageStyleCustom];
     }
     
-    if (index == 0) {
-        [self.firstViewController willMoveToParentViewController:nil];
-        [self addChildViewController:self.firstViewController];
-        [page.contentView addSubview:self.firstViewController.view];
+    GBTableViewController *controller = nil;
+    
+    if ([NSNull null] == [self.viewControllers objectAtIndex:index]) {
+        controller = [self.storyboard instantiateViewControllerWithIdentifier:@"Table View Controller"];
+        [self.viewControllers replaceObjectAtIndex:index withObject:controller];
     } else {
-        [self.secondViewController willMoveToParentViewController:nil];
-        [self addChildViewController:self.secondViewController];
-        [page.contentView addSubview:self.secondViewController.view];
+        controller = [self.viewControllers objectAtIndex:index];
     }
     
+    controller.index = index;
+    
+    [controller willMoveToParentViewController:nil];
+    [self addChildViewController:controller];
+    [page.contentView addSubview:controller.view];
+    
     return page;
+}
+
+
+- (void)infiniteScrollViewDidScrollNextPage:(GBInfiniteScrollView *)infiniteScrollView
+{
+    [self resetViewControllers];
+}
+
+- (void)infiniteScrollViewDidScrollPreviousPage:(GBInfiniteScrollView *)infiniteScrollView
+{
+    [self resetViewControllers];
+}
+
+- (void)resetViewControllers
+{
+    NSUInteger currentIndex = self.infiniteScrollView.currentPageIndex;
+    NSUInteger previousIndex = [self previousIndex:currentIndex];
+    NSUInteger nextIndex = [self nextIndex:currentIndex];
+    
+    [self.viewControllers enumerateObjectsUsingBlock:^(UIViewController *controller, NSUInteger idx, BOOL *stop) {
+        if ((idx != currentIndex) && (idx != previousIndex) && (idx != nextIndex)) {
+            if ([NSNull null] != [self.viewControllers objectAtIndex:idx]) {
+                UIViewController *controller = [self.viewControllers objectAtIndex:idx];
+                [controller removeFromParentViewController];
+                controller = nil;
+                [self.viewControllers replaceObjectAtIndex:idx withObject:[NSNull null]];
+            }
+        }
+    }];
 }
 
 @end
