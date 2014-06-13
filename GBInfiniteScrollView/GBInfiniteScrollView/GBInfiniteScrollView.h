@@ -133,12 +133,12 @@ typedef NS_ENUM(NSInteger, GBScrollDirection) {
 /**
  *  Debug mode.
  */
-@property (nonatomic) BOOL debug;
+@property (nonatomic, getter = isDebugModeOn) BOOL debug;
 
 /**
  *  Verbose for debug mode.
  */
-@property (nonatomic) BOOL verboseDebug;
+@property (nonatomic, getter = isVerboseDebugModeOn) BOOL verboseDebug;
 
 /**
  *  Gets the current view.

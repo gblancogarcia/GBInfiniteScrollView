@@ -10,4 +10,7 @@
    <FileRef
       location = "group:GBInfiniteViewControllersDemo/GBInfiniteViewControllersDemo.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:GBInfiniteScrollViewPageControlDemo/GBInfiniteScrollViewPageControlDemo.xcodeproj">
+   </FileRef>
 </Workspace>
