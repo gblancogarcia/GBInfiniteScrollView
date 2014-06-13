@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11279487194B800C008D22A2 /* FXPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 11279483194B800C008D22A2 /* FXPageControl.m */; };
+		11279488194B800C008D22A2 /* GBInfiniteScrollViewWithPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 11279486194B800C008D22A2 /* GBInfiniteScrollViewWithPageControl.m */; };
+		1127948A194B802D008D22A2 /* FXPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 11279483194B800C008D22A2 /* FXPageControl.m */; };
+		1127948B194B8031008D22A2 /* GBInfiniteScrollViewWithPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 11279486194B800C008D22A2 /* GBInfiniteScrollViewWithPageControl.m */; };
 		4357F3DF1801B3C700EF282B /* GBInfiniteScrollView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4388DC421801A3460074CABE /* GBInfiniteScrollView.h */; };
 		4388DC1D1801A3280074CABE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4388DC1C1801A3280074CABE /* Foundation.framework */; };
 		4388DC2B1801A3280074CABE /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4388DC2A1801A3280074CABE /* XCTest.framework */; };
@@ -45,6 +49,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		11279482194B800C008D22A2 /* FXPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXPageControl.h; sourceTree = "<group>"; };
+		11279483194B800C008D22A2 /* FXPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXPageControl.m; sourceTree = "<group>"; };
+		11279485194B800C008D22A2 /* GBInfiniteScrollViewWithPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBInfiniteScrollViewWithPageControl.h; sourceTree = "<group>"; };
+		11279486194B800C008D22A2 /* GBInfiniteScrollViewWithPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBInfiniteScrollViewWithPageControl.m; sourceTree = "<group>"; };
 		4388DC191801A3280074CABE /* libGBInfiniteScrollView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGBInfiniteScrollView.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4388DC1C1801A3280074CABE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4388DC201801A3280074CABE /* GBInfiniteScrollView-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GBInfiniteScrollView-Prefix.pch"; sourceTree = "<group>"; };
@@ -83,6 +91,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		11279480194B800C008D22A2 /* Optional */ = {
+			isa = PBXGroup;
+			children = (
+				11279481194B800C008D22A2 /* FXPageControl */,
+				11279484194B800C008D22A2 /* PageControlSubClass */,
+			);
+			path = Optional;
+			sourceTree = "<group>";
+		};
+		11279481194B800C008D22A2 /* FXPageControl */ = {
+			isa = PBXGroup;
+			children = (
+				11279482194B800C008D22A2 /* FXPageControl.h */,
+				11279483194B800C008D22A2 /* FXPageControl.m */,
+			);
+			path = FXPageControl;
+			sourceTree = "<group>";
+		};
+		11279484194B800C008D22A2 /* PageControlSubClass */ = {
+			isa = PBXGroup;
+			children = (
+				11279485194B800C008D22A2 /* GBInfiniteScrollViewWithPageControl.h */,
+				11279486194B800C008D22A2 /* GBInfiniteScrollViewWithPageControl.m */,
+			);
+			path = PageControlSubClass;
+			sourceTree = "<group>";
+		};
 		4388DC101801A3280074CABE = {
 			isa = PBXGroup;
 			children = (
@@ -119,6 +154,7 @@
 				4388DC431801A3460074CABE /* GBInfiniteScrollView.m */,
 				43E7ABCC184C9CA4007211A5 /* GBInfiniteScrollViewPage.h */,
 				43E7ABCD184C9CA4007211A5 /* GBInfiniteScrollViewPage.m */,
+				11279480194B800C008D22A2 /* Optional */,
 				4388DC1F1801A3280074CABE /* Supporting Files */,
 			);
 			path = GBInfiniteScrollView;
@@ -231,6 +267,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1127948B194B8031008D22A2 /* GBInfiniteScrollViewWithPageControl.m in Sources */,
+				1127948A194B802D008D22A2 /* FXPageControl.m in Sources */,
 				4388DC441801A3460074CABE /* GBInfiniteScrollView.m in Sources */,
 				43E7ABCE184C9CA4007211A5 /* GBInfiniteScrollViewPage.m in Sources */,
 			);
@@ -240,7 +278,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11279487194B800C008D22A2 /* FXPageControl.m in Sources */,
 				4388DC391801A3280074CABE /* GBInfiniteScrollViewTests.m in Sources */,
+				11279488194B800C008D22A2 /* GBInfiniteScrollViewWithPageControl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
