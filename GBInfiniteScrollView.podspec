@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/gblancogarcia"
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
   s.author       = { "Gerardo Blanco" => "gblancogarcia@gmail.com" }
-  s.source       = { :git => "https://github.com/gblancogarcia/GBInfiniteScrollView.git", :tag => "{s.version}" }
+  s.source       = { :git => "https://github.com/gblancogarcia/GBInfiniteScrollView.git", :tag => "#{s.version}" }
   s.platform     = :ios, '6.1'
   s.requires_arc = true
   s.default_subspec = 'Core'
