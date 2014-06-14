@@ -50,6 +50,9 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
+    self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 88, 0);
+    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(64, 0, 88, 0);
+    
     [self.tableView addSubview:self.refreshControl];
     
     [self.tableView reloadData];
