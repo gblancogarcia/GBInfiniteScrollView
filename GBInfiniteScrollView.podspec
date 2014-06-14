@@ -9,15 +9,12 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '6.1'
   s.requires_arc = true
   s.default_subspec = 'Core'
-
   s.subspec 'Core' do |core|
     core.source_files = 'GBInfiniteScrollView/GBInfiniteScrollView/*.{h,m}'
   end
-
   s.subspec 'PageControl' do |pc|
     pc.dependency 'GBInfiniteScrollView/Core'
-    pc.source_files = 'GBInfiniteScrollView/GBInfiniteScrollView/Optional/PageControlSubClass/*.{h,m}’
+    pc.source_files = 'GBInfiniteScrollView/GBInfiniteScrollView/Optional/PageControlSubClass/*.{h,m}'
     pc.dependency 'FXPageControl', '~> 1.3.2'
   end
-
 end
