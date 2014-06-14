@@ -8,8 +8,6 @@
 
 #import "GBTableViewController.h"
 
-#import "GBRoundBorderedButton.h"
-
 @interface GBTableViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -29,6 +27,11 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
 }
 
 - (void)setUp
@@ -55,14 +58,16 @@
 
 - (void)refreshTable
 {
-    [self.refreshControl endRefreshing];
-    
-    self.color = [self randomColor];
-    
-    self.view.backgroundColor = self.color;
-    self.tableView.backgroundColor = self.color;
-    
-    [self.tableView reloadData];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.refreshControl endRefreshing];
+        
+        self.color = [self randomColor];
+        
+        self.view.backgroundColor = self.color;
+        self.tableView.backgroundColor = self.color;
+        
+        [self.tableView reloadData];
+    });
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
