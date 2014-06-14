@@ -10,7 +10,7 @@
 
 #import "GBPageRecord.h"
 
-static CGFloat const GBNumberOfPages = 1000.0f;
+static CGFloat const GBNumberOfPages = 20.0f;
 static CGFloat const GBMaxNumberOfPages = 10000.0f;
 
 @interface GBViewController ()
@@ -25,8 +25,8 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
 @property (nonatomic, strong) UIButton *addButton;
 @property (nonatomic, strong) UIColor *color;
 @property (nonatomic) GBAutoScrollDirection autoScrollDirection;
-@property(nonatomic) CGAffineTransform rightToLeftTransform;
-@property(nonatomic) CGAffineTransform leftToRightTransform;
+@property(nonatomic) CGAffineTransform topToBottomTransform;
+@property(nonatomic) CGAffineTransform bottomToTopTransform;
 @property(nonatomic) BOOL debug;
 
 @end
@@ -61,6 +61,8 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
         [self addRandomColorPage];
     }
     
+    self.autoScrollDirection = GBAutoScrollDirectionBottomToTop;
+    
     self.infiniteScrollView = [[GBInfiniteScrollViewWithPageControl alloc] initWithFrame:self.view.bounds];
     self.infiniteScrollView.infiniteScrollViewDataSource = self;
     self.infiniteScrollView.infiniteScrollViewDelegate = self;
@@ -68,11 +70,10 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
     self.infiniteScrollView.verboseDebug = verboseDebug;
     self.infiniteScrollView.interval = 3.0f;
     self.infiniteScrollView.pageIndex = 0;
-    self.infiniteScrollView.autoScrollDirection = GBAutoScrollDirectionRightToLeft;
+    self.infiniteScrollView.autoScrollDirection = self.autoScrollDirection;
+    self.infiniteScrollView.scrollDirection = GBScrollDirectionVertical;
     
-    self.infiniteScrollView.scrollDirection = GBScrollDirectionVertical; //GBScrollDirectionHorizontal;
-    
-    self.infiniteScrollView.pageControlPosition = GBPageControlPositionHorizontalBottom;
+    self.infiniteScrollView.pageControlPosition = GBPageControlPositionVerticalLeft;
     [self.infiniteScrollView.pageControlViewContainer.pageControl setDotColor:[UIColor whiteColor]];
     
     [self.view addSubview:self.infiniteScrollView];
@@ -127,9 +128,9 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
     
     [self.view addConstraint:left];
     
-    self.leftToRightTransform = self.directionButton.transform;
-    self.rightToLeftTransform = CGAffineTransformRotate(self.directionButton.transform, M_PI);
-    self.directionButton.transform = self.rightToLeftTransform;
+    self.bottomToTopTransform = self.directionButton.transform;
+    self.topToBottomTransform = CGAffineTransformRotate(self.directionButton.transform, M_PI);
+    self.directionButton.transform = self.bottomToTopTransform;
 }
 
 - (void)setUpInfoButton
@@ -297,12 +298,12 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
     CGAffineTransform transform;
     GBAutoScrollDirection autoScrollDirection;
     
-    if (self.autoScrollDirection == GBAutoScrollDirectionLeftToRight) {
-        transform = self.rightToLeftTransform;
-        autoScrollDirection = GBAutoScrollDirectionRightToLeft;
-    } else if (self.autoScrollDirection == GBAutoScrollDirectionRightToLeft) {
-        transform = self.leftToRightTransform;
-        autoScrollDirection = GBAutoScrollDirectionLeftToRight;
+    if (self.autoScrollDirection == GBAutoScrollDirectionBottomToTop) {
+        transform = self.topToBottomTransform;
+        autoScrollDirection = GBAutoScrollDirectionTopToBottom;
+    } else if (self.autoScrollDirection == GBAutoScrollDirectionTopToBottom) {
+        transform = self.bottomToTopTransform;
+        autoScrollDirection = GBAutoScrollDirectionBottomToTop;
     }
     
     [UIView animateWithDuration:0.5f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{

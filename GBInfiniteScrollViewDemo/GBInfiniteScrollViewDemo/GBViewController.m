@@ -69,7 +69,7 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
     self.infiniteScrollView.interval = 3.0f;
     self.infiniteScrollView.pageIndex = 0;
     self.infiniteScrollView.autoScrollDirection = GBAutoScrollDirectionRightToLeft;
-    self.infiniteScrollView.scrollDirection = GBScrollDirectionHorizontal; //GBScrollDirectionVertical;
+    self.infiniteScrollView.scrollDirection = GBScrollDirectionHorizontal;
     
     [self.view addSubview:self.infiniteScrollView];
     
