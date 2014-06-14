@@ -50,8 +50,10 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
-    self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 88, 0);
-    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(64, 0, 88, 0);
+    BOOL isIOS7 = [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0;
+    UIEdgeInsets insets = UIEdgeInsetsMake((isIOS7 ? 64 : 0), 0, (isIOS7 ? 88 : 172), 0);
+    self.tableView.contentInset = insets;
+    self.tableView.scrollIndicatorInsets = insets;
     
     [self.tableView addSubview:self.refreshControl];
     
