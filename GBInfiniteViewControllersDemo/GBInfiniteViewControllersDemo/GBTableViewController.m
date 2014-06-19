@@ -18,6 +18,22 @@
 
 @implementation GBTableViewController
 
+- (void)loadDataSource
+{
+    [self.refreshControl beginRefreshing];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.refreshControl endRefreshing];
+        
+        self.color = [self randomColor];
+        
+        self.view.backgroundColor = self.color;
+        self.tableView.backgroundColor = self.color;
+        
+        [self.tableView reloadData];
+    });
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -27,6 +43,11 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    [self loadDataSource];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -63,16 +84,7 @@
 
 - (void)refreshTable
 {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.refreshControl endRefreshing];
-        
-        self.color = [self randomColor];
-        
-        self.view.backgroundColor = self.color;
-        self.tableView.backgroundColor = self.color;
-        
-        [self.tableView reloadData];
-    });
+    [self loadDataSource];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
