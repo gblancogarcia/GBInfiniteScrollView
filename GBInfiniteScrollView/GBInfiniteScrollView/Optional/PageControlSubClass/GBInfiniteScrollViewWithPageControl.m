@@ -214,14 +214,8 @@
     [self setupDefaultValuesPageControl];
 }
 
-#pragma mark - UIScrollViewDelegate Methods
-
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+- (void)setupPageControl
 {
-    if (self.isDebugModeOn && self.isVerboseDebugModeOn) {
-        NSLog(@"Running %@ '%@'", self.class, NSStringFromSelector(_cmd));
-    }
-    
     NSInteger numberOfPages = [self.infiniteScrollViewDataSource numberOfPagesInInfiniteScrollView:self];
     
     if ([self fitsPageControlSizeForNumberOfPages:numberOfPages]) {
@@ -237,6 +231,22 @@
     }else{
         [self.pageControlViewContainer.pageControl setNumberOfPages:0];
     }
+}
+
+- (void)reloadData
+{
+    [self setupPageControl];
+    [super reloadData];
+}
+
+#pragma mark - UIScrollViewDelegate Methods
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    if (self.isDebugModeOn && self.isVerboseDebugModeOn) {
+        NSLog(@"Running %@ '%@'", self.class, NSStringFromSelector(_cmd));
+    }
+    [self setupPageControl];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
