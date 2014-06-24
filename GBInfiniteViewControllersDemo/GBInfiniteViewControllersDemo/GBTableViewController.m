@@ -8,8 +8,6 @@
 
 #import "GBTableViewController.h"
 
-#import "GBRoundBorderedButton.h"
-
 @interface GBTableViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -20,6 +18,22 @@
 
 @implementation GBTableViewController
 
+- (void)loadDataSource
+{
+    [self.refreshControl beginRefreshing];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.refreshControl endRefreshing];
+        
+        self.color = [self randomColor];
+        
+        self.view.backgroundColor = self.color;
+        self.tableView.backgroundColor = self.color;
+        
+        [self.tableView reloadData];
+    });
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -29,6 +43,16 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    [self loadDataSource];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
 }
 
 - (void)setUp
@@ -47,6 +71,11 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
+    BOOL isIOS7 = [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0;
+    UIEdgeInsets insets = UIEdgeInsetsMake((isIOS7 ? 64 : 0), 0, (isIOS7 ? 88 : 172), 0);
+    self.tableView.contentInset = insets;
+    self.tableView.scrollIndicatorInsets = insets;
+    
     [self.tableView addSubview:self.refreshControl];
     
     [self.tableView reloadData];
@@ -55,14 +84,7 @@
 
 - (void)refreshTable
 {
-    [self.refreshControl endRefreshing];
-    
-    self.color = [self randomColor];
-    
-    self.view.backgroundColor = self.color;
-    self.tableView.backgroundColor = self.color;
-    
-    [self.tableView reloadData];
+    [self loadDataSource];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
