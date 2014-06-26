@@ -128,6 +128,14 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 
 #pragma mark - Setup
 
+- (void)tapOnScrollView
+{
+    if (self.infiniteScrollViewDelegate &&
+        [self.infiniteScrollViewDelegate respondsToSelector:@selector(infiniteScrollView:didTapAtIndex:)]) {
+        [self.infiniteScrollViewDelegate infiniteScrollView:self didTapAtIndex:self.currentPageIndex];
+    }
+}
+
 - (void)setup
 {
     if (self.isDebugModeOn && self.isVerboseDebugModeOn) {
@@ -143,6 +151,11 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     self.exclusiveTouch = YES;
 
     [self setupDefautValues];
+    
+    UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc]
+                                       initWithTarget:self
+                                       action:@selector(tapOnScrollView)];
+    [self addGestureRecognizer:gesture];
 }
 
 - (void)setupDefautValues

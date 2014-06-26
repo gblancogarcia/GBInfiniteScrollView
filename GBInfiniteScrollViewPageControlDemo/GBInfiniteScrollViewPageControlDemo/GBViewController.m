@@ -414,6 +414,13 @@ static CGFloat const GBGoldenRatio = 0.618033988749895f;
     }
 }
 
+- (void)infiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView didTapAtIndex:(NSInteger)pageIndex
+{
+    if (self.debug) {
+        NSLog(@"Did tap at page %d", pageIndex);
+    }
+}
+
 - (NSInteger)numberOfPagesInInfiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView
 {
     return self.data.count;

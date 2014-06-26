@@ -242,4 +242,14 @@ typedef NS_ENUM(NSInteger, GBScrollDirection) {
  */
 - (void)infiniteScrollViewDidScrollPreviousPage:(GBInfiniteScrollView *)infiniteScrollView;
 
+/**
+ * Called when use tap on GBInfiniteScrollView
+ *
+ *  @warning Optional
+ *
+ *  @param infiniteScrollView Infinite Scroll View Object
+ *  @param pageIndex tapped page index
+ */
+- (void)infiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView didTapAtIndex:(NSInteger)pageIndex;
+
 @end
