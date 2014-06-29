@@ -98,6 +98,16 @@ Finally, implement the `GBInfiniteScrollViewDataSource` and `GBInfiniteScrollVie
     NSLog(@"Previous page");
 }
 
+- (BOOL)infiniteScrollViewShouldScrollNextPage:(GBInfiniteScrollView *)infiniteScrollView
+{
+    return YES;
+}
+
+- (BOOL)infiniteScrollViewShouldScrollPreviousPage:(GBInfiniteScrollView *)infiniteScrollView
+{
+    return YES;
+}
+
 - (NSInteger)numberOfPagesInInfiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView
 {
     return self.data.count;
