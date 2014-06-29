@@ -553,7 +553,7 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
     self.shouldScrollPreviousPage = YES;
     self.lockLeftToRightButton.alpha = 0.5f;
     
-    [self.infiniteScrollView scrollToPageAtIndex:self.indexPage animated:YES];
+    [self.infiniteScrollView scrollToPageAtIndex:self.indexPage animated:NO];
 }
 
 - (GBPageRecord *)randomColorPageRecord

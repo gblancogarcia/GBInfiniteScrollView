@@ -1370,33 +1370,39 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 - (void)scrollToPageAtIndex:(NSUInteger)index animated:(BOOL)animated
 {
     if (index <= self.numberOfPages && self.needsUpdatePageIndex == NO) {
-        [self shouldScroll];
-        [self resetLayout];
-        
-        long numberOfPagesOnTheRight = [self numberOfPagesOnTheRightBetweenFirstIndex:self.currentPageIndex
-                                                                       andSecondIndex:index];
-        
-        long numberOfPagesOnTheLeft = [self numberOfPagesOnTheLeftBetweenFirstIndex:self.currentPageIndex
-                                                                     andSecondIndex:index];
-        
-        if (numberOfPagesOnTheRight <= numberOfPagesOnTheLeft) {
-            CGFloat rightEdge = CGRectGetMaxX([self currentPage].frame);
+        if (animated) {
+            [self shouldScroll];
+            [self resetLayout];
             
-            if (![self isLastPage] || self.shouldScrollingWrapDataSource) {
-                [self placePage:[self pageAtIndex:index] onRight:rightEdge];
-                [self scrollToNextPage];
+            long numberOfPagesOnTheRight = [self numberOfPagesOnTheRightBetweenFirstIndex:self.currentPageIndex
+                                                                           andSecondIndex:index];
+            
+            long numberOfPagesOnTheLeft = [self numberOfPagesOnTheLeftBetweenFirstIndex:self.currentPageIndex
+                                                                         andSecondIndex:index];
+            
+            if (numberOfPagesOnTheRight <= numberOfPagesOnTheLeft) {
+                CGFloat rightEdge = CGRectGetMaxX([self currentPage].frame);
+                
+                if (![self isLastPage] || self.shouldScrollingWrapDataSource) {
+                    [self placePage:[self pageAtIndex:index] onRight:rightEdge];
+                    [self scrollToNextPage];
+                }
+            } else {
+                CGFloat leftEdge = CGRectGetMinX([self currentPage].frame);
+                
+                if (![self isFirstPage] || self.shouldScrollingWrapDataSource) {
+                    [self placePage:[self pageAtIndex:index] onLeft:leftEdge];
+                    [self scrollToPreviousPage];
+                }
             }
+            
+            self.needsUpdatePageIndex = YES;
+            self.newPageIndex = index;
         } else {
-            CGFloat leftEdge = CGRectGetMinX([self currentPage].frame);
-            
-            if (![self isFirstPage] || self.shouldScrollingWrapDataSource) {
-                [self placePage:[self pageAtIndex:index] onLeft:leftEdge];
-                [self scrollToPreviousPage];
-            }
+            self.currentPageIndex = index;
+            [self resetLayout];
+            [self resetVisiblePages];
         }
-        
-        self.needsUpdatePageIndex = YES;
-        self.newPageIndex = index;
     }
 }
 
