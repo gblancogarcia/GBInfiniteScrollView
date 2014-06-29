@@ -141,6 +141,11 @@ typedef NS_ENUM(NSInteger, GBScrollDirection) {
 @property (nonatomic, getter = isVerboseDebugModeOn) BOOL verboseDebug;
 
 /**
+ *  Verbose for debug mode.
+ */
+@property (nonatomic, getter = isTapEnabled) BOOL tapEnabled;
+
+/**
  *  Gets the current view.
  *
  *  @return The current page of the infinite scroll view.
@@ -178,6 +183,14 @@ typedef NS_ENUM(NSInteger, GBScrollDirection) {
  *  @return A reusable infinite scroll view page object.
  */
 - (GBInfiniteScrollViewPage *)dequeueReusablePage;
+
+/**
+ * Scrolls a specific page.
+ *
+ *  @param index     Index of the page
+ *  @param animated  YES if the scrolling should be animated, NO if it should be immediate.
+ */
+- (void)scrollToPageAtIndex:(NSUInteger)index animated:(BOOL)animated;
 
 @end
 
@@ -251,5 +264,23 @@ typedef NS_ENUM(NSInteger, GBScrollDirection) {
  *  @param pageIndex tapped page index
  */
 - (void)infiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView didTapAtIndex:(NSInteger)pageIndex;
+
+/**
+ *  Asks the delegate if it is allowed to scroll to next page.
+ *
+ *  @warning Optional
+ *
+ *  @param infiniteScrollView Infinite Scroll View Object
+ */
+- (BOOL)infiniteScrollViewShouldScrollNextPage:(GBInfiniteScrollView *)infiniteScrollView;
+
+/**
+ *  Asks the delegate if it is allowed to scroll to previous page.
+ *
+ *  @warning Optional
+ *
+ *  @param infiniteScrollView Infinite Scroll View Object
+ */
+- (BOOL)infiniteScrollViewShouldScrollPreviousPage:(GBInfiniteScrollView *)infiniteScrollView;
 
 @end

@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GBDetailViewController : UIViewController <UIWebViewDelegate>
+#import "GAITrackedViewController.h"
+
+@interface GBDetailViewController : GAITrackedViewController <UIWebViewDelegate>
 
 @end

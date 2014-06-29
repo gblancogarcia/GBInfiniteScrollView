@@ -21,6 +21,7 @@
 - (void)loadDataSource
 {
     [self.refreshControl beginRefreshing];
+    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.refreshControl endRefreshing];
         
@@ -70,11 +71,6 @@
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    
-    BOOL isIOS7 = [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0;
-    UIEdgeInsets insets = UIEdgeInsetsMake((isIOS7 ? 64 : 0), 0, (isIOS7 ? 88 : 172), 0);
-    self.tableView.contentInset = insets;
-    self.tableView.scrollIndicatorInsets = insets;
     
     [self.tableView addSubview:self.refreshControl];
     

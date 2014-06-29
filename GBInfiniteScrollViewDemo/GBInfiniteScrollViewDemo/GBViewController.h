@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "GAITrackedViewController.h"
+
 #import <GBInfiniteScrollView/GBInfiniteScrollView.h>
 
-@interface GBViewController : UIViewController <GBInfiniteScrollViewDataSource, GBInfiniteScrollViewDelegate>
+@interface GBViewController : GAITrackedViewController <GBInfiniteScrollViewDataSource, GBInfiniteScrollViewDelegate>
 
 @end

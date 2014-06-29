@@ -9,8 +9,10 @@
 #import "GBViewController.h"
 
 #import "GBPageRecord.h"
+#import "GBRoundBorderedButton.h"
+#import "UIColor+Utils.h"
 
-static CGFloat const GBNumberOfPages = 1000.0f;
+static CGFloat const GBNumberOfPages = 100.0f;
 static CGFloat const GBMaxNumberOfPages = 10000.0f;
 
 @interface GBViewController ()
@@ -20,13 +22,20 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
 @property (nonatomic, strong) GBInfiniteScrollView *infiniteScrollView;
 @property (nonatomic, strong) UIButton *directionButton;
 @property (nonatomic, strong) UIButton *infoButton;
+@property (nonatomic, strong) UIButton *lockLeftToRightButton;
+@property (nonatomic, strong) UIButton *lockRightToLeftButton;
 @property (nonatomic, strong) UIButton *playButton;
 @property (nonatomic, strong) UIButton *stopButton;
 @property (nonatomic, strong) UIButton *addButton;
+@property (nonatomic, strong) GBRoundBorderedButton *indexPageButton;
+@property (nonatomic) NSUInteger indexPage;
 @property (nonatomic, strong) UIColor *color;
 @property (nonatomic) GBAutoScrollDirection autoScrollDirection;
 @property(nonatomic) CGAffineTransform rightToLeftTransform;
 @property(nonatomic) CGAffineTransform leftToRightTransform;
+@property (nonatomic) BOOL shouldScrollNextPage;
+@property (nonatomic) BOOL shouldScrollPreviousPage;
+@property(nonatomic) BOOL autoScroll;
 @property(nonatomic) BOOL debug;
 
 @end
@@ -44,10 +53,16 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
     [super viewDidAppear:animated];
     
     if (self.debug) {
-        NSLog(@"View Did Appear");
+        NSLog(@"View did appear");
     }
     
     [self.infiniteScrollView resetLayout];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.screenName = @"Infinite Scroll Screen";
 }
 
 - (void)setUp
@@ -61,12 +76,15 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
         [self addRandomColorPage];
     }
     
+    self.shouldScrollNextPage = YES;
+    self.shouldScrollPreviousPage = YES;
+    
     self.infiniteScrollView = [[GBInfiniteScrollView alloc] initWithFrame:self.view.bounds];
     self.infiniteScrollView.infiniteScrollViewDataSource = self;
     self.infiniteScrollView.infiniteScrollViewDelegate = self;
     self.infiniteScrollView.debug = self.debug;
     self.infiniteScrollView.verboseDebug = verboseDebug;
-    self.infiniteScrollView.interval = 3.0f;
+    self.infiniteScrollView.interval = 1.0f;
     self.infiniteScrollView.pageIndex = 0;
     self.infiniteScrollView.autoScrollDirection = GBAutoScrollDirectionRightToLeft;
     self.infiniteScrollView.scrollDirection = GBScrollDirectionHorizontal;
@@ -75,12 +93,102 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
     
     [self.infiniteScrollView reloadData];
     
+    [self setUpLockLeftToRightButton];
+    [self setUpLockRightToLeftButton];
     [self setUpDirectionButton];
     [self setUpInfoButton];
     [self setUpAddButton];
+    [self setUpIndexPageButton];
     [self setUpPlayButton];
     [self setUpStopButton];
 }
+
+- (void)setUpLockLeftToRightButton
+{
+    self.lockLeftToRightButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 64.0f, 64.0f)];
+    
+    [self.lockLeftToRightButton setImage:[UIImage imageNamed:@"LockLeftButton"]
+                                forState:UIControlStateNormal];
+    [self.lockLeftToRightButton setImage:[UIImage imageNamed:@"LockLeftButtonHighlighted"]
+                                forState:UIControlStateHighlighted];
+    
+    [self.lockLeftToRightButton addTarget:self
+                                   action:@selector(lockLeftToRight)
+                         forControlEvents:UIControlEventTouchUpInside];
+    
+    self.lockLeftToRightButton.alpha = 0.5f;
+    
+    [self.view addSubview:self.lockLeftToRightButton];
+    
+    [self.lockLeftToRightButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+    CGFloat constant = 24.0f;
+    
+    if (floor(NSFoundationVersionNumber) < NSFoundationVersionNumber_iOS_6_1) {
+        constant -= 20.0f;
+    }
+    
+    NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:self.lockLeftToRightButton
+                                                           attribute:NSLayoutAttributeTop
+                                                           relatedBy:NSLayoutRelationEqual
+                                                              toItem:self.view
+                                                           attribute:NSLayoutAttributeTop
+                                                          multiplier:1.0f
+                                                            constant:constant];
+    
+    [self.view addConstraint:top];
+    
+    NSLayoutConstraint *left = [NSLayoutConstraint constraintWithItem:self.lockLeftToRightButton
+                                                            attribute:NSLayoutAttributeLeft
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.view
+                                                            attribute:NSLayoutAttributeLeft
+                                                           multiplier:1.0f
+                                                             constant:8.0f];
+    
+    [self.view addConstraint:left];
+}
+
+- (void)setUpLockRightToLeftButton
+{
+    self.lockRightToLeftButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 64.0f, 64.0f)];
+    
+    [self.lockRightToLeftButton setImage:[UIImage imageNamed:@"LockRightButton"]
+                                forState:UIControlStateNormal];
+    [self.lockRightToLeftButton setImage:[UIImage imageNamed:@"LockRightButtonHighlighted"]
+                                forState:UIControlStateHighlighted];
+    
+    [self.lockRightToLeftButton addTarget:self
+                                   action:@selector(lockRightToLeft)
+                         forControlEvents:UIControlEventTouchUpInside];
+    
+    self.lockRightToLeftButton.alpha = 0.5f;
+    
+    [self.view addSubview:self.lockRightToLeftButton];
+    
+    [self.lockRightToLeftButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+    NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:self.lockRightToLeftButton
+                                                           attribute:NSLayoutAttributeTop
+                                                           relatedBy:NSLayoutRelationEqual
+                                                              toItem:self.lockLeftToRightButton
+                                                           attribute:NSLayoutAttributeTop
+                                                          multiplier:1.0f
+                                                            constant:80.0f];
+    
+    [self.view addConstraint:top];
+    
+    NSLayoutConstraint *left = [NSLayoutConstraint constraintWithItem:self.lockRightToLeftButton
+                                                            attribute:NSLayoutAttributeLeft
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.view
+                                                            attribute:NSLayoutAttributeLeft
+                                                           multiplier:1.0f
+                                                             constant:8.0f];
+    
+    [self.view addConstraint:left];
+}
+
 
 - (void)setUpDirectionButton
 {
@@ -99,7 +207,7 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
     
     CGFloat constant = 24.0f;
     
-    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+    if (floor(NSFoundationVersionNumber) < NSFoundationVersionNumber_iOS_6_1) {
         constant -= 20.0f;
     }
     
@@ -113,15 +221,15 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
     
     [self.view addConstraint:top];
     
-    NSLayoutConstraint *left = [NSLayoutConstraint constraintWithItem:self.directionButton
-                                                            attribute:NSLayoutAttributeLeft
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.view
-                                                            attribute:NSLayoutAttributeLeft
-                                                           multiplier:1.0f
-                                                             constant:16.0f];
+    NSLayoutConstraint *centerX = [NSLayoutConstraint constraintWithItem:self.directionButton
+                                                               attribute:NSLayoutAttributeCenterX
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:self.view
+                                                               attribute:NSLayoutAttributeCenterX
+                                                              multiplier:1.0f
+                                                                constant:0.0f];
     
-    [self.view addConstraint:left];
+    [self.view addConstraint:centerX];
     
     self.leftToRightTransform = self.directionButton.transform;
     self.rightToLeftTransform = CGAffineTransformRotate(self.directionButton.transform, M_PI);
@@ -165,7 +273,7 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
                                                                 toItem:self.view
                                                              attribute:NSLayoutAttributeRight
                                                             multiplier:1.0f
-                                                              constant:-16.0f];
+                                                              constant:-8.0f];
     
     [self.view addConstraint:right];
 }
@@ -191,7 +299,7 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
                                                                  toItem:self.view
                                                               attribute:NSLayoutAttributeBottom
                                                              multiplier:1.0f
-                                                               constant:-16.0f];
+                                                               constant:-8.0f];
     
     [self.view addConstraint:bottom];
     
@@ -201,9 +309,71 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
                                                                toItem:self.view
                                                             attribute:NSLayoutAttributeLeft
                                                            multiplier:1.0f
-                                                             constant:16.0f];
+                                                             constant:8.0f];
     
     [self.view addConstraint:left];
+}
+
+- (void)setUpIndexPageButton
+{
+    CGRect frame = CGRectMake(0.0f, 0.0f, 44.0f, 44.0f);
+    
+    self.indexPage = 0;
+    
+    self.indexPageButton = [[GBRoundBorderedButton alloc] initWithFrame:frame];
+    
+    NSString *title = [NSString stringWithFormat:@"%lu", (unsigned long)self.indexPage];
+    [self.indexPageButton setTitle:title forState:UIControlStateNormal];
+    
+    [self.indexPageButton addTarget:self
+                             action:@selector(changeIndexPage)
+                   forControlEvents:UIControlEventTouchUpInside];
+    
+    self.indexPageButton.normalColor = [UIColor whiteColor];
+    self.indexPageButton.highlightedColor = [UIColor brightRedColor];
+    self.indexPageButton.borderWidth = 2.0f;
+    
+    [self.view addSubview:self.indexPageButton];
+    
+    self.indexPageButton.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    NSLayoutConstraint *width = [NSLayoutConstraint constraintWithItem:self.indexPageButton
+                                                             attribute:NSLayoutAttributeWidth
+                                                             relatedBy:NSLayoutRelationEqual
+                                                                toItem:nil
+                                                             attribute:NSLayoutAttributeNotAnAttribute
+                                                            multiplier:1.0f
+                                                              constant:44.0f];
+    [self.view addConstraint:width];
+    
+    NSLayoutConstraint *height = [NSLayoutConstraint constraintWithItem:self.indexPageButton
+                                                              attribute:NSLayoutAttributeHeight
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:nil
+                                                              attribute:NSLayoutAttributeNotAnAttribute
+                                                             multiplier:1.0f
+                                                               constant:44.0f];
+    [self.view addConstraint:height];
+    
+    NSLayoutConstraint *centerX = [NSLayoutConstraint constraintWithItem:self.indexPageButton
+                                                               attribute:NSLayoutAttributeCenterX
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:self.view
+                                                               attribute:NSLayoutAttributeCenterX
+                                                              multiplier:1.0f
+                                                                constant:0.0f];
+    
+    [self.view addConstraint:centerX];
+    
+    NSLayoutConstraint *bottom = [NSLayoutConstraint constraintWithItem:self.indexPageButton
+                                                              attribute:NSLayoutAttributeBottom
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.view
+                                                              attribute:NSLayoutAttributeBottom
+                                                             multiplier:1.0f
+                                                               constant:-18.0f];
+    
+    [self.view addConstraint:bottom];
 }
 
 - (void)setUpPlayButton
@@ -232,7 +402,7 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
                                                                      toItem:self.view
                                                                   attribute:NSLayoutAttributeBottom
                                                                  multiplier:1.0f
-                                                                   constant:-16.0f];
+                                                                   constant:-8.0f];
         
         [self.view addConstraint:bottom];
         
@@ -242,7 +412,7 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
                                                                     toItem:self.view
                                                                  attribute:NSLayoutAttributeRight
                                                                 multiplier:1.0f
-                                                                  constant:-16.0f];
+                                                                  constant:-8.0f];
         
         [self.view addConstraint:right];
     }
@@ -272,7 +442,7 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
                                                                      toItem:self.view
                                                                   attribute:NSLayoutAttributeBottom
                                                                  multiplier:1.0f
-                                                                   constant:-16.0f];
+                                                                   constant:-8.0f];
         
         [self.view addConstraint:bottom];
         
@@ -282,7 +452,7 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
                                                                     toItem:self.view
                                                                  attribute:NSLayoutAttributeRight
                                                                 multiplier:1.0f
-                                                                  constant:-16.0f];
+                                                                  constant:-8.0f];
         
         [self.view addConstraint:right];
     }
@@ -315,6 +485,44 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
     [self performSegueWithIdentifier:identifier sender:self];
 }
 
+- (void)lockLeftToRight
+{
+    if (self.shouldScrollPreviousPage) {
+        self.shouldScrollPreviousPage = NO;
+        self.lockLeftToRightButton.alpha = 1.0f;
+    } else {
+        self.shouldScrollPreviousPage = YES;
+        self.lockLeftToRightButton.alpha = 0.5f;
+    }
+    
+    if (self.autoScroll == NO) {
+        [self.infiniteScrollView updateData];
+    } else {
+        if (self.autoScrollDirection == GBAutoScrollDirectionLeftToRight) {
+            [self stopAutoScroll];
+        }
+    }
+}
+
+- (void)lockRightToLeft
+{
+    if (self.shouldScrollNextPage) {
+        self.shouldScrollNextPage = NO;
+        self.lockRightToLeftButton.alpha = 1.0f;
+    } else {
+        self.shouldScrollNextPage = YES;
+        self.lockRightToLeftButton.alpha = 0.5f;
+    }
+    
+    if (self.autoScroll == NO) {
+        [self.infiniteScrollView updateData];
+    } else {
+        if (self.autoScrollDirection == GBAutoScrollDirectionRightToLeft) {
+            [self stopAutoScroll];
+        }
+    }
+}
+
 - (void)addRandomColorPage
 {
     if (self.data.count >= GBMaxNumberOfPages) {
@@ -328,12 +536,32 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
     }
 }
 
+- (void)changeIndexPage
+{
+    self.indexPage =  self.indexPage + 5;
+    
+    if (self.indexPage  >= [self.data count]) {
+        self.indexPage = 0;
+    }
+    
+    NSString *title = [NSString stringWithFormat:@"%lu", (unsigned long)self.indexPage];
+    [self.indexPageButton setTitle:title forState:UIControlStateNormal];
+    
+    self.shouldScrollNextPage = YES;
+    self.lockRightToLeftButton.alpha = 0.5f;
+    
+    self.shouldScrollPreviousPage = YES;
+    self.lockLeftToRightButton.alpha = 0.5f;
+    
+    [self.infiniteScrollView scrollToPageAtIndex:self.indexPage animated:YES];
+}
+
 - (GBPageRecord *)randomColorPageRecord
 {
     GBPageRecord *pageRecord = [[GBPageRecord alloc] init];
     
     pageRecord.index = self.data.count;
-    pageRecord.text = [NSString stringWithFormat: @"%lu", (unsigned long)[self.data count]];
+    pageRecord.text = [NSString stringWithFormat:@"%lu", (unsigned long)[self.data count]];
     pageRecord.backgroundColor = self.color;
     self.color = [self nextColor:self.color];
     pageRecord.textColor = self.color;
@@ -383,36 +611,62 @@ static CGFloat const GBGoldenRatio = 0.618033988749895f;
 
 - (void)startAutoScroll
 {
-    [self.infiniteScrollView startAutoScroll];
+    self.shouldScrollNextPage = YES;
+    self.lockRightToLeftButton.alpha = 0.5f;
+    self.shouldScrollPreviousPage = YES;
+    self.lockLeftToRightButton.alpha = 0.5f;
     self.playButton.hidden = YES;
     self.stopButton.hidden = NO;
+    self.autoScroll = YES;
+    
+    [self.infiniteScrollView startAutoScroll];
 }
 
 - (void)stopAutoScroll
 {
     [self.infiniteScrollView stopAutoScroll];
+    
     self.playButton.hidden = NO;
     self.stopButton.hidden = YES;
+    self.autoScroll = NO;
 }
 
 - (void)infiniteScrollViewDidScrollNextPage:(GBInfiniteScrollView *)infiniteScrollView
 {
     if (self.debug) {
-        NSLog(@"Did Scroll Next Page");
+        NSLog(@"Did scroll next page");
     }
 }
 
 - (void)infiniteScrollViewDidScrollPreviousPage:(GBInfiniteScrollView *)infiniteScrollView
 {
     if (self.debug) {
-        NSLog(@"Did Scroll Previous Page");
+        NSLog(@"Did scroll previous page");
     }
+}
+
+- (BOOL)infiniteScrollViewShouldScrollNextPage:(GBInfiniteScrollView *)infiniteScrollView
+{
+    if (self.debug) {
+        NSLog(@"Should scroll next page");
+    }
+    
+    return self.shouldScrollNextPage;
+}
+
+- (BOOL)infiniteScrollViewShouldScrollPreviousPage:(GBInfiniteScrollView *)infiniteScrollView
+{
+    if (self.debug) {
+        NSLog(@"Should scroll previous page");
+    }
+    
+    return self.shouldScrollPreviousPage;
 }
 
 - (void)infiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView didTapAtIndex:(NSInteger)pageIndex
 {
     if (self.debug) {
-        NSLog(@"Did tap at page %d", pageIndex);
+        NSLog(@"Did tap at page %lu", (unsigned long)index);
     }
 }
 
@@ -421,7 +675,7 @@ static CGFloat const GBGoldenRatio = 0.618033988749895f;
     return self.data.count;
 }
 
-- (GBInfiniteScrollViewPage *)infiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView pageAtIndex:(NSUInteger)index;
+- (GBInfiniteScrollViewPage *)infiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView pageAtIndex:(NSUInteger)index
 {
     NSLog(@"Page at index %lu", (unsigned long)index);
     

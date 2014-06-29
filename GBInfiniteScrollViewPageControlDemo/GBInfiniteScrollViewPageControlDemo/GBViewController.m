@@ -10,7 +10,7 @@
 
 #import "GBPageRecord.h"
 
-static CGFloat const GBNumberOfPages = 20.0f;
+static CGFloat const GBNumberOfPages = 15.0f;
 static CGFloat const GBMaxNumberOfPages = 10000.0f;
 
 @interface GBViewController ()
@@ -44,7 +44,7 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
     [super viewDidAppear:animated];
     
     if (self.debug) {
-        NSLog(@"View Did Appear");
+        NSLog(@"View did appear");
     }
     
     [self.infiniteScrollView resetLayout];
@@ -124,7 +124,7 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
                                                                toItem:self.view
                                                             attribute:NSLayoutAttributeLeft
                                                            multiplier:1.0f
-                                                             constant:16.0f];
+                                                             constant:8.0f];
     
     [self.view addConstraint:left];
     
@@ -170,7 +170,7 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
                                                                 toItem:self.view
                                                              attribute:NSLayoutAttributeRight
                                                             multiplier:1.0f
-                                                              constant:-16.0f];
+                                                              constant:-8.0f];
     
     [self.view addConstraint:right];
 }
@@ -196,7 +196,7 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
                                                                  toItem:self.view
                                                               attribute:NSLayoutAttributeBottom
                                                              multiplier:1.0f
-                                                               constant:-16.0f];
+                                                               constant:-8.0f];
     
     [self.view addConstraint:bottom];
     
@@ -206,7 +206,7 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
                                                                toItem:self.view
                                                             attribute:NSLayoutAttributeLeft
                                                            multiplier:1.0f
-                                                             constant:16.0f];
+                                                             constant:8.0f];
     
     [self.view addConstraint:left];
 }
@@ -237,7 +237,7 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
                                                                      toItem:self.view
                                                                   attribute:NSLayoutAttributeBottom
                                                                  multiplier:1.0f
-                                                                   constant:-16.0f];
+                                                                   constant:-8.0f];
         
         [self.view addConstraint:bottom];
         
@@ -247,7 +247,7 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
                                                                     toItem:self.view
                                                                  attribute:NSLayoutAttributeRight
                                                                 multiplier:1.0f
-                                                                  constant:-16.0f];
+                                                                  constant:-8.0f];
         
         [self.view addConstraint:right];
     }
@@ -277,7 +277,7 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
                                                                      toItem:self.view
                                                                   attribute:NSLayoutAttributeBottom
                                                                  multiplier:1.0f
-                                                                   constant:-16.0f];
+                                                                   constant:-8.0f];
         
         [self.view addConstraint:bottom];
         
@@ -287,7 +287,7 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
                                                                     toItem:self.view
                                                                  attribute:NSLayoutAttributeRight
                                                                 multiplier:1.0f
-                                                                  constant:-16.0f];
+                                                                  constant:-8.0f];
         
         [self.view addConstraint:right];
     }
@@ -403,14 +403,14 @@ static CGFloat const GBGoldenRatio = 0.618033988749895f;
 - (void)infiniteScrollViewDidScrollNextPage:(GBInfiniteScrollView *)infiniteScrollView
 {
     if (self.debug) {
-        NSLog(@"Did Scroll Next Page");
+        NSLog(@"Did scroll next page");
     }
 }
 
 - (void)infiniteScrollViewDidScrollPreviousPage:(GBInfiniteScrollView *)infiniteScrollView
 {
     if (self.debug) {
-        NSLog(@"Did Scroll Previous Page");
+        NSLog(@"Did scroll previous page");
     }
 }
 
