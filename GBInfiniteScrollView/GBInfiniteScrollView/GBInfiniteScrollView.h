@@ -238,6 +238,16 @@ typedef NS_ENUM(NSInteger, GBScrollDirection) {
 @optional
 
 /**
+ *  Called when the GBInfiniteScrollView is panning
+ *
+ *  @warning Optional
+ *
+ *  @param UIPanGestureRecognizer
+ */
+
+-(void)infiniteScrollViewDidPan:(UIPanGestureRecognizer*)pan;
+
+/**
  *  Called when the GBInfiniteScrollView has scrolled to next page.
  *
  *  @warning Optional
