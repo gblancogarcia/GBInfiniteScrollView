@@ -10,7 +10,7 @@
 
 static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 
-@interface GBInfiniteScrollView ()
+@interface GBInfiniteScrollView ()  <UIGestureRecognizerDelegate>
 
 /**
  *  Number of pages.
@@ -155,6 +155,10 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     self.showsVerticalScrollIndicator = NO;
     self.userInteractionEnabled = YES;
     
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(panOnScrollView:)];
+    pan.delegate = self;
+    [self addGestureRecognizer:pan];
+    
     if ([self isTapEnabled]) {
         self.exclusiveTouch = YES;
         
@@ -220,6 +224,16 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     if (self.infiniteScrollViewDelegate &&
         [self.infiniteScrollViewDelegate respondsToSelector:@selector(infiniteScrollView:didTapAtIndex:)]) {
         [self.infiniteScrollViewDelegate infiniteScrollView:self didTapAtIndex:self.currentPageIndex];
+    }
+}
+
+#pragma mark - Pan
+
+-(void)panOnScrollView:(UIPanGestureRecognizer*)pan
+{
+    if (self.infiniteScrollViewDelegate &&
+        [self.infiniteScrollViewDelegate respondsToSelector:@selector(infiniteScrollViewDidPan:)]) {
+        [self.infiniteScrollViewDelegate infiniteScrollViewDidPan:pan];
     }
 }
 
@@ -1405,5 +1419,13 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
         }
     }
 }
+
+#pragma mark - UIGestureRecognizer Delegate
+
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
+}
+
 
 @end
