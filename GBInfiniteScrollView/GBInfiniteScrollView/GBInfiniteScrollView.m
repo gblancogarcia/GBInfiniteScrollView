@@ -65,6 +65,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 
 @property (nonatomic) BOOL needsUpdatePageIndex;
 @property (nonatomic) NSUInteger newPageIndex;
+@property (nonatomic) CGSize pageSize;
 
 @end
 
@@ -1024,6 +1025,12 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     }
     
     [super layoutSubviews];
+    
+    if ((self.scrollDirection == GBScrollDirectionHorizontal && self.pageSize.width  != self.frame.size.width) ||
+        (self.scrollDirection == GBScrollDirectionVertical   && self.pageSize.height != self.frame.size.height)) {
+        self.pageSize = self.frame.size;
+        [self layoutCurrentView];
+    }
     
     if ([self isScrollNecessary]) {
         [self recenterContent];
