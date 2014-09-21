@@ -10,7 +10,7 @@
 
 static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 
-@interface GBInfiniteScrollView ()
+@interface GBInfiniteScrollView ()  <UIGestureRecognizerDelegate>
 
 /**
  *  Number of pages.
@@ -52,6 +52,21 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
  */
 @property (nonatomic) BOOL needsReloadData;
 
+/**
+ *  A boolean value that determines whether it is allowed to scroll to next page.
+ */
+@property (nonatomic) BOOL shouldScrollNextPage;
+
+/**
+ *  A boolean value that determines whether it is allowed to scroll to previous page.
+ */
+@property (nonatomic) BOOL shouldScrollPreviousPage;
+
+
+@property (nonatomic) BOOL needsUpdatePageIndex;
+@property (nonatomic) NSUInteger newPageIndex;
+@property (nonatomic) CGSize pageSize;
+
 @end
 
 @implementation GBInfiniteScrollView
@@ -68,7 +83,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     self = [super initWithFrame:frame];
     
     if (self) {
-        [self setup];
+        [self setUp];
     }
     
     return self;
@@ -79,7 +94,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     self = [super initWithCoder:aDecoder];
     
     if (self) {
-        [self setup];
+        [self setUp];
     }
     
     return self;
@@ -126,9 +141,9 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     return _reusablePages;
 }
 
-#pragma mark - Setup
+#pragma mark - SetUp
 
-- (void)setup
+- (void)setUp
 {
     if (self.isDebugModeOn && self.isVerboseDebugModeOn) {
         NSLog(@"Running %@ '%@'", self.class, NSStringFromSelector(_cmd));
@@ -140,12 +155,26 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     self.showsHorizontalScrollIndicator = NO;
     self.showsVerticalScrollIndicator = NO;
     self.userInteractionEnabled = YES;
-    self.exclusiveTouch = YES;
-
-    [self setupDefautValues];
+    
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(panOnScrollView:)];
+    pan.delegate = self;
+    [self addGestureRecognizer:pan];
+    
+    if ([self isTapEnabled]) {
+        self.exclusiveTouch = YES;
+        
+        UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                  action:@selector(tapOnScrollView)];
+        
+        [self addGestureRecognizer:gesture];
+    } else {
+        self.exclusiveTouch = NO;
+    }
+    
+    [self setUpDefautValues];
 }
 
-- (void)setupDefautValues
+- (void)setUpDefautValues
 {
     if (self.isDebugModeOn && self.isVerboseDebugModeOn) {
         NSLog(@"Running %@ '%@'", self.class, NSStringFromSelector(_cmd));
@@ -158,9 +187,11 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     self.scrollDirection = GBScrollDirectionHorizontal;
     self.autoScrollDirection = GBAutoScrollDirectionRightToLeft;
     self.interval = GBAutoScrollDefaultInterval;
+    self.shouldScrollNextPage = YES;
+    self.shouldScrollPreviousPage = YES;
 }
 
-- (void)setupTimer
+- (void)setUpTimer
 {
     if (self.isDebugModeOn && self.isVerboseDebugModeOn) {
         NSLog(@"Running %@ '%@'", self.class, NSStringFromSelector(_cmd));
@@ -184,6 +215,26 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
                                                         userInfo:nil
                                                          repeats:YES];
         }
+    }
+}
+
+#pragma mark - Tap
+
+- (void)tapOnScrollView
+{
+    if (self.infiniteScrollViewDelegate &&
+        [self.infiniteScrollViewDelegate respondsToSelector:@selector(infiniteScrollView:didTapAtIndex:)]) {
+        [self.infiniteScrollViewDelegate infiniteScrollView:self didTapAtIndex:self.currentPageIndex];
+    }
+}
+
+#pragma mark - Pan
+
+-(void)panOnScrollView:(UIPanGestureRecognizer*)pan
+{
+    if (self.infiniteScrollViewDelegate &&
+        [self.infiniteScrollViewDelegate respondsToSelector:@selector(infiniteScrollViewDidPan:)]) {
+        [self.infiniteScrollViewDelegate infiniteScrollViewDidPan:pan];
     }
 }
 
@@ -236,7 +287,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
         NSLog(@"Running %@ '%@'", self.class, NSStringFromSelector(_cmd));
     }
     
-    return (self.currentPageIndex==[self lastPageIndex]?YES:NO);
+    return (self.currentPageIndex == [self lastPageIndex] ? YES : NO);
 }
 
 - (BOOL)isFirstPage
@@ -245,7 +296,33 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
         NSLog(@"Running %@ '%@'", self.class, NSStringFromSelector(_cmd));
     }
     
-    return (self.currentPageIndex==[self firstPageIndex]?YES:NO);
+    return (self.currentPageIndex == [self firstPageIndex] ? YES : NO);
+}
+
+- (NSUInteger)numberOfPagesOnTheRightBetweenFirstIndex:(NSUInteger)firstIndex andSecondIndex:(NSUInteger)secondIndex
+{
+    NSUInteger numberOfPages = 0;
+
+    if (firstIndex < secondIndex) {
+        numberOfPages = secondIndex - firstIndex - 1;
+    } else if (firstIndex > secondIndex) {
+        numberOfPages = ([self lastPageIndex] - firstIndex) + (secondIndex - [self firstPageIndex]);
+    }
+    
+    return numberOfPages;
+}
+
+- (NSUInteger)numberOfPagesOnTheLeftBetweenFirstIndex:(NSUInteger)firstIndex andSecondIndex:(NSUInteger)secondIndex
+{
+    NSUInteger numberOfPages = 0;
+    
+    if (firstIndex < secondIndex) {
+        numberOfPages = ([self lastPageIndex] - secondIndex) + (firstIndex - [self firstPageIndex]);
+    } else if (firstIndex > secondIndex) {
+        numberOfPages = firstIndex - secondIndex - 1;
+    }
+    
+    return numberOfPages;
 }
 
 #pragma mark - Pages
@@ -259,6 +336,21 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     if (self.infiniteScrollViewDataSource &&
         [self.infiniteScrollViewDataSource respondsToSelector:@selector(numberOfPagesInInfiniteScrollView:)]) {
         self.numberOfPages = [self.infiniteScrollViewDataSource numberOfPagesInInfiniteScrollView:self];
+    }
+}
+
+- (void)updatePageIndex
+{
+    if (self.isDebugModeOn && self.isVerboseDebugModeOn) {
+        NSLog(@"Running %@ '%@'", self.class, NSStringFromSelector(_cmd));
+    }
+    
+    if (self.needsUpdatePageIndex) {
+        self.currentPageIndex = self.newPageIndex;
+        self.needsUpdatePageIndex = NO;
+    
+        [self resetVisiblePages];
+        [self resetLayout];
     }
 }
 
@@ -360,7 +452,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     if (self.isDebugModeOn) {
         NSLog(@"GBInfiniteScrollView: Next: %lu", (unsigned long)[self nextPageIndex]);
     }
-    
+
     self.currentPageIndex = [self nextPageIndex];
 }
 
@@ -635,6 +727,10 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
         NSLog(@"Running %@ '%@'", self.class, NSStringFromSelector(_cmd));
     }
     
+    if (self.shouldScrollPreviousPage == NO) {
+        return [self centerContentOffsetX];
+    }
+    
     return [self centerContentOffsetX] - [self distanceFromCenterOffsetX];
 }
 
@@ -642,6 +738,10 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 {
     if (self.isDebugModeOn && self.isVerboseDebugModeOn) {
         NSLog(@"Running %@ '%@'", self.class, NSStringFromSelector(_cmd));
+    }
+    
+    if (self.shouldScrollPreviousPage == NO) {
+        return [self centerContentOffsetX];
     }
     
     return [self centerContentOffsetY] - [self distanceFromCenterOffsetY];
@@ -653,6 +753,10 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
         NSLog(@"Running %@ '%@'", self.class, NSStringFromSelector(_cmd));
     }
     
+    if (self.shouldScrollPreviousPage == NO) {
+        return 0.0f;
+    }
+    
     return [self pageWidth];
 }
 
@@ -660,6 +764,10 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 {
     if (self.isDebugModeOn && self.isVerboseDebugModeOn) {
         NSLog(@"Running %@ '%@'", self.class, NSStringFromSelector(_cmd));
+    }
+    
+    if (self.shouldScrollPreviousPage == NO) {
+        return 0.0f;
     }
     
     return [self pageHeight];
@@ -671,6 +779,10 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
         NSLog(@"Running %@ '%@'", self.class, NSStringFromSelector(_cmd));
     }
     
+    if (self.shouldScrollNextPage == NO) {
+        return [self centerContentOffsetX];
+    }
+    
     return [self centerContentOffsetX] + [self distanceFromCenterOffsetX];
 }
 
@@ -678,6 +790,10 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 {
     if (self.isDebugModeOn && self.isVerboseDebugModeOn) {
         NSLog(@"Running %@ '%@'", self.class, NSStringFromSelector(_cmd));
+    }
+    
+    if (self.shouldScrollNextPage == NO) {
+        return [self centerContentOffsetX];
     }
     
     return [self centerContentOffsetY] + [self distanceFromCenterOffsetY];
@@ -707,7 +823,15 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
         NSLog(@"Running %@ '%@'", self.class, NSStringFromSelector(_cmd));
     }
     
-    return [self pageWidth] * 3.0f;
+    int multiplier = 3;
+    
+    if ((self.shouldScrollNextPage == NO) && (self.shouldScrollPreviousPage == NO)) {
+        multiplier = 1;
+    } else if ((self.shouldScrollNextPage == NO) || (self.shouldScrollPreviousPage == NO)) {
+        multiplier = 2;
+    }
+    
+    return [self pageWidth] * multiplier;
 }
 
 - (CGFloat)contentSizeHeight
@@ -716,9 +840,16 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
         NSLog(@"Running %@ '%@'", self.class, NSStringFromSelector(_cmd));
     }
     
-    return [self pageHeight] * 3.0f;
+    int multiplier = 3;
+    
+    if ((self.shouldScrollNextPage == NO) && (self.shouldScrollPreviousPage == NO)) {
+        multiplier = 1;
+    } else if ((self.shouldScrollNextPage == NO) || (self.shouldScrollPreviousPage == NO)) {
+        multiplier = 2;
+    }
+    
+    return [self pageHeight] * multiplier;
 }
-
 #pragma mark - Layout
 
 - (void)reloadData
@@ -749,6 +880,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     [self.visibleIndices removeAllObjects];
     [self.visiblePages removeAllObjects];
     
+    [self shouldScroll];
     [self resetLayout];
 }
 
@@ -894,6 +1026,12 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     
     [super layoutSubviews];
     
+    if ((self.scrollDirection == GBScrollDirectionHorizontal && self.pageSize.width  != self.frame.size.width) ||
+        (self.scrollDirection == GBScrollDirectionVertical   && self.pageSize.height != self.frame.size.height)) {
+        self.pageSize = self.frame.size;
+        [self layoutCurrentView];
+    }
+    
     if ([self isScrollNecessary]) {
         [self recenterContent];
         
@@ -938,9 +1076,10 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
             }
             
             [self updateNumberOfPages];
+            [self updatePageIndex];
             [self resetVisiblePages];
             [self recenterCurrentView];
-            [self setupTimer];
+            [self setUpTimer];
         }
     } else {
         CGFloat distanceFromCenterOffsetY = fabs(currentContentOffset.y - [self centerContentOffsetY]);
@@ -955,9 +1094,10 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
             }
             
             [self updateNumberOfPages];
+            [self updatePageIndex];
             [self resetVisiblePages];
             [self recenterCurrentView];
-            [self setupTimer];
+            [self setUpTimer];
         }
     }
 }
@@ -1061,25 +1201,27 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     }
     
     CGFloat rightEdge = CGRectGetMaxX([self lastVisiblePage].frame);
+    
     // Add views that are missing on right side.
     if (rightEdge < maximumVisibleX) {
         if ([self firstVisiblePageIndex] != [self currentPageIndex]) {
             [self removeFirstVisiblePage];
         }
 
-        if (![self isLastPage] || _shouldScrollingWrapDataSource) {
+        if (![self isLastPage] || self.shouldScrollingWrapDataSource) {
             [self placePage:[self nextPage] onRight:rightEdge];
         }
     }
     
     CGFloat leftEdge = CGRectGetMinX([self firstVisiblePage].frame);
+    
     // Add views that are missing on left side.
     if (leftEdge > minimumVisibleX) {
         if ([self currentPageIndex] != [self lastVisiblePageIndex]) {
             [self removeLastVisiblePage];
         }
 
-        if (![self isFirstPage] || _shouldScrollingWrapDataSource) {
+        if (![self isFirstPage] || self.shouldScrollingWrapDataSource) {
             [self placePage:[self previousPage] onLeft:leftEdge];
         }
     }
@@ -1093,24 +1235,26 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     
     CGFloat bottomEdge = CGRectGetMaxY([self lastVisiblePage].frame);
     // Add views that are missing on bottom side.
+    
     if (bottomEdge < maximumVisibleY) {
         if ([self firstVisiblePageIndex] != [self currentPageIndex]) {
             [self removeFirstVisiblePage];
         }
         
-        if (![self isLastPage] || _shouldScrollingWrapDataSource) {
+        if (![self isLastPage] || self.shouldScrollingWrapDataSource) {
             [self placePage:[self nextPage] onBottom:bottomEdge];
         }
     }
     
     CGFloat topEdge = CGRectGetMinY([self firstVisiblePage].frame);
+    
     // Add views that are missing on top side.
     if (topEdge > minimumVisibleY) {
         if ([self currentPageIndex] != [self lastVisiblePageIndex]) {
             [self removeLastVisiblePage];
         }
         
-        if (![self isFirstPage] || _shouldScrollingWrapDataSource) {
+        if (![self isFirstPage] || self.shouldScrollingWrapDataSource) {
             [self placePage:[self previousPage] onTop:topEdge];
         }
     }
@@ -1139,7 +1283,9 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     
     self.autoScroll = YES;
     
-    [self setupTimer];
+    [self shouldScroll];
+    [self resetLayout];
+    [self setUpTimer];
 }
 
 - (void)scrollToNextPage
@@ -1148,7 +1294,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
         NSLog(@"Running %@ '%@'", self.class, NSStringFromSelector(_cmd));
     }
     
-    if ([self isScrollNecessary]) {
+    if ([self isScrollNecessary] && self.shouldScrollNextPage) {
         CGRect frame = [self currentPage].frame;
         CGFloat x = CGFLOAT_MAX;
         CGFloat y = CGFLOAT_MAX;
@@ -1172,7 +1318,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
         NSLog(@"Running %@ '%@'", self.class, NSStringFromSelector(_cmd));
     }
     
-    if ([self isScrollNecessary]) {
+    if ([self isScrollNecessary] && self.shouldScrollPreviousPage) {
         CGRect frame = [self currentPage].frame;
         CGFloat x = CGFLOAT_MAX;
         CGFloat y = CGFLOAT_MAX;
@@ -1196,10 +1342,13 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
         NSLog(@"Running %@ '%@'", self.class, NSStringFromSelector(_cmd));
     }
     
-    if (self.infiniteScrollViewDelegate &&
-        [self.infiniteScrollViewDelegate respondsToSelector:@selector(infiniteScrollViewDidScrollNextPage:)]) {
-        [self.infiniteScrollViewDelegate infiniteScrollViewDidScrollNextPage:self];
+    if (self.infiniteScrollViewDelegate) {
+        if ([self.infiniteScrollViewDelegate respondsToSelector:@selector(infiniteScrollViewDidScrollNextPage:)]) {
+            [self.infiniteScrollViewDelegate infiniteScrollViewDidScrollNextPage:self];
+        }
     }
+    
+    [self shouldScroll];
 }
 
 - (void)didScrollToPreviousPage
@@ -1208,10 +1357,82 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
         NSLog(@"Running %@ '%@'", self.class, NSStringFromSelector(_cmd));
     }
     
-    if (self.infiniteScrollViewDelegate &&
-        [self.infiniteScrollViewDelegate respondsToSelector:@selector(infiniteScrollViewDidScrollPreviousPage:)]) {
-        [self.infiniteScrollViewDelegate infiniteScrollViewDidScrollPreviousPage:self];
+    if (self.infiniteScrollViewDelegate) {
+        if ([self.infiniteScrollViewDelegate respondsToSelector:@selector(infiniteScrollViewDidScrollPreviousPage:)]) {
+            [self.infiniteScrollViewDelegate infiniteScrollViewDidScrollPreviousPage:self];
+        }
+    }
+    
+    [self shouldScroll];
+}
+
+- (void)shouldScroll
+{
+    if (self.infiniteScrollViewDelegate) {
+        if ([self.infiniteScrollViewDelegate respondsToSelector:@selector(infiniteScrollViewShouldScrollNextPage:)]) {
+            self.shouldScrollNextPage = [self.infiniteScrollViewDelegate infiniteScrollViewShouldScrollNextPage:self];
+        } else {
+            self.shouldScrollNextPage = YES;
+        }
+        
+        if ([self.infiniteScrollViewDelegate respondsToSelector:@selector(infiniteScrollViewShouldScrollPreviousPage:)]) {
+            self.shouldScrollPreviousPage = [self.infiniteScrollViewDelegate infiniteScrollViewShouldScrollPreviousPage:self];
+        } else {
+            self.shouldScrollPreviousPage = YES;
+        }
+        
+        [self resetContentSize];
+    } else {
+        self.shouldScrollNextPage = YES;
+        self.shouldScrollPreviousPage = YES;
     }
 }
+
+- (void)scrollToPageAtIndex:(NSUInteger)index animated:(BOOL)animated
+{
+    if (index <= self.numberOfPages && self.needsUpdatePageIndex == NO) {
+        if (animated) {
+            [self shouldScroll];
+            [self resetLayout];
+            
+            long numberOfPagesOnTheRight = [self numberOfPagesOnTheRightBetweenFirstIndex:self.currentPageIndex
+                                                                           andSecondIndex:index];
+            
+            long numberOfPagesOnTheLeft = [self numberOfPagesOnTheLeftBetweenFirstIndex:self.currentPageIndex
+                                                                         andSecondIndex:index];
+            
+            if (numberOfPagesOnTheRight <= numberOfPagesOnTheLeft) {
+                CGFloat rightEdge = CGRectGetMaxX([self currentPage].frame);
+                
+                if (![self isLastPage] || self.shouldScrollingWrapDataSource) {
+                    [self placePage:[self pageAtIndex:index] onRight:rightEdge];
+                    [self scrollToNextPage];
+                }
+            } else {
+                CGFloat leftEdge = CGRectGetMinX([self currentPage].frame);
+                
+                if (![self isFirstPage] || self.shouldScrollingWrapDataSource) {
+                    [self placePage:[self pageAtIndex:index] onLeft:leftEdge];
+                    [self scrollToPreviousPage];
+                }
+            }
+            
+            self.needsUpdatePageIndex = YES;
+            self.newPageIndex = index;
+        } else {
+            self.currentPageIndex = index;
+            [self resetLayout];
+            [self resetVisiblePages];
+        }
+    }
+}
+
+#pragma mark - UIGestureRecognizer Delegate
+
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
+}
+
 
 @end

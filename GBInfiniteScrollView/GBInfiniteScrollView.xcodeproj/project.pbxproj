@@ -20,6 +20,8 @@
 		4388DC371801A3280074CABE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4388DC351801A3280074CABE /* InfoPlist.strings */; };
 		4388DC391801A3280074CABE /* GBInfiniteScrollViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4388DC381801A3280074CABE /* GBInfiniteScrollViewTests.m */; };
 		4388DC441801A3460074CABE /* GBInfiniteScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4388DC431801A3460074CABE /* GBInfiniteScrollView.m */; };
+		438EF525194C482D00756049 /* GBInfiniteScrollViewWithPageControl.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 11279485194B800C008D22A2 /* GBInfiniteScrollViewWithPageControl.h */; };
+		438EF527194C484100756049 /* FXPageControl.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 11279482194B800C008D22A2 /* FXPageControl.h */; };
 		43E7ABCE184C9CA4007211A5 /* GBInfiniteScrollViewPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 43E7ABCD184C9CA4007211A5 /* GBInfiniteScrollViewPage.m */; };
 		43E7ABCF184CE0A8007211A5 /* GBInfiniteScrollViewPage.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43E7ABCC184C9CA4007211A5 /* GBInfiniteScrollViewPage.h */; };
 /* End PBXBuildFile section */
@@ -37,10 +39,12 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		4388DC171801A3280074CABE /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
+				438EF527194C484100756049 /* FXPageControl.h in CopyFiles */,
+				438EF525194C482D00756049 /* GBInfiniteScrollViewWithPageControl.h in CopyFiles */,
 				43E7ABCF184CE0A8007211A5 /* GBInfiniteScrollViewPage.h in CopyFiles */,
 				4357F3DF1801B3C700EF282B /* GBInfiniteScrollView.h in CopyFiles */,
 			);

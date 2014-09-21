@@ -26,6 +26,12 @@
     [self setUp];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.screenName = @"Detail Screen";
+}
+
 - (void)setUp
 {
     self.view.backgroundColor = [UIColor brightRedColor];
@@ -71,7 +77,7 @@
                                                                     toItem:self.view
                                                                  attribute:NSLayoutAttributeRight
                                                                 multiplier:1.0f
-                                                                  constant:-16.0f];
+                                                                  constant:-8.0f];
         
         [self.view addConstraint:right];
     }

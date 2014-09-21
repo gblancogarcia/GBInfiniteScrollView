@@ -71,7 +71,7 @@
                                                                     toItem:self.view
                                                                  attribute:NSLayoutAttributeRight
                                                                 multiplier:1.0f
-                                                                  constant:-16.0f];
+                                                                  constant:-8.0f];
         
         [self.view addConstraint:right];
     }

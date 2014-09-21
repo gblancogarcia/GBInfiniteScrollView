@@ -132,6 +132,7 @@
     [self.viewControllers enumerateObjectsUsingBlock:^(UIViewController *controller, NSUInteger idx, BOOL *stop) {
         if ((idx != currentIndex) && (idx != previousIndex) && (idx != nextIndex)) {
             if ([NSNull null] != [self.viewControllers objectAtIndex:idx]) {
+                *stop = YES;
                 UIViewController *controller = [self.viewControllers objectAtIndex:idx];
                 [controller removeFromParentViewController];
                 controller = nil;
