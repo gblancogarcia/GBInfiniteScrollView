@@ -1284,7 +1284,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     self.autoScroll = YES;
     
     [self shouldScroll];
-    [self resetLayout];
+    // ???: is necessary? [self resetLayout];
     [self setUpTimer];
 }
 
