@@ -387,6 +387,9 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
         NSLog(@"Running %@ '%@'", self.class, NSStringFromSelector(_cmd));
     }
     
+    if ([self numberOfPages] == 0)
+        return 0;
+    
     return fmax([self firstPageIndex], [self numberOfPages] - 1);
 }
 
@@ -850,6 +853,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     
     return [self pageHeight] * multiplier;
 }
+
 #pragma mark - Layout
 
 - (void)reloadData
@@ -858,6 +862,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
         NSLog(@"Running %@ '%@'", self.class, NSStringFromSelector(_cmd));
     }
     
+    [self updateNumberOfPages];
     [self updateCurrentPageIndex];
     [self updateData];
 }
@@ -869,8 +874,6 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     }
     
     self.needsReloadData = YES;
-    
-    [self updateNumberOfPages];
     
     [self.visiblePages enumerateObjectsUsingBlock:^(GBInfiniteScrollViewPage *visiblePage, NSUInteger idx, BOOL *stop) {
         [self.reusablePages addObject:visiblePage];
