@@ -160,6 +160,13 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     pan.delegate = self;
     [self addGestureRecognizer:pan];
     
+    [self setupTapGesture];
+    
+    [self setUpDefautValues];
+}
+
+- (void)setupTapGesture
+{
     if ([self isTapEnabled]) {
         self.exclusiveTouch = YES;
         
@@ -170,8 +177,6 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     } else {
         self.exclusiveTouch = NO;
     }
-    
-    [self setUpDefautValues];
 }
 
 - (void)setUpDefautValues
@@ -216,6 +221,14 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
                                                          repeats:YES];
         }
     }
+}
+
+#pragma mark - Propertys
+
+// Setter Method
+- (void)setTapEnabled:(BOOL)tapEnabled {
+    _tapEnabled = tapEnabled;
+    [self setupTapGesture];
 }
 
 #pragma mark - Tap
