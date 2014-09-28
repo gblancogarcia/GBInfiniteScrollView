@@ -5,34 +5,34 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>08C8503F-051B-4266-8BBE-240DC9CA23B3</string>
+	<string>FB099E8F-D99C-4A0C-AB46-0028FAC1BDC9</string>
 	<key>IDESourceControlProjectName</key>
 	<string>GBInfiniteScrollView</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>88635181-19E4-4232-8C5D-BAF0809EF56C</key>
+		<key>A116367E8C4C3EFF72A66E578DE1DD105B2996EE</key>
 		<string>https://github.com/gblancogarcia/GBInfiniteScrollView.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>GBInfiniteScrollView.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>88635181-19E4-4232-8C5D-BAF0809EF56C</key>
+		<key>A116367E8C4C3EFF72A66E578DE1DD105B2996EE</key>
 		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/gblancogarcia/GBInfiniteScrollView.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>88635181-19E4-4232-8C5D-BAF0809EF56C</string>
+	<string>A116367E8C4C3EFF72A66E578DE1DD105B2996EE</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>88635181-19E4-4232-8C5D-BAF0809EF56C</string>
+			<string>A116367E8C4C3EFF72A66E578DE1DD105B2996EE</string>
 			<key>IDESourceControlWCCName</key>
 			<string>GBInfiniteScrollView</string>
 		</dict>
