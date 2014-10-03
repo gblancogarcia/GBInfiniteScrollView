@@ -1128,6 +1128,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     
     CGRect frame = [page frame];
     frame.origin.x = pointX;
+    frame.size = self.frame.size;
     page.frame = frame;
     
     [self addSubview:page];
@@ -1141,6 +1142,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     
     CGRect frame = [page frame];
     frame.origin.y = pointY;
+    frame.size = self.frame.size;
     page.frame = frame;
     
     [self addSubview:page];
@@ -1154,6 +1156,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     
     CGRect frame = [page frame];
     frame.origin.x = rightEdge;
+    frame.size = self.frame.size;
     page.frame = frame;
     
     [self addSubview:page];
@@ -1170,6 +1173,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     
     CGRect frame = [page frame];
     frame.origin.y = bottomEdge;
+    frame.size = self.frame.size;
     page.frame = frame;
     
     [self addSubview:page];
@@ -1186,6 +1190,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     
     CGRect frame = [page frame];
     frame.origin.x = leftEdge - [self pageWidth];
+    frame.size = self.frame.size;
     page.frame = frame;
     
     [self addSubview:page];
@@ -1202,6 +1207,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     
     CGRect frame = [page frame];
     frame.origin.y = topEdge - [self pageHeight];
+    frame.size = self.frame.size;
     page.frame = frame;
     
     [self addSubview:page];
