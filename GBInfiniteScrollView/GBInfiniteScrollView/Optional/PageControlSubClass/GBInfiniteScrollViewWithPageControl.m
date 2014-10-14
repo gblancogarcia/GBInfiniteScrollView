@@ -12,6 +12,8 @@
 
 @property (nonatomic, getter = isPageControlRotated) BOOL pageControlRotated;
 
+@property (nonatomic) CGSize pageSize;
+
 @end
 
 @implementation GBInfiniteScrollViewWithPageControl
@@ -212,6 +214,15 @@
     [super didMoveToSuperview];
     
     [self setupDefaultValuesPageControl];
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    if ((self.scrollDirection == GBScrollDirectionHorizontal && self.pageSize.width  != self.frame.size.width) ||
+        (self.scrollDirection == GBScrollDirectionVertical   && self.pageSize.height != self.frame.size.height)) {
+        self.pageSize = self.frame.size;
+        [self setupDefaultValuesPageControl];
+    }
 }
 
 - (void)setupPageControl
