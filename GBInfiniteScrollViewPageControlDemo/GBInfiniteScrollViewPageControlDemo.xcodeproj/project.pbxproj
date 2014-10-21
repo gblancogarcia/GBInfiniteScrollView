@@ -495,7 +495,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "GBInfiniteScrollViewPageControlDemo/GBInfiniteScrollViewPageControlDemoTests-Info.plist";
+				INFOPLIST_FILE = "GBInfiniteScrollViewPageControlDemoTests/GBInfiniteScrollViewPageControlDemoTests-Info.plist";
 				PRODUCT_NAME = GBInfiniteScrollViewPageControlDemoTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;

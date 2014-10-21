@@ -160,6 +160,13 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     pan.delegate = self;
     [self addGestureRecognizer:pan];
     
+    [self setupTapGesture];
+    
+    [self setUpDefautValues];
+}
+
+- (void)setupTapGesture
+{
     if ([self isTapEnabled]) {
         self.exclusiveTouch = YES;
         
@@ -170,8 +177,6 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     } else {
         self.exclusiveTouch = NO;
     }
-    
-    [self setUpDefautValues];
 }
 
 - (void)setUpDefautValues
@@ -216,6 +221,14 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
                                                          repeats:YES];
         }
     }
+}
+
+#pragma mark - Propertys
+
+// Setter Method
+- (void)setTapEnabled:(BOOL)tapEnabled {
+    _tapEnabled = tapEnabled;
+    [self setupTapGesture];
 }
 
 #pragma mark - Tap
@@ -386,6 +399,9 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     if (self.isDebugModeOn && self.isVerboseDebugModeOn) {
         NSLog(@"Running %@ '%@'", self.class, NSStringFromSelector(_cmd));
     }
+    
+    if ([self numberOfPages] == 0)
+        return 0;
     
     return fmax([self firstPageIndex], [self numberOfPages] - 1);
 }
@@ -850,6 +866,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     
     return [self pageHeight] * multiplier;
 }
+
 #pragma mark - Layout
 
 - (void)reloadData
@@ -858,6 +875,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
         NSLog(@"Running %@ '%@'", self.class, NSStringFromSelector(_cmd));
     }
     
+    [self updateNumberOfPages];
     [self updateCurrentPageIndex];
     [self updateData];
 }
@@ -869,8 +887,6 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     }
     
     self.needsReloadData = YES;
-    
-    [self updateNumberOfPages];
     
     [self.visiblePages enumerateObjectsUsingBlock:^(GBInfiniteScrollViewPage *visiblePage, NSUInteger idx, BOOL *stop) {
         [self.reusablePages addObject:visiblePage];
@@ -1112,6 +1128,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     
     CGRect frame = [page frame];
     frame.origin.x = pointX;
+    frame.size = self.frame.size;
     page.frame = frame;
     
     [self addSubview:page];
@@ -1125,6 +1142,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     
     CGRect frame = [page frame];
     frame.origin.y = pointY;
+    frame.size = self.frame.size;
     page.frame = frame;
     
     [self addSubview:page];
@@ -1138,6 +1156,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     
     CGRect frame = [page frame];
     frame.origin.x = rightEdge;
+    frame.size = self.frame.size;
     page.frame = frame;
     
     [self addSubview:page];
@@ -1154,6 +1173,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     
     CGRect frame = [page frame];
     frame.origin.y = bottomEdge;
+    frame.size = self.frame.size;
     page.frame = frame;
     
     [self addSubview:page];
@@ -1170,6 +1190,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     
     CGRect frame = [page frame];
     frame.origin.x = leftEdge - [self pageWidth];
+    frame.size = self.frame.size;
     page.frame = frame;
     
     [self addSubview:page];
@@ -1186,6 +1207,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     
     CGRect frame = [page frame];
     frame.origin.y = topEdge - [self pageHeight];
+    frame.size = self.frame.size;
     page.frame = frame;
     
     [self addSubview:page];

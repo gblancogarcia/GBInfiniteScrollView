@@ -10,6 +10,13 @@
 
 CGFloat const GBInfiniteScrollViewPageMargin = 16.0f;
 
+UIViewAutoresizing const GBInfiniteScrollViewPageResizeAll = UIViewAutoresizingFlexibleLeftMargin |
+                                                             UIViewAutoresizingFlexibleWidth |
+                                                             UIViewAutoresizingFlexibleRightMargin |
+                                                             UIViewAutoresizingFlexibleTopMargin |
+                                                             UIViewAutoresizingFlexibleHeight |
+                                                             UIViewAutoresizingFlexibleBottomMargin;
+
 @interface GBInfiniteScrollViewPage ()
 
 @property (nonatomic) GBInfiniteScrollViewPageStyle style;
@@ -84,6 +91,8 @@ CGFloat const GBInfiniteScrollViewPageMargin = 16.0f;
         _contentView.clipsToBounds = YES;
         _contentView.userInteractionEnabled = YES;
         _contentView.exclusiveTouch = YES;
+        _contentView.autoresizesSubviews = YES;
+        _contentView.autoresizingMask = GBInfiniteScrollViewPageResizeAll;
         
         [self addSubview:_contentView];
     }
@@ -95,6 +104,7 @@ CGFloat const GBInfiniteScrollViewPageMargin = 16.0f;
         _textLabel = [[UILabel alloc] initWithFrame:self.bounds];
         
         _textLabel.backgroundColor = [UIColor clearColor];
+        _textLabel.autoresizingMask = GBInfiniteScrollViewPageResizeAll;
         
         if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) {
             _textLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
@@ -110,6 +120,7 @@ CGFloat const GBInfiniteScrollViewPageMargin = 16.0f;
 {
     if (!_imageView) {
         _imageView = [[UIImageView alloc] initWithFrame:self.bounds];
+        _imageView.autoresizingMask = GBInfiniteScrollViewPageResizeAll;
         
         [_contentView addSubview:_imageView];
     }
