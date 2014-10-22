@@ -54,6 +54,38 @@ typedef NS_ENUM(NSInteger, GBScrollDirection) {
                                         */
 };
 
+@interface GBInfiniteScrollViewParent : UIScrollView
+
+/**
+ *  Timing function of an scroll animation.
+ *  
+ *  Default CAMediaTimingFunctionEaseInEaseOut
+ */
+@property (nonatomic) CAMediaTimingFunction *timingFunction;
+
+/**
+ *  The animation duration for the contentOffset
+ *
+ *  Default 0.25f
+ */
+@property (nonatomic) CGFloat animationDuration;
+
+/**
+ *  Debug mode.
+ *  
+ *  Default NO.
+ */
+@property (nonatomic, getter = isDebugModeOn) BOOL debug;
+
+/**
+ *  Verbose for debug mode.
+ *
+ *  Default NO.
+ */
+@property (nonatomic, getter = isVerboseDebugModeOn) BOOL verboseDebug;
+
+@end
+
 @protocol GBInfiniteScrollViewDelegate;
 @protocol GBInfiniteScrollViewDataSource;
 
@@ -73,7 +105,7 @@ typedef NS_ENUM(NSInteger, GBScrollDirection) {
  *
  * It is based on Apple StreetScroller iOS sample code.
  */
-@interface GBInfiniteScrollView : UIScrollView <UIScrollViewDelegate>
+@interface GBInfiniteScrollView : GBInfiniteScrollViewParent <UIScrollViewDelegate>
 
 /** 
  * The data source of the Infinite-scroll-view object.
@@ -129,16 +161,6 @@ typedef NS_ENUM(NSInteger, GBScrollDirection) {
  * A Boolean value that controls if it should scrolling wrap the data source's ends.
  */
 @property (nonatomic) BOOL shouldScrollingWrapDataSource;
-
-/**
- *  Debug mode.
- */
-@property (nonatomic, getter = isDebugModeOn) BOOL debug;
-
-/**
- *  Verbose for debug mode.
- */
-@property (nonatomic, getter = isVerboseDebugModeOn) BOOL verboseDebug;
 
 /**
  *  Verbose for debug mode.
