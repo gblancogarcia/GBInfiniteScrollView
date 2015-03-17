@@ -417,7 +417,19 @@ static CGFloat const GBGoldenRatio = 0.618033988749895f;
 - (void)infiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView didTapAtIndex:(NSInteger)pageIndex
 {
     if (self.debug) {
-        NSLog(@"Did tap at page %d", pageIndex);
+        NSLog(@"Did tap at page %ld", (long)pageIndex);
+    }
+}
+
+- (void)infiniteScrollViewWillBeginDragging:(GBInfiniteScrollView *)infiniteScrollView {
+    if (self.debug) {
+        NSLog(@"Will begin dragging");
+    }
+}
+
+- (void)infiniteScrollViewWillEndDragging:(GBInfiniteScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
+    if (self.debug) {
+        NSLog(@"Will end dragging");
     }
 }
 

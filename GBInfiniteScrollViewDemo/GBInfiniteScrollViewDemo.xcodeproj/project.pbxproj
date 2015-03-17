@@ -530,7 +530,7 @@
 		4300392D187064F600978149 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/GBInfiniteScrollViewDemo.app/GBInfiniteScrollViewDemo";
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -544,7 +544,7 @@
 				);
 				INFOPLIST_FILE = "GBInfiniteScrollViewDemoTests/GBInfiniteScrollViewDemoTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Infinite.app/Infinite";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Debug;
@@ -552,7 +552,7 @@
 		4300392E187064F600978149 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/GBInfiniteScrollViewDemo.app/GBInfiniteScrollViewDemo";
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -562,7 +562,7 @@
 				GCC_PREFIX_HEADER = "GBInfiniteScrollViewDemo/GBInfiniteScrollViewDemo-Prefix.pch";
 				INFOPLIST_FILE = "GBInfiniteScrollViewDemoTests/GBInfiniteScrollViewDemoTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Infinite.app/Infinite";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
