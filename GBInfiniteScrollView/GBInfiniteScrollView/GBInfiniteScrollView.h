@@ -298,6 +298,26 @@ typedef NS_ENUM(NSInteger, GBScrollDirection) {
 - (void)infiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView didTapAtIndex:(NSInteger)pageIndex;
 
 /**
+ *  Called when the GBInfiniteScrollView will beigin dragging.
+ *
+ *  @warning Optional
+ *
+ *  @param infiniteScrollView Infinite Scroll View Object
+ */
+- (void)infiniteScrollViewWillBeginDragging:(GBInfiniteScrollView *)infiniteScrollView;
+
+/**
+ *  Called when the GBInfiniteScrollView will end dragging.
+ *
+ *  @warning Optional
+ *
+ *  @param infiniteScrollView Infinite Scroll View Object
+ *  @param velocity The velocity of the scroll view (in points) at the moment the touch was released
+ *  @param targetContentOffset The expected offset when the scrolling action decelerates to a stop
+ */
+- (void)infiniteScrollViewWillEndDragging:(GBInfiniteScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset;
+
+/**
  *  Asks the delegate if it is allowed to scroll to next page.
  *
  *  @warning Optional

@@ -258,6 +258,15 @@
         NSLog(@"Running %@ '%@'", self.class, NSStringFromSelector(_cmd));
     }
     [self setupPageControl];
+    if ([self.infiniteScrollViewDelegate respondsToSelector:@selector(infiniteScrollViewWillBeginDragging:)]) {
+        [self.infiniteScrollViewDelegate infiniteScrollViewWillBeginDragging:self];
+    }
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
+    if ([self.infiniteScrollViewDelegate respondsToSelector:@selector(infiniteScrollViewWillEndDragging:withVelocity:targetContentOffset:)]) {
+        [self.infiniteScrollViewDelegate infiniteScrollViewWillEndDragging:self withVelocity:velocity targetContentOffset:targetContentOffset];
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
