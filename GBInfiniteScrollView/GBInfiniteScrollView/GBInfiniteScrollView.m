@@ -492,6 +492,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
                                                         userInfo:nil
                                                          repeats:YES];
         }
+        [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
     }
 }
 
