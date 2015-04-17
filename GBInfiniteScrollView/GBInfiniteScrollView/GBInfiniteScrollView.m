@@ -1374,6 +1374,8 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
         [self recenterCurrentView];
         [self updateNumberOfPages];
     }
+    
+    [self layoutIfNeeded];
 }
 
 - (void)recenterContent
