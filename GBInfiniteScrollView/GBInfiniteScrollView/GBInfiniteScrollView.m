@@ -46,38 +46,48 @@
 
 #import "GBInfiniteScrollView.h"
 
-/// Constants used for Newton approximation of cubic function root.
+/** 
+ * Constants used for Newton approximation of cubic function root. 
+ */
 const static double kApproximationTolerance = 0.00000001;
 const static int kMaximumSteps = 10;
 
 @interface GBInfiniteScrollViewParent ()
 
-/// Display link used to trigger event to scroll the view.
+/**
+ * Display link used to trigger event to scroll the view.
+ */
 @property(nonatomic) CADisplayLink *displayLink;
 
-/// States whether the animation has started.
+/**
+ * States whether the animation has started.
+ */
 @property(nonatomic) BOOL animationStarted;
 
-/// Time at the begining of an animation.
+/**
+ * Time at the begining of an animation.
+ */
 @property(nonatomic) CFTimeInterval beginTime;
 
-/// The content offset at the begining of an animation.
+/**
+ * The content offset at the begining of an animation.
+ */
 @property(nonatomic) CGPoint beginContentOffset;
 
-/// The delta between the contentOffset at the start of the animation and
-/// the contentOffset at the end of the animation.
+/**
+ * The delta between the contentOffset at the start of the animation and the contentOffset at the end of the animation.
+ */
 @property(nonatomic) CGPoint deltaContentOffset;
 
 /**
  *  Sets the contentOffset of the ScrollView and animates the transition.
  *
- * @param contentOffset  A point (expressed in points) that is offset from the
- *                       content view’s origin.
+ * @param contentOffset A point (expressed in points) that is offset from the content view’s origin.
  */
 - (void)setContentOffsetWithCustomDuration:(CGPoint)contentOffset;
 
 /**
- *  Cancel the ongoing animation
+ *  Cancel the ongoing animation.
  */
 - (void)cancelAnimation;
 
@@ -123,7 +133,8 @@ const static int kMaximumSteps = 10;
     }
     
     self.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    self.animationDuration = 0.25f; // Default setContentOffset time animation.
+    // Default setContentOffset time animation
+    self.animationDuration = 0.25f;
 }
 
 #pragma mark - Set ContentOffset with Custom Animation
@@ -162,6 +173,7 @@ const static int kMaximumSteps = 10;
         
         // Ratio of duration that went by
         CGFloat progress = (CGFloat)(deltaTime / self.animationDuration);
+        
         if (progress < 1.0) {
             // Ratio adjusted by timing function
             CGFloat adjustedProgress = (CGFloat)timingFunctionValue(self.timingFunction, progress);
@@ -199,7 +211,7 @@ const static int kMaximumSteps = 10;
     
     if (self.delegate
         && [self.delegate respondsToSelector:@selector(scrollViewDidEndScrollingAnimation:)]) {
-        // inform delegate about end of animation
+        // Inform delegate about end of animation
         [self.delegate scrollViewDidEndScrollingAnimation:self];
     }
 }
@@ -233,7 +245,7 @@ double cubicFunctionValue(double a, double b, double c, double d, double x) {
 }
 
 double cubicDerivativeValue(double a, double b, double c, double __unused d, double x) {
-    /// Derivation of the cubic (a*x*x*x)+(b*x*x)+(c*x)+d
+    // Derivation of the cubic (a*x*x*x)+(b*x*x)+(c*x)+d
     return (3*a*x*x)+(2*b*x)+c;
 }
 
@@ -479,13 +491,15 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     }
     
     if (self.autoScroll) {
-        if (self.autoScrollDirection == GBAutoScrollDirectionLeftToRight || self.autoScrollDirection == GBAutoScrollDirectionTopToBottom) {
+        if (self.autoScrollDirection == GBAutoScrollDirectionLeftToRight ||
+            self.autoScrollDirection == GBAutoScrollDirectionTopToBottom) {
             self.timer = [NSTimer scheduledTimerWithTimeInterval:self.interval
                                                           target:self
                                                         selector:@selector(scrollToPreviousPage)
                                                         userInfo:nil
                                                          repeats:YES];
-        } else if (self.autoScrollDirection == GBAutoScrollDirectionRightToLeft || self.autoScrollDirection == GBAutoScrollDirectionBottomToTop){
+        } else if (self.autoScrollDirection == GBAutoScrollDirectionRightToLeft ||
+                   self.autoScrollDirection == GBAutoScrollDirectionBottomToTop){
             self.timer = [NSTimer scheduledTimerWithTimeInterval:self.interval
                                                           target:self
                                                         selector:@selector(scrollToNextPage)
@@ -796,7 +810,8 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     NSUInteger visibleIndex = [self.visibleIndices indexOfObject:[NSNumber numberWithUnsignedInteger:index]];
     
     if ((visibleIndex == NSNotFound) || (self.needsReloadData)) {
-        if (self.infiniteScrollViewDataSource && [self.infiniteScrollViewDataSource respondsToSelector:@selector(infiniteScrollView:pageAtIndex:)]) {
+        if (self.infiniteScrollViewDataSource &&
+            [self.infiniteScrollViewDataSource respondsToSelector:@selector(infiniteScrollView:pageAtIndex:)]) {
             page = [self.infiniteScrollViewDataSource infiniteScrollView:self pageAtIndex:index];
         }
         

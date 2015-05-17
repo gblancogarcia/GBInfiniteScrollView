@@ -11,15 +11,12 @@
 #import <UIKit/UIKit.h>
 
 typedef NS_ENUM(NSInteger, GBInfiniteScrollViewPageStyle) {
-    GBInfiniteScrollViewPageStyleCustom, /**<
-                                          * Page Style custom.
-                                          */
-    GBInfiniteScrollViewPageStyleText, /**< 
-                                        * Page Style Text
-                                        */
-    GBInfiniteScrollViewPageStyleImage /**< 
-                                        * Page Style Image
-                                        */
+    /** Page Style Custom. */
+    GBInfiniteScrollViewPageStyleCustom,
+    /** Page Style Text. */
+    GBInfiniteScrollViewPageStyleText,
+    /** Page Style Image */
+    GBInfiniteScrollViewPageStyleImage
 };
 
 @interface GBInfiniteScrollViewPage : UIView
@@ -27,7 +24,7 @@ typedef NS_ENUM(NSInteger, GBInfiniteScrollViewPageStyle) {
 /**
 *  Initializes and returns a newly allocated view object with the specified page style.
 *
-*  @param style GBInfiniteScrollViewPageStyle type
+*  @param style The GBInfiniteScrollViewPageStyle type.
 *
 *  @return An initialized view object or nil if the object couldn't be created.
 */
@@ -36,8 +33,10 @@ typedef NS_ENUM(NSInteger, GBInfiniteScrollViewPageStyle) {
 /**
  *  Initializes and returns a newly allocated view object with the specified frame rectangle.
  *
- *  @param frame The frame rectangle for the view, measured in points. The origin of the frame is relative to the superview in which you plan to add it. This method uses the frame rectangle to set the center and bounds properties accordingly.
- *  @param style GBInfiniteScrollViewPageStyle type
+ *  @param frame The frame rectangle for the view, measured in points. The origin of the frame is relative to the 
+ *               superview in which you plan to add it. This method uses the frame rectangle to set the center and 
+ *               bounds properties accordingly.
+ *  @param style The GBInfiniteScrollViewPageStyle type.
  *
  *  @return An initialized view object or nil if the object couldn't be created.
  */

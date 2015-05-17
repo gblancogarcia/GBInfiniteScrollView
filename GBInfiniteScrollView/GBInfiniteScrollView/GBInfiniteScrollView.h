@@ -29,58 +29,46 @@
 #import "GBInfiniteScrollViewPage.h"
 
 typedef NS_ENUM(NSInteger, GBAutoScrollDirection) {
-    GBAutoScrollDirectionRightToLeft,   /**<
-                                        * Automatic scrolling from right to left.
-                                        * @warning Default
-                                        */
-    GBAutoScrollDirectionLeftToRight,   /**<
-                                        * Automatic scrolling from left to right.
-                                        */
-    GBAutoScrollDirectionTopToBottom,   /**<
-                                        * Automatic scrolling from top to bottom.
-                                        */
-    GBAutoScrollDirectionBottomToTop    /**<
-                                        * Automatic scrolling from bottom to top.
-                                        */
+    /** Automatic scrolling from right to left. This is the default. */
+    GBAutoScrollDirectionRightToLeft,
+    /** Automatic scrolling from left to right. */
+    GBAutoScrollDirectionLeftToRight,
+    /** Automatic scrolling from top to bottom. */
+    GBAutoScrollDirectionTopToBottom,
+    /** Automatic scrolling from bottom to top. */
+    GBAutoScrollDirectionBottomToTop
 };
 
 typedef NS_ENUM(NSInteger, GBScrollDirection) {
-    GBScrollDirectionHorizontal,        /**<
-                                        * Horizontal scroll direction.
-                                        * @warning Default
-                                        */
-    GBScrollDirectionVertical           /**<
-                                        * Vertical scroll direction.
-                                        */
+    /** Horizontal scroll direction. */
+    GBScrollDirectionHorizontal,
+    /** Vertical scroll direction. */
+    GBScrollDirectionVertical
 };
 
 @interface GBInfiniteScrollViewParent : UIScrollView
 
 /**
  *  Timing function of an scroll animation.
- *  
- *  Default CAMediaTimingFunctionEaseInEaseOut
+ *  Defaults to CAMediaTimingFunctionEaseInEaseOut.
  */
 @property (nonatomic) CAMediaTimingFunction *timingFunction;
 
 /**
- *  The animation duration for the contentOffset
- *
- *  Default 0.25f
+ *  The animation duration for the contentOffset.
+ *  Defaults to 0.25f
  */
 @property (nonatomic) CGFloat animationDuration;
 
 /**
  *  Debug mode.
- *  
- *  Default NO.
+ *  Defaults to NO.
  */
 @property (nonatomic, getter = isDebugModeOn) BOOL debug;
 
 /**
  *  Verbose for debug mode.
- *
- *  Default NO.
+ *  Defaults to NO.
  */
 @property (nonatomic, getter = isVerboseDebugModeOn) BOOL verboseDebug;
 
@@ -94,7 +82,7 @@ typedef NS_ENUM(NSInteger, GBScrollDirection) {
  * which allows users to scroll infinitely in the horizontal direction. GBInfiniteScrollView also provides automatic
  * scrolling feature.
  *
- * A GBInfiniteScrollView object must have an object that acts as a data source and an object that acts as a delegate.
+ * A infinite scroll view object must have an object that acts as a data source and an object that acts as a delegate.
  * The data source must adopt the GBInfiniteScrollViewDataSource protocol and the delegate must adopt the
  * GBInfiniteScrollViewDelegate protocol. The data source provides the views that GBInfiniteScrollView needs to display.
  * The delegate allows the adopting delegate to respond to scrolling operations.
@@ -108,12 +96,12 @@ typedef NS_ENUM(NSInteger, GBScrollDirection) {
 @interface GBInfiniteScrollView : GBInfiniteScrollViewParent <UIScrollViewDelegate>
 
 /** 
- * The data source of the Infinite-scroll-view object.
+ * The data source of the infinite scroll view object.
  */
 @property (nonatomic, assign) id <GBInfiniteScrollViewDataSource> infiniteScrollViewDataSource;
 
 /**
- * The delegate of the Infinite-scroll-view object.
+ * The delegate of the infinite scroll view object.
  */
 @property (nonatomic, assign) id <GBInfiniteScrollViewDelegate> infiniteScrollViewDelegate;
 
@@ -202,15 +190,15 @@ typedef NS_ENUM(NSInteger, GBScrollDirection) {
 /**
  *  Gets a reusable page.
  *
- *  @return A reusable infinite scroll view page object.
+ *  @return A reusable GBInfiniteScrollViewPage object.
  */
 - (GBInfiniteScrollViewPage *)dequeueReusablePage;
 
 /**
  * Scrolls a specific page.
  *
- *  @param index     Index of the page
- *  @param animated  YES if the scrolling should be animated, NO if it should be immediate.
+ *  @param index Index of the page.
+ *  @param animated YES if the scrolling should be animated, NO if it should be immediate.
  */
 - (void)scrollToPageAtIndex:(NSUInteger)index animated:(BOOL)animated;
 
@@ -230,9 +218,9 @@ typedef NS_ENUM(NSInteger, GBScrollDirection) {
  *
  *  @warning Required
  *
- *  @param infiniteScrollView Infinite Scroll View Object
+ *  @param infiniteScrollView The infinite scroll view object.
  *
- *  @return An NSInteger with the number of pages of the Infinite Scroll View Object
+ *  @return An NSInteger with the number of pages of the GBInfiniteScrollViewPage object.
  */
 - (NSInteger)numberOfPagesInInfiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView;
 
@@ -241,12 +229,13 @@ typedef NS_ENUM(NSInteger, GBScrollDirection) {
  *
  *  @warning Required
  *
- *  @param infiniteScrollView Infinite Scroll View Object
- *  @param index              Index of the page
+ *  @param infiniteScrollView The infinite scroll view object.
+ *  @param index Index of the page
  *
- *  @return The GBInfiniteScrollViewPage object for the index
+ *  @return The GBInfiniteScrollViewPage object for the index.
  */
-- (GBInfiniteScrollViewPage *)infiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView pageAtIndex:(NSUInteger)index;
+- (GBInfiniteScrollViewPage *)infiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView
+                                     pageAtIndex:(NSUInteger)index;
 
 @end
 
@@ -260,7 +249,7 @@ typedef NS_ENUM(NSInteger, GBScrollDirection) {
 @optional
 
 /**
- *  Called when the GBInfiniteScrollView is panning
+ *  Called when the GBInfiniteScrollView is panning.
  *
  *  @warning Optional
  *
@@ -274,7 +263,7 @@ typedef NS_ENUM(NSInteger, GBScrollDirection) {
  *
  *  @warning Optional
  *
- *  @param infiniteScrollView Infinite Scroll View Object
+ *  @param infiniteScrollView The infinite scroll view object.
  */
 - (void)infiniteScrollViewDidScrollNextPage:(GBInfiniteScrollView *)infiniteScrollView;
 
@@ -283,17 +272,17 @@ typedef NS_ENUM(NSInteger, GBScrollDirection) {
  *
  *  @warning Optional
  *
- *  @param infiniteScrollView Infinite Scroll View Object
+ *  @param infiniteScrollView The infinite scroll view object.
  */
 - (void)infiniteScrollViewDidScrollPreviousPage:(GBInfiniteScrollView *)infiniteScrollView;
 
 /**
- * Called when use tap on GBInfiniteScrollView
+ * Called when use tap on GBInfiniteScrollView.
  *
  *  @warning Optional
  *
- *  @param infiniteScrollView Infinite Scroll View Object
- *  @param pageIndex tapped page index
+ *  @param infiniteScrollView The infinite scroll view object.
+ *  @param pageIndex Tapped page index.
  */
 - (void)infiniteScrollView:(GBInfiniteScrollView *)infiniteScrollView didTapAtIndex:(NSInteger)pageIndex;
 
@@ -302,7 +291,7 @@ typedef NS_ENUM(NSInteger, GBScrollDirection) {
  *
  *  @warning Optional
  *
- *  @param infiniteScrollView Infinite Scroll View Object
+ *  @param infiniteScrollView The infinite scroll view object.
  */
 - (void)infiniteScrollViewWillBeginDragging:(GBInfiniteScrollView *)infiniteScrollView;
 
@@ -311,18 +300,19 @@ typedef NS_ENUM(NSInteger, GBScrollDirection) {
  *
  *  @warning Optional
  *
- *  @param infiniteScrollView Infinite Scroll View Object
- *  @param velocity The velocity of the scroll view (in points) at the moment the touch was released
- *  @param targetContentOffset The expected offset when the scrolling action decelerates to a stop
+ *  @param infiniteScrollView The infinite scroll view object.
+ *  @param velocity The velocity of the scroll view (in points) at the moment the touch was released.
+ *  @param targetContentOffset The expected offset when the scrolling action decelerates to a stop.
  */
-- (void)infiniteScrollViewWillEndDragging:(GBInfiniteScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset;
+- (void)infiniteScrollViewWillEndDragging:(GBInfiniteScrollView *)scrollView withVelocity:(CGPoint)velocity
+                      targetContentOffset:(inout CGPoint *)targetContentOffset;
 
 /**
  *  Asks the delegate if it is allowed to scroll to next page.
  *
  *  @warning Optional
  *
- *  @param infiniteScrollView Infinite Scroll View Object
+ *  @param infiniteScrollView The infinite scroll view object.
  */
 - (BOOL)infiniteScrollViewShouldScrollNextPage:(GBInfiniteScrollView *)infiniteScrollView;
 
@@ -331,7 +321,7 @@ typedef NS_ENUM(NSInteger, GBScrollDirection) {
  *
  *  @warning Optional
  *
- *  @param infiniteScrollView Infinite Scroll View Object
+ *  @param infiniteScrollView The infinite scroll view object.
  */
 - (BOOL)infiniteScrollViewShouldScrollPreviousPage:(GBInfiniteScrollView *)infiniteScrollView;
 
