@@ -530,11 +530,14 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
     [self setupTapGesture];
 }
 
-- (void)setUseInfiniteScrollPanGestureRecognizer:(BOOL)useInfiniteScrollPanGestureRecognizer {
+- (void)setUseInfiniteScrollPanGestureRecognizer:(BOOL)useInfiniteScrollPanGestureRecognizer
+{
     _useInfiniteScrollPanGestureRecognizer = useInfiniteScrollPanGestureRecognizer;
     
     if (self.useInfiniteScrollPanGestureRecognizer) {
-        if (self.infiniteScrollViewPanGestureRecognizer == nil) [self setupPanGesture];
+        if (self.infiniteScrollViewPanGestureRecognizer == nil) {
+           [self setupPanGesture];
+        }
     } else {
         [self removeGestureRecognizer:self.infiniteScrollViewPanGestureRecognizer];
         self.infiniteScrollViewPanGestureRecognizer = nil;
@@ -1805,7 +1808,7 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-    //If the usage of the PanGestureRecognizer is enabled, we need to enable simultaneously gesture recongizing. If not, it's not needed.
+    //If the usage of the UIPanGestureRecognizer is enabled, we need to enable simultaneously gesture recognizing. If not, it's not needed.
     return self.useInfiniteScrollPanGestureRecognizer;
 }
 

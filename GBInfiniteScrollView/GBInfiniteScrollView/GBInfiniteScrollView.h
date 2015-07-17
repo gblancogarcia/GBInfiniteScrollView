@@ -156,8 +156,10 @@ typedef NS_ENUM(NSInteger, GBScrollDirection) {
 @property (nonatomic, getter = isTapEnabled) BOOL tapEnabled;
 
 /**
- *  Whether to use GBInfiniteScrollViews UIPanGestureRecognizer or not. A usage results in a simultaneously gesture recognizer usage!
- *  The default is YES.
+ *  Whether to use GBInfiniteScrollViews UIPanGestureRecognizer or not.
+ *  If enabled, the simultaneously gesture recognizer usage will be enabled.
+ *  This can result in unwanted scroll delegation behavior if you use the GBInfiniteScrollView above other UIScrollViews as the touch input is delegated to these UIScrollViews too.
+ *  Default value YES.
  */
 @property (nonatomic) BOOL useInfiniteScrollPanGestureRecognizer;
 
