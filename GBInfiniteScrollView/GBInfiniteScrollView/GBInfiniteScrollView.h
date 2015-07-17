@@ -156,6 +156,12 @@ typedef NS_ENUM(NSInteger, GBScrollDirection) {
 @property (nonatomic, getter = isTapEnabled) BOOL tapEnabled;
 
 /**
+ *  Whether to use GBInfiniteScrollViews UIPanGestureRecognizer or not. A usage results in a simultaneously gesture recognizer usage!
+ *  The default is YES.
+ */
+@property (nonatomic) BOOL useInfiniteScrollPanGestureRecognizer;
+
+/**
  *  Gets the current view.
  *
  *  @return The current page of the infinite scroll view.
