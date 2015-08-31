@@ -633,10 +633,22 @@ static CGFloat const GBGoldenRatio = 0.618033988749895f;
     self.autoScroll = NO;
 }
 
+- (void)infiniteScrollViewWillScrollNextPage:(GBInfiniteScrollView *)infiniteScrollView {
+    if (self.debug) {
+        NSLog(@"Will scroll next page");
+    }
+}
+
 - (void)infiniteScrollViewDidScrollNextPage:(GBInfiniteScrollView *)infiniteScrollView
 {
     if (self.debug) {
         NSLog(@"Did scroll next page");
+    }
+}
+
+- (void)infiniteScrollViewWillScrollPreviousPage:(GBInfiniteScrollView *)infiniteScrollView {
+    if (self.debug) {
+        NSLog(@"Will scroll previous page");
     }
 }
 
