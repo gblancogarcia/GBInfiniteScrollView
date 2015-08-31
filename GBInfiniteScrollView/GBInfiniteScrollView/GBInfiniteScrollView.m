@@ -1676,6 +1676,11 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
             y = CGRectGetMaxY(frame);
         }
         
+        // Notify delegate we're going to the next page
+        if ([self.infiniteScrollViewDelegate respondsToSelector:@selector(infiniteScrollViewWillScrollNextPage:)]) {
+            [self.infiniteScrollViewDelegate infiniteScrollViewWillScrollNextPage:self];
+        }
+        
         CGPoint point = CGPointMake(x, y);
         [self setContentOffsetWithCustomDuration:point];
     }
@@ -1698,6 +1703,12 @@ static CGFloat const GBAutoScrollDefaultInterval = 3.0f;
         } else {
             x = frame.origin.x;
             y = CGRectGetMinY(frame) - [self pageHeight];
+        }
+        
+        
+        // Notify delegate we're going to the next page
+        if ([self.infiniteScrollViewDelegate respondsToSelector:@selector(infiniteScrollViewWillScrollPreviousPage:)]) {
+            [self.infiniteScrollViewDelegate infiniteScrollViewWillScrollPreviousPage:self];
         }
         
         CGPoint point = CGPointMake(x, y);
