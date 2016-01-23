@@ -1,3 +1,3 @@
 platform :ios, '7.0'
 
-pod 'GBInfiniteScrollView', '~> 1.4'
+pod 'GBInfiniteScrollView', '~> 1.8.1'
