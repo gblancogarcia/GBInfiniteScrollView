@@ -468,7 +468,7 @@ static CGFloat const GBMaxNumberOfPages = 10000.0f;
     if (self.autoScrollDirection == GBAutoScrollDirectionLeftToRight) {
         transform = self.rightToLeftTransform;
         autoScrollDirection = GBAutoScrollDirectionRightToLeft;
-    } else if (self.autoScrollDirection == GBAutoScrollDirectionRightToLeft) {
+    } else {
         transform = self.leftToRightTransform;
         autoScrollDirection = GBAutoScrollDirectionLeftToRight;
     }

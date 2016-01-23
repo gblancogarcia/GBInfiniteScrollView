@@ -303,7 +303,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = GB;
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Gerardo Blanco García";
 				TargetAttributes = {
 					430038F6187064F600978149 = {
@@ -435,6 +435,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -497,11 +498,8 @@
 				GCC_PREFIX_HEADER = "GBInfiniteScrollViewDemo/GBInfiniteScrollViewDemo-Prefix.pch";
 				INFOPLIST_FILE = "GBInfiniteScrollViewDemo/GBInfiniteScrollViewDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/GBInfiniteScrollView-edronfnxpnachpfcgaxqokzpftby/Build/Products/Debug-iphoneos",
-					"$(PROJECT_DIR)/GBInfiniteScrollViewDemo",
-				);
+				LIBRARY_SEARCH_PATHS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.gblancogarcia.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Infinite;
 				WRAPPER_EXTENSION = app;
 			};
@@ -517,11 +515,8 @@
 				GCC_PREFIX_HEADER = "GBInfiniteScrollViewDemo/GBInfiniteScrollViewDemo-Prefix.pch";
 				INFOPLIST_FILE = "GBInfiniteScrollViewDemo/GBInfiniteScrollViewDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/GBInfiniteScrollView-edronfnxpnachpfcgaxqokzpftby/Build/Products/Debug-iphoneos",
-					"$(PROJECT_DIR)/GBInfiniteScrollViewDemo",
-				);
+				LIBRARY_SEARCH_PATHS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.gblancogarcia.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Infinite;
 				WRAPPER_EXTENSION = app;
 			};
@@ -543,6 +538,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "GBInfiniteScrollViewDemoTests/GBInfiniteScrollViewDemoTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.gblancogarcia.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Infinite.app/Infinite";
 				WRAPPER_EXTENSION = xctest;
@@ -561,6 +557,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GBInfiniteScrollViewDemo/GBInfiniteScrollViewDemo-Prefix.pch";
 				INFOPLIST_FILE = "GBInfiniteScrollViewDemoTests/GBInfiniteScrollViewDemoTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.gblancogarcia.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Infinite.app/Infinite";
 				WRAPPER_EXTENSION = xctest;
