@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "GBInfiniteScrollView"
-  s.version      = "1.8.1"
+  s.version      = "1.8.2"
   s.summary      = "GBInfiniteScrollView class provides an endlessly scroll view organized in pages."
   s.homepage     = "https://github.com/gblancogarcia"
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
