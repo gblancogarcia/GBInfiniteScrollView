@@ -20,7 +20,7 @@ It is based on Apple StreetScroller iOS sample code.
 
 ## Adding GBInfiniteScrollView to your project
 
-### Cocoapods
+### CocoaPods
 
 [CocoaPods](http://cocoapods.org) is the recommended way to add GBInfiniteScrollView to your project.
 
